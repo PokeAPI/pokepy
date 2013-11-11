@@ -4,7 +4,7 @@ Pykemon
 
 .. image:: https://badge.fury.io/py/pykemon.png
     :target: http://badge.fury.io/py/pykemon
-    
+
 .. image:: https://travis-ci.org/phalt/pykemon.png?branch=master
         :target: https://travis-ci.org/phalt/pykemon
 
@@ -13,6 +13,9 @@ Pykemon
 
 
 A python wrapper for the pokeapi.co API
+
+WORK IN PROGRESS
+----------------
 
 * Free software: BSD license
 * Documentation: http://pykemon.rtfd.org.
