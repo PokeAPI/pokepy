@@ -33,6 +33,7 @@ Usage
 Even simpler:
 
 .. code-block:: python
+
     >>> from pykemon import pykemon
     >>> pykemon.get(pokemon='bulbasaur')
     <Pokemon - Bulbasaur>
