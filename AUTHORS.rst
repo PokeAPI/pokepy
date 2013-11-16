@@ -10,4 +10,6 @@ Development Lead
 Contributors
 ------------
 
-None yet. Why not be the first?
+* Owen Hallett
+
+Made a commit? Add your name to the list!
