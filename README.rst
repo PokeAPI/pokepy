@@ -22,7 +22,7 @@ Installation
 
 Nice and simple:
 
-.. code-block:: python
+.. code-block:: bash
 
     $ pip install pykemon
 
