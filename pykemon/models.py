@@ -7,17 +7,23 @@ This files holds all the class definitions representing resources from PokeAPI.
 """
 
 
-class Pokemon(object):
+class DateTimeObject(object):
+
+    def __init__(self, bundle):
+        self.name = bundle['name']
+        self.resource_uri = bundle['resource_uri']
+        self.created = bundle['created']
+        self.modified = bundle['modified']
+
+
+class Pokemon(DateTimeObject):
     """
     This class represents a single Pokemon resource
     """
 
     def __init__(self, bundle):
-        self.name = bundle['name']
+        super(Pokemon, self).__init__(bundle)
         self.id = bundle['national_id']
-        self.resource_uri = bundle['resource_uri']
-        self.created = bundle['created']
-        self.modified = bundle['modified']
         self.abilities = bundle['abilities']
         self.egg_groups = bundle['egg_groups']
         self.evolutions = bundle['evolutions']
