@@ -22,32 +22,39 @@ Installation
 
 Nice and simple:
 
-```
-$ pip install pykemon
-```
+.. code-block:: python
+
+    $ pip install pykemon
+
 
 Usage
 -----
 
 Even simpler:
 
-```
->>> from pykemon import pykemon
->>> pykemon.get(pokemon='bulbasaur')
-<Pokemon - Bulbasaur>
->>> p = pykemon.get(pokemon_id=1)
-<Pokemon - Bulbasaur>
+.. code-block:: python
+    >>> from pykemon import pykemon
+    >>> pykemon.get(pokemon='bulbasaur')
+    <Pokemon - Bulbasaur>
+    >>> p = pykemon.get(pokemon_id=1)
+    <Pokemon - Bulbasaur>
 
-# Interact with resources linked to Pokemon easily
->>> p.moves
-['cut', 'tackle', 'vine whip']
->>> p.get_move('cut')
-<Move - cut>
+Interact with resources linked to Pokemon easily:
 
-# Or grab a resource separately
->>> pykemon.get(move='cut')
-<Move - cut>
-```
+.. code-block:: python
+
+    >>> p.moves
+    ['cut', 'tackle', 'vine whip']
+    >>> p.get_move('cut')
+    <Move - cut>
+
+Or grab a resource separately:
+
+.. code-block:: python
+
+    >>> pykemon.get(move='cut')
+    <Move - cut>
+
 
 Features
 --------
