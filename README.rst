@@ -34,7 +34,7 @@ Even simpler:
 
 .. code-block:: python
 
-    >>> from pykemon import pykemon
+    >>> import pykemon
     >>> pykemon.get(pokemon='bulbasaur')
     <Pokemon - Bulbasaur>
     >>> p = pykemon.get(pokemon_id=1)
