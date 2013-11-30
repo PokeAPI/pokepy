@@ -7,7 +7,7 @@ This is the request factory for pykemon
 All API calls made to the PokeAPI website go from here.
 """
 
-BASE_URI = 'http://pokeapi.co/api/v1/'
+BASE_URI = 'http://pokeapi.co/api/v1'
 
 CHOICES = ['pokedex', 'pokedex_id', 'pokemon', 'pokemon_id', 'move', 'move_id',
            'ability', 'ability_id', 'type', 'type_id', 'egg',
@@ -17,23 +17,15 @@ CHOICES = ['pokedex', 'pokedex_id', 'pokemon', 'pokemon_id', 'move', 'move_id',
 import requests
 import simplejson
 from simplejson import JSONDecodeError
-from models import (
-    Pokedex, Pokemon, Move, Ability, Type, EggGroup, Description, Sprite,
-    Game
-)
+from models import Pokemon, Moves
 
 CLASSES = {
-    'pokedex': Pokedex,
     'pokemon': Pokemon,
-    'move': Move,
-    'egg': EggGroup,
-    'description': Description,
-    'sprite': Sprite,
-    'game': Game
+    'move': Move
 }
 
 
-def _request(self, uri):
+def _request(uri):
     """
     Just a wrapper around the request.get() function
     """
@@ -46,7 +38,7 @@ def _request(self, uri):
         return r.status_code
 
 
-def _to_json(self, data):
+def _to_json(data):
     try:
         content = simplejson.loads(data)
         return content
@@ -54,30 +46,30 @@ def _to_json(self, data):
         raise JSONDecodeError
 
 
-def _compose(self, choice):
+def _compose(choice):
     """
     Figure out exactly what resource we're requesting and return the correct
     class.
     """
-    choice = choice.keys()[0]
+    nchoice = choice.keys()[0]
     id = choice.values()[0]
 
-    if '_id' in choice:
-        choice = choice[:-3]
-    return ('/'.join([BASE_URI, choice, id, '']), choice)
+    if '_id' in nchoice:
+        nchoice = nchoice[:-3]
+    return ('/'.join([BASE_URI, nchoice, id, '']), nchoice)
 
 
-def make_request(self, choice):
+def make_request(choice):
     """
     The entry point from pykemon.api.
     Call _request and _compose to figure out the resource / class
     and return the correct constructed object
     """
-    uri, choice = _compose(choice)
+    uri, nchoice = _compose(choice)
     data = _request(uri)
 
-    if type(data) == type(dict):
-        resource = CLASSES[choice]
+    try:
+        resource = CLASSES[nchoice]
         return resource(data)
-    else:
-        raise ValueError('API response %s received' % data)
+    except Exception as e:
+        raise ValueError('An error occured, %s' % e)

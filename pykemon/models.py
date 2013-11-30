@@ -49,3 +49,17 @@ class Pokemon(DateTimeObject):
 
     def __repr__(self):
         return '<Pokemon - %s>' % self.name.capitalize()
+
+
+class Move(DateTimeObject):
+    """
+    This class represents a single Move resource
+    """
+
+    def __init__(self, bundle):
+        super(Move, self).__init__(bundle)
+        self.id = bundle['id']
+        self.accuracy = bundle['accuracy']
+        self.category = bundle['category']
+        self.power = bundle['power']
+        self.pp = bundle['pp']
