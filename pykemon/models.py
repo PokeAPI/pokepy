@@ -7,6 +7,11 @@ This files holds all the class definitions representing resources from PokeAPI.
 """
 
 
+def buildr(bundle, key):
+    " Builds a dict of NAME:URI for each item in the bundle "
+    return {f['name']: f['resource_uri'] for f in bundle[key]}
+
+
 class DateTimeObject(object):
 
     def __init__(self, bundle):
@@ -24,11 +29,12 @@ class Pokemon(DateTimeObject):
     def __init__(self, bundle):
         super(Pokemon, self).__init__(bundle)
         self.id = bundle['national_id']
-        self.abilities = bundle['abilities']
-        self.egg_groups = bundle['egg_groups']
-        self.evolutions = bundle['evolutions']
-        self.moves = bundle['moves']
-        self.types = bundle['types']
+        self.abilities = buildr(bundle, 'abilities')
+        self.egg_groups = buildr(bundle, 'egg_groups')
+        self.evolutions = {
+            f['to']: f['resource_uri'] for f in bundle['evolutions']}
+        self.moves = buildr(bundle, 'moves')
+        self.types = buildr(bundle, 'types')
         self.catch_rate = bundle['catch_rate']
         self.species = bundle['species']
         self.hp = bundle['hp']
@@ -64,6 +70,9 @@ class Move(DateTimeObject):
         self.power = bundle['power']
         self.pp = bundle['pp']
 
+    def __repr__(self):
+        return '<Move - %s>' % self.name.capitalize()
+
 
 class Type(DateTimeObject):
     """
@@ -73,3 +82,25 @@ class Type(DateTimeObject):
     def __init__(self, bundle):
         super(Type, self).__init__(bundle)
         self.id = bundle['id']
+        self.name = bundle['name']
+        self.ineffective = buildr(bundle, 'ineffective')
+        self.resistance = buildr(bundle, 'resistance')
+        self.super_effective = buildr(bundle, 'super_effective')
+        self.weakness = buildr(bundle, 'weakness')
+
+    def __repr__(self):
+        return '<Type - %s>' % self.name.capitalize()
+
+
+class Ability(DateTimeObject):
+    """
+    This class represents a single Ability resource
+    """
+
+    def __init__(self, bundle):
+        super(Ability, self).__init__(bundle)
+        self.id = bundle['id']
+        self.description = bundle['description']
+
+    def __repr__(self):
+        return '<Ability - %s>' % self.name.capitalize()

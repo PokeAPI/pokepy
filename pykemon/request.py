@@ -17,12 +17,14 @@ CHOICES = ['pokedex', 'pokedex_id', 'pokemon', 'pokemon_id', 'move', 'move_id',
 import requests
 import simplejson
 from simplejson import JSONDecodeError
-from models import Pokemon, Move
+from models import Pokemon, Move, Type, Ability
 from exceptions import ResourceNotFoundError
 
 CLASSES = {
     'pokemon': Pokemon,
-    'move': Move
+    'move': Move,
+    'type': Type,
+    'ability': Ability,
 }
 
 
