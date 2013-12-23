@@ -243,8 +243,8 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'pykemon', u'Pykemon Documentation',
-   u'Paul Hallett', 'pykemon', 'One line description of project.',
-   'Miscellaneous'),
+   u'Paul Hallett', 'pykemon', 'Python wrapper for PokeAPI.co.',
+   'Wrapper'),
 ]
 
 # Documents to append as an appendix to all manuals.
@@ -258,3 +258,5 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+RTD_NEW_THEME = True
