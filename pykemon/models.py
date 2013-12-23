@@ -104,3 +104,63 @@ class Ability(DateTimeObject):
 
     def __repr__(self):
         return '<Ability - %s>' % self.name.capitalize()
+
+
+class Egg(DateTimeObject):
+    """
+    This class represents a single Egg group resource
+    """
+
+    def __init__(self, bundle):
+        super(Egg, self).__init__(bundle)
+        self.id = bundle['id']
+        self.pokemon = buildr(bundle, 'pokemon')
+
+    def __repr__(self):
+        return '<Egg - %s>' % self.name.capitalize()
+
+
+class Description(DateTimeObject):
+    """
+    This class represents a single Description resource
+    """
+
+    def __init__(self, bundle):
+        super(Description, self).__init__(bundle)
+        self.id = bundle['id']
+        self.description = bundle['description']
+        self.pokemon = bundle['pokemon']
+        self.games = buildr(bundle, 'games')
+
+    def __repr__(self):
+        return '<Description - %s>' % self.name.capitalize()
+
+
+class Sprite(DateTimeObject):
+    """
+    This class represents a single Sprite resource
+    """
+
+    def __init__(self, bundle):
+        super(Sprite, self).__init__(bundle)
+        self.id = bundle['id']
+        self.pokemon = bundle['pokemon']
+        self.image = bundle['image']
+
+    def __repr__(self):
+        return '<Sprite - %s>' % self.name.capitalize()
+
+
+class Game(DateTimeObject):
+    """
+    This class represents a single Game resource
+    """
+
+    def __init__(self, bundle):
+        super(Game, self).__init__(bundle)
+        self.id = bundle['id']
+        self.generation = bundle['generation']
+        self.release_year = bundle['release_year']
+
+    def __repr__(self):
+        return '<Game - %s>' % self.name.capitalize()

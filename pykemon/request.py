@@ -17,7 +17,7 @@ CHOICES = ['pokedex', 'pokedex_id', 'pokemon', 'pokemon_id', 'move', 'move_id',
 import requests
 import simplejson
 from simplejson import JSONDecodeError
-from models import Pokemon, Move, Type, Ability
+from models import Pokemon, Move, Type, Ability, Egg, Description, Sprite, Game
 from exceptions import ResourceNotFoundError
 
 CLASSES = {
@@ -25,6 +25,10 @@ CLASSES = {
     'move': Move,
     'type': Type,
     'ability': Ability,
+    'egg': Egg,
+    'description': Description,
+    'sprite': Sprite,
+    'game': Game
 }
 
 
