@@ -19,7 +19,7 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
     name='pykemon',
-    version='0.0.1',
+    version='0.1.0',
     description='A python wrapper for PokeAPI',
     long_description=readme + '\n\n' + history,
     author='Paul Hallett',
