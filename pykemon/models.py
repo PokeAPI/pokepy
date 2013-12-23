@@ -63,3 +63,13 @@ class Move(DateTimeObject):
         self.category = bundle['category']
         self.power = bundle['power']
         self.pp = bundle['pp']
+
+
+class Type(DateTimeObject):
+    """
+    This class represents a single Type Resource
+    """
+
+    def __init__(self, bundle):
+        super(Type, self).__init__(bundle)
+        self.id = bundle['id']

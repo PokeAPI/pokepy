@@ -16,23 +16,15 @@ def get(**kwargs):
 
     Resource choices:
 
-    pokedex
     pokedex_id
     pokemon
     pokemon_id
-    move
     move_id
-    ability
     ability_id
-    type
     type_id
-    egg
-    eggid
-    description
+    egg_id
     description_id
-    sprite
     sprite_id
-    game
     game_id
 
     """

@@ -17,7 +17,8 @@ CHOICES = ['pokedex', 'pokedex_id', 'pokemon', 'pokemon_id', 'move', 'move_id',
 import requests
 import simplejson
 from simplejson import JSONDecodeError
-from models import Pokemon, Moves
+from models import Pokemon, Move
+from exceptions import ResourceNotFoundError
 
 CLASSES = {
     'pokemon': Pokemon,
@@ -35,7 +36,8 @@ def _request(uri):
     if r.status_code == 200:
         return _to_json(r.text)
     else:
-        return r.status_code
+        raise ResourceNotFoundError(
+            'API responded with %s error' % str(r.status_code))
 
 
 def _to_json(data):
@@ -43,7 +45,7 @@ def _to_json(data):
         content = simplejson.loads(data)
         return content
     except JSONDecodeError:
-        raise JSONDecodeError
+        raise JSONDecodeError('Error decoding data', data, 0)
 
 
 def _compose(choice):
@@ -56,7 +58,7 @@ def _compose(choice):
 
     if '_id' in nchoice:
         nchoice = nchoice[:-3]
-    return ('/'.join([BASE_URI, nchoice, id, '']), nchoice)
+    return ('/'.join([BASE_URI, nchoice, str(id), '']), nchoice)
 
 
 def make_request(choice):
@@ -68,8 +70,5 @@ def make_request(choice):
     uri, nchoice = _compose(choice)
     data = _request(uri)
 
-    try:
-        resource = CLASSES[nchoice]
-        return resource(data)
-    except Exception as e:
-        raise ValueError('An error occured, %s' % e)
+    resource = CLASSES[nchoice]
+    return resource(data)
