@@ -33,6 +33,7 @@ class Pokemon(DateTimeObject):
         self.egg_groups = buildr(bundle, 'egg_groups')
         self.evolutions = {
             f['to']: f['resource_uri'] for f in bundle['evolutions']}
+        self.descriptions = buildr(bundle, 'descriptions')
         self.moves = buildr(bundle, 'moves')
         self.types = buildr(bundle, 'types')
         self.catch_rate = bundle['catch_rate']

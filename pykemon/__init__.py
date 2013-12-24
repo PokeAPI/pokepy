@@ -3,7 +3,7 @@
 
 __author__ = 'Paul Hallett'
 __email__ = 'hello@phalt.co'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __copyright__ = 'Copyright Paul Hallett 2013'
 __license__ = 'BSD'
 

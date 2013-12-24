@@ -22,7 +22,7 @@ class TestPykemon(unittest.TestCase):
         self.type_one = pykemon.get(type_id=10)  # Fire
         self.ability_one = pykemon.get(ability_id=1)  # Stench
         self.egg_one = pykemon.get(egg_id=1)  # Monster
-        self.description_one = pykemon.get(description_id=1)
+        self.description_one = pykemon.get(description_id=2)
         self.sprite_one = pykemon.get(sprite_id=152)  # Mew_auto
         self.game_one = pykemon.get(game_id=4)  # Red
 
@@ -32,7 +32,7 @@ class TestPykemon(unittest.TestCase):
         self.assertEquals(self.type_one.name, 'Fire')
         self.assertEquals(self.ability_one.name, 'Stench')
         self.assertEquals(self.egg_one.name, 'Monster')
-        self.assertEquals(self.description_one.name, 'Bulbasaur_red_blue')
+        self.assertEquals(self.description_one.name, 'Bulbasaur_gen_1')
         self.assertEquals(self.sprite_one.name, 'Mew_auto')
         self.assertEquals(self.game_one.name, 'Red')
 
@@ -43,7 +43,7 @@ class TestPykemon(unittest.TestCase):
         self.assertEquals(str(self.ability_one), '<Ability - Stench>')
         self.assertEquals(str(self.egg_one), '<Egg - Monster>')
         self.assertEquals(
-            str(self.description_one), '<Description - Bulbasaur_red_blue>')
+            str(self.description_one), '<Description - Bulbasaur_gen_1>')
         self.assertEquals(str(self.sprite_one), '<Sprite - Mew_auto>')
         self.assertEquals(str(self.game_one), '<Game - Red>')
 
@@ -54,7 +54,7 @@ class TestPykemon(unittest.TestCase):
         self.assertEquals(self.ability_one.resource_uri, '/api/v1/ability/1/')
         self.assertEquals(self.egg_one.resource_uri, '/api/v1/egg/1/')
         self.assertEquals(
-            self.description_one.resource_uri, '/api/v1/description/1/')
+            self.description_one.resource_uri, '/api/v1/description/2/')
         self.assertEquals(self.sprite_one.resource_uri, '/api/v1/sprite/152/')
         self.assertEquals(self.game_one.resource_uri, '/api/v1/game/4/')
 
@@ -64,6 +64,7 @@ class TestPykemon(unittest.TestCase):
         self.assertIn('grass', self.poke_one.types)
         self.assertIn('overgrow', self.poke_one.abilities)
         self.assertIn('Monster', self.poke_one.egg_groups)
+        self.assertIn('bulbasaur_gen_1', self.poke_one.descriptions)
 
     def test_type_complex_attribs(self):
         self.assertIn('grass', self.type_one.super_effective)
@@ -75,7 +76,7 @@ class TestPykemon(unittest.TestCase):
         self.assertIn('Blastoise', self.egg_one.pokemon)
 
     def test_description_complex_attribs(self):
-        self.assertIn('blue', self.description_one.games)
+        self.assertIn('red(JPN)', self.description_one.games)
 
 
 class Testexceptions(unittest.TestCase):
