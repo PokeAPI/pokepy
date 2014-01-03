@@ -3,8 +3,8 @@
 
 __author__ = 'Paul Hallett'
 __email__ = 'hello@phalt.co'
-__version__ = '0.1.1'
-__copyright__ = 'Copyright Paul Hallett 2013'
+__version__ = '0.1.2'
+__copyright__ = 'Copyright Paul Hallett 2014'
 __license__ = 'BSD'
 
 from api import get

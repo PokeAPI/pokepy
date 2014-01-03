@@ -53,6 +53,7 @@ class Pokemon(DateTimeObject):
         self.weight = bundle['weight']
         self.happiness = bundle['happiness']
         self.male_female_ratio = bundle['male_female_ratio']
+        self.sprites = buildr(bundle, 'sprites')
 
     def __repr__(self):
         return '<Pokemon - %s>' % self.name.capitalize()

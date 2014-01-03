@@ -65,6 +65,7 @@ class TestPykemon(unittest.TestCase):
         self.assertIn('overgrow', self.poke_one.abilities)
         self.assertIn('Monster', self.poke_one.egg_groups)
         self.assertIn('bulbasaur_gen_1', self.poke_one.descriptions)
+        self.assertIn('bulbasaur', self.poke_one.sprites)
 
     def test_type_complex_attribs(self):
         self.assertIn('grass', self.type_one.super_effective)
