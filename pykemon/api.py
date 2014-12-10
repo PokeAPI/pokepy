@@ -31,7 +31,7 @@ def get(**kwargs):
     if len(kwargs.keys()) > 1:
         raise ValueError('Too many arguments. Only pass 1 argument')
 
-    if kwargs.keys()[0] in CHOICES:
+    if list(kwargs.keys())[0] in CHOICES:
         return make_request(kwargs)
 
     else:

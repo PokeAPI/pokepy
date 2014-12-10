@@ -59,8 +59,8 @@ def _compose(choice):
     Figure out exactly what resource we're requesting and return the correct
     class.
     """
-    nchoice = choice.keys()[0]
-    id = choice.values()[0]
+    nchoice = list(choice.keys())[0]
+    id = list(choice.values())[0]
 
     if '_id' in nchoice:
         nchoice = nchoice[:-3]
@@ -78,3 +78,4 @@ def make_request(choice):
 
     resource = CLASSES[nchoice]
     return resource(data)
+
