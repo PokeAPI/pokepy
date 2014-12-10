@@ -6,8 +6,8 @@
 User interaction with this package is done through this file.
 """
 
-from request import CHOICES
-from request import make_request
+from pykemon.request import CHOICES
+from pykemon.request import make_request
 
 
 def get(**kwargs):

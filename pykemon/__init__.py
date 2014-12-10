@@ -7,8 +7,8 @@ __version__ = '0.1.2'
 __copyright__ = 'Copyright Paul Hallett 2014'
 __license__ = 'BSD'
 
-from api import get
-from exceptions import ResourceNotFoundError
+from pykemon.api import get
+from pykemon.exceptions import ResourceNotFoundError
 
 
 """
