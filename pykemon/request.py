@@ -17,10 +17,11 @@ CHOICES = ['pokedex', 'pokedex_id', 'pokemon', 'pokemon_id', 'move', 'move_id',
 import requests
 import simplejson
 from simplejson import JSONDecodeError
-from pykemon.models import Pokemon, Move, Type, Ability, Egg, Description, Sprite, Game
+from pykemon.models import Pokedex, Pokemon, Move, Type, Ability, Egg, Description, Sprite, Game
 from pykemon.exceptions import ResourceNotFoundError
 
 CLASSES = {
+    'pokedex': Pokedex,
     'pokemon': Pokemon,
     'move': Move,
     'type': Type,
@@ -78,4 +79,3 @@ def make_request(choice):
 
     resource = CLASSES[nchoice]
     return resource(data)
-
