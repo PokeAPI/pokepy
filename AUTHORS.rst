@@ -5,7 +5,7 @@ Credits
 Development Lead
 ----------------
 
-* Paul Hallett <hello@phalt.co>
+* Paul Hallett <paulandrewhallett@gmail.com>
 
 Contributors
 ------------
