@@ -5,8 +5,8 @@ Pykemon
 .. image:: https://badge.fury.io/py/pykemon.png
     :target: http://badge.fury.io/py/pykemon
 
-.. image:: https://travis-ci.org/phalt/pykemon.png?branch=master
-        :target: https://travis-ci.org/phalt/pykemon
+.. image:: https://travis-ci.org/PokeAPI/pykemon.png?branch=master
+        :target: https://travis-ci.org/PokeAPI/pykemon
 
 A python wrapper for `PokeAPI <http://pokeapi.co>`_
 
