@@ -17,10 +17,11 @@ CHOICES = ['pokedex', 'pokedex_id', 'pokemon', 'pokemon_id', 'move', 'move_id',
 import requests
 import simplejson
 from simplejson import JSONDecodeError
-from models import Pokemon, Move, Type, Ability, Egg, Description, Sprite, Game
-from exceptions import ResourceNotFoundError
+from pykemon.models import Pokedex, Pokemon, Move, Type, Ability, Egg, Description, Sprite, Game
+from pykemon.exceptions import ResourceNotFoundError
 
 CLASSES = {
+    'pokedex': Pokedex,
     'pokemon': Pokemon,
     'move': Move,
     'type': Type,
@@ -59,8 +60,8 @@ def _compose(choice):
     Figure out exactly what resource we're requesting and return the correct
     class.
     """
-    nchoice = choice.keys()[0]
-    id = choice.values()[0]
+    nchoice = list(choice.keys())[0]
+    id = list(choice.values())[0]
 
     if '_id' in nchoice:
         nchoice = nchoice[:-3]

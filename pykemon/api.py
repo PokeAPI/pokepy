@@ -6,8 +6,8 @@
 User interaction with this package is done through this file.
 """
 
-from request import CHOICES
-from request import make_request
+from pykemon.request import CHOICES
+from pykemon.request import make_request
 
 
 def get(**kwargs):
@@ -31,7 +31,7 @@ def get(**kwargs):
     if len(kwargs.keys()) > 1:
         raise ValueError('Too many arguments. Only pass 1 argument')
 
-    if kwargs.keys()[0] in CHOICES:
+    if list(kwargs.keys())[0] in CHOICES:
         return make_request(kwargs)
 
     else:

@@ -21,6 +21,14 @@ class DateTimeObject(object):
         self.modified = bundle['modified']
 
 
+class Pokedex(DateTimeObject):
+    """
+    This class represents the pokedex
+    """
+    def __init__(self, bundle):
+        self.pokemon = buildr(bundle, 'pokemon')
+
+
 class Pokemon(DateTimeObject):
     """
     This class represents a single Pokemon resource
