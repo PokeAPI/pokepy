@@ -13,6 +13,8 @@ import simplejson
 
 import pykemon
 
+import responses
+
 
 class TestPykemon(unittest.TestCase):
 
@@ -78,6 +80,105 @@ class TestPykemon(unittest.TestCase):
 
     def test_description_complex_attribs(self):
         self.assertIn('red(JPN)', self.description_one.games)
+
+    def get_client(self):
+        return pykemon.V1Client()
+
+    @responses.activate
+    def test_v1_move_resource(self):
+        responses.add(responses.GET, 'http://pokeapi.co/api/v1/move/1/',
+                      body='''
+                        {"id": 1, "name": "move"}''',
+                      status=200,
+                      content_type='application/json')
+
+        client = self.get_client()
+        response = client.get_move(uid=1)[0]
+        assert response.name == 'move'
+
+    @responses.activate
+    def test_v1_pokemon_resource(self):
+        responses.add(responses.GET, 'http://pokeapi.co/api/v1/pokemon/1/',
+                      body='''
+                        {"id": 1, "name": "pokemon"}''',
+                      status=200,
+                      content_type='application/json')
+
+        client = self.get_client()
+        response = client.get_pokemon(uid=1)[0]
+        assert response.name == 'pokemon'
+
+    @responses.activate
+    def test_v1_type_resource(self):
+        responses.add(responses.GET, 'http://pokeapi.co/api/v1/type/1/',
+                      body='''
+                        {"id": 1, "name": "types"}''',
+                      status=200,
+                      content_type='application/json')
+
+        client = self.get_client()
+        response = client.get_type(uid=1)[0]
+        assert response.name == 'types'
+
+    @responses.activate
+    def test_v1_ability_resource(self):
+        responses.add(responses.GET, 'http://pokeapi.co/api/v1/ability/1/',
+                      body='''
+                        {"id": 1, "name": "abilities"}''',
+                      status=200,
+                      content_type='application/json')
+
+        client = self.get_client()
+        response = client.get_ability(uid=1)[0]
+        assert response.name == 'abilities'
+
+    @responses.activate
+    def test_v1_egg_resource(self):
+        responses.add(responses.GET, 'http://pokeapi.co/api/v1/egg/1/',
+                      body='''
+                        {"id": 1, "name": "eggz"}''',
+                      status=200,
+                      content_type='application/json')
+
+        client = self.get_client()
+        response = client.get_egg(uid=1)[0]
+        assert response.name == 'eggz'
+
+    @responses.activate
+    def test_v1_description_resource(self):
+        responses.add(responses.GET, 'http://pokeapi.co/api/v1/description/1/',
+                      body='''
+                        {"id": 1, "name": "description"}''',
+                      status=200,
+                      content_type='application/json')
+
+        client = self.get_client()
+        response = client.get_description(uid=1)[0]
+        assert response.name == 'description'
+
+    @responses.activate
+    def test_v1_sprite_resource(self):
+        responses.add(responses.GET, 'http://pokeapi.co/api/v1/sprite/1/',
+                      body='''
+                        {"id": 1, "name": "spritez"}''',
+                      status=200,
+                      content_type='application/json')
+
+        client = self.get_client()
+        response = client.get_sprite(uid=1)[0]
+        assert response.name == 'spritez'
+
+    @responses.activate
+    def test_v1_game_resource(self):
+        responses.add(responses.GET, 'http://pokeapi.co/api/v1/game/1/',
+                      body='''
+                        {"id": 1, "name": "gamez"}''',
+                      status=200,
+                      content_type='application/json')
+
+        client = self.get_client()
+        response = client.get_game(uid=1)[0]
+        assert response.name == 'gamez'
 
 
 class Testexceptions(unittest.TestCase):

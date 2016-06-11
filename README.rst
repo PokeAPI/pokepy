@@ -32,12 +32,9 @@ Even simpler:
 .. code-block:: python
 
     >>> import pykemon
-    >>> pykemon.get(pokemon='bulbasaur')
-    <Pokemon - Bulbasaur>
-    >>> p = pykemon.get(pokemon_id=1)
-    <Pokemon - Bulbasaur>
-    >>> pykemon.get(move_id=15)
-    <Move - cut>
+    >>> client = pykemon.V1Client()
+    >>> p = client.get_pokemon(uid=1)
+    [<Pokemon - Bulbasaur>]
 
 
 Features

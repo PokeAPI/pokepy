@@ -3,12 +3,12 @@
 
 __author__ = 'Paul Hallett'
 __email__ = 'hello@phalt.co'
-__version__ = '0.1.2'
-__copyright__ = 'Copyright Paul Hallett 2014'
+__version__ = '0.2.0'
+__copyright__ = 'Copyright Paul Hallett 2016'
 __license__ = 'BSD'
 
-from api import get
-from exceptions import ResourceNotFoundError
+from api import get, V1Client  # NOQA
+from exceptions import ResourceNotFoundError  # NOQA
 
 
 """
