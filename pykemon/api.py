@@ -6,8 +6,15 @@
 User interaction with this package is done through this file.
 """
 
+from beckett.clients import BaseClient
+
 from request import CHOICES
 from request import make_request
+
+from .resources import (
+    MoveResource, PokemonResource, TypeResource, AbilityResource, EggResource,
+    DescriptionResource, SpriteResource, GameResource
+)
 
 
 def get(**kwargs):
@@ -36,3 +43,20 @@ def get(**kwargs):
 
     else:
         raise ValueError('An invalid argument was passed')
+
+
+class V1Client(BaseClient):
+
+    class Meta(BaseClient.Meta):
+        name = 'pykemon-v1-client'
+        base_url = 'http://pokeapi.co/api/v1'
+        resources = (
+            MoveResource,
+            PokemonResource,
+            TypeResource,
+            AbilityResource,
+            EggResource,
+            DescriptionResource,
+            SpriteResource,
+            GameResource,
+        )

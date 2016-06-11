@@ -4,7 +4,8 @@
 *.so
 
 # Packages
-*.egg
+*.egg*
+*.cache
 *.egg-info
 dist
 build

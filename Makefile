@@ -27,7 +27,7 @@ lint:
 	flake8 pykemon tests
 
 test:
-	python setup.py test
+	py.test tests/
 
 test-all:
 	tox

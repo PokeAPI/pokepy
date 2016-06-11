@@ -6,6 +6,33 @@ To use Pykemon in a project::
 
 >>> import pykemon
 
+=======
+New API
+=======
+
+Since version 0.2.0, Pykemon now works with `Beckett <https://phalt.github.io/beckett>`_, an easy to use API Client Framework::
+
+   >>> client = pykemon.V1Client()
+   >>> bulba = client.get_pokemon(uid=1)[0]
+   <Pokemon | Bulbasaur>
+   >>> bulba.name
+   Bulbasaur
+
+The following methods work with this client and all take a `uid` parameter:
+
+* get_pokemon
+* get_move
+* get_sprite
+* get_ability
+* get_game
+* get_type
+* get_egg
+
+
+================
+Version 0.1* API
+================
+
 Then you can start grabbing stuff from the API::
 
     >>> pykemon.get(pokemon='mew')
@@ -57,4 +84,3 @@ The Pokemon resource can also be requested using the name:
     <Pokemon - Rotom>
 
 Make sure you use lower case strings!
-
