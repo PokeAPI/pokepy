@@ -7,8 +7,8 @@ __version__ = '0.2.0'
 __copyright__ = 'Copyright Paul Hallett 2016'
 __license__ = 'BSD'
 
-from api import get, V1Client  # NOQA
-from exceptions import ResourceNotFoundError  # NOQA
+from .api import get, V1Client  # NOQA
+from .exceptions import ResourceNotFoundError  # NOQA
 
 
 """
