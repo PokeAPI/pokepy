@@ -9,7 +9,7 @@ User interaction with this package is done through this file.
 from beckett.clients import BaseClient
 
 from resourcesV1 import (
-    MoveResource, PokemonResource, TypeResource, AbilityResource,
+    PokedexResource, PokemonResource, TypeResource, MoveResource, AbilityResource,
     EggResource, DescriptionResource, SpriteResource, GameResource
 )
 
@@ -20,6 +20,7 @@ class V1Client(BaseClient):
         name = 'pykemon-v1-client'
         base_url = 'https://pokeapi.co/api/v1'
         resources = (
+            PokedexResource,
             MoveResource,
             PokemonResource,
             TypeResource,

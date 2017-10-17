@@ -3,7 +3,28 @@
 from beckett.resources import BaseResource
 
 
+class PokedexResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Pokedex'
+        resource_name = 'pokedex'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'name',
+            'created',
+            'pokemon',
+            'modified'
+        )
+
+    def __repr__(self):
+        return '<Pokedex - %s>' % self.name.capitalize()
+
+
 class PokemonResource(BaseResource):
+
     class Meta(BaseResource.Meta):
         name = 'Pokemon'
         resource_name = 'pokemon'
@@ -12,9 +33,10 @@ class PokemonResource(BaseResource):
             'get',
         )
         attributes = (
+            'name',
+            'national_id',
             'created',
             'modified',
-            'national_id',
             'abilities',
             'egg_groups',
             'evolutions',
@@ -26,48 +48,23 @@ class PokemonResource(BaseResource):
             'hp',
             'attack',
             'defense',
-            'name',
             'sp_atk',
             'sp_def',
-            'speed',
             'total',
+            'speed',
             'egg_cycles',
             'ev_yield',
             'exp',
             'growth_rate',
             'height',
             'weight',
-            'happiness',
             'male_female_ratio',
+            'happiness',
             'sprites',
         )
 
     def __repr__(self):
         return '<Pokemon - %s>' % self.name.capitalize()
-
-
-class MoveResource(BaseResource):
-
-    class Meta(BaseResource.Meta):
-        name = 'Move'
-        resource_name = 'move'
-        identifier = 'id'
-        methods = (
-            'get',
-        )
-        attributes = (
-            'created',
-            'modified',
-            'id',
-            'accuracy',
-            'category',
-            'power',
-            'pp',
-            'name',
-        )
-
-    def __repr__(self):
-        return '<Move - %s>' % self.name.capitalize()
 
 
 class TypeResource(BaseResource):
@@ -80,11 +77,12 @@ class TypeResource(BaseResource):
             'get',
         )
         attributes = (
+            'name',
+            'id',
             'created',
             'modified',
-            'id',
-            'name',
             'ineffective',
+            'no_effect',
             'resistance',
             'super_effective',
             'weakness',
@@ -92,6 +90,31 @@ class TypeResource(BaseResource):
 
     def __repr__(self):
         return '<Type - %s>' % self.name.capitalize()
+
+
+class MoveResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Move'
+        resource_name = 'move'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'name',
+            'id',
+            'created',
+            'modified',
+            'description',
+            'power',
+            'accuracy',
+            'category',
+            'pp',
+        )
+
+    def __repr__(self):
+        return '<Move - %s>' % self.name.capitalize()
 
 
 class AbilityResource(BaseResource):
@@ -104,10 +127,10 @@ class AbilityResource(BaseResource):
             'get',
         )
         attributes = (
+            'name',
+            'id',
             'created',
             'modified',
-            'id',
-            'name',
             'description',
         )
 
@@ -125,10 +148,10 @@ class EggResource(BaseResource):
             'get',
         )
         attributes = (
+            'name',
+            'id',
             'created',
             'modified',
-            'id',
-            'name',
             'pokemon',
         )
 
@@ -146,13 +169,13 @@ class DescriptionResource(BaseResource):
             'get',
         )
         attributes = (
+            'name',
+            'id',
             'created',
             'modified',
-            'id',
-            'name',
-            'description',
-            'pokemon',
             'games',
+            'pokemon',
+            'description',
         )
 
     def __repr__(self):
@@ -169,10 +192,10 @@ class SpriteResource(BaseResource):
             'get',
         )
         attributes = (
+            'name',
+            'id',
             'created',
             'modified',
-            'id',
-            'name',
             'pokemon',
             'image',
         )
@@ -191,12 +214,12 @@ class GameResource(BaseResource):
             'get',
         )
         attributes = (
+            'name',
+            'id',
             'created',
             'modified',
-            'id',
-            'name',
-            'generation',
             'release_year',
+            'generation',
         )
 
     def __repr__(self):
