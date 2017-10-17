@@ -7,8 +7,8 @@ __version__ = '0.2.0'
 __copyright__ = 'Copyright Paul Hallett 2016'
 __license__ = 'BSD'
 
-from api import get, V1Client  # NOQA
-from exceptions import ResourceNotFoundError  # NOQA
+from api import V1Client  # NOQA
+# TODO from api import V2Client
 
 
 """
@@ -22,9 +22,12 @@ A Python wrapper for PokeAPI (http://pokeapi.co)
 Usage:
 
 >>> import pykemon
->>> pykemon.get(pokemon='bulbasaur')
-<Pokemon - Bulbasaur>
->>> pykemon.get(pokemon_id=151)
-<Pokemon - Mew>
+>>> clientV1 = pykemon.V1Client()
+>>> bulbasaur = clientV1.get_pokemon(uid='bulbasaur')[0]
+>>> bulbasaur.name
+u'Bulbasaur'
+>>> mew = clientV1.get_pokemon(uid=151)[0]
+>>> mew.name
+u'Mew'
 
 """

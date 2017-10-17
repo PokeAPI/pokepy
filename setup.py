@@ -30,9 +30,7 @@ setup(
     ],
     package_dir={'pykemon': 'pykemon'},
     include_package_data=True,
-    install_requires=[
-        'requests==2.10.0', 'simplejson==3.3.1', 'beckett==0.4.0'
-    ],
+    install_requires=["beckett"],
     license="BSD",
     zip_safe=False,
     keywords='pykemon',

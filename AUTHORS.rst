@@ -11,5 +11,6 @@ Contributors
 ------------
 
 * Owen Hallett
+* Kronopt
 
 Made a commit? Add your name to the list!

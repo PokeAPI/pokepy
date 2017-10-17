@@ -8,11 +8,12 @@ test_pykemon
 Tests for `pykemon` module.
 """
 
+# TODO - alter API 0.1 tests so that they test beckett API
+# TODO - Probably remove all the responses.activate methods
+# TODO - test V2
+
 import unittest
-import simplejson
-
 import pykemon
-
 import responses
 
 

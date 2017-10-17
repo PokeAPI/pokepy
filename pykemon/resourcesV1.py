@@ -42,11 +42,6 @@ class PokemonResource(BaseResource):
             'sprites',
         )
 
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
-
 
 class MoveResource(BaseResource):
 
@@ -67,11 +62,6 @@ class MoveResource(BaseResource):
             'pp',
             'name',
         )
-
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
 
 
 class TypeResource(BaseResource):
@@ -94,11 +84,6 @@ class TypeResource(BaseResource):
             'weakness',
         )
 
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
-
 
 class AbilityResource(BaseResource):
 
@@ -117,11 +102,6 @@ class AbilityResource(BaseResource):
             'description',
         )
 
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
-
 
 class EggResource(BaseResource):
 
@@ -139,11 +119,6 @@ class EggResource(BaseResource):
             'name',
             'pokemon',
         )
-
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
 
 
 class DescriptionResource(BaseResource):
@@ -165,11 +140,6 @@ class DescriptionResource(BaseResource):
             'games',
         )
 
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
-
 
 class SpriteResource(BaseResource):
 
@@ -189,11 +159,6 @@ class SpriteResource(BaseResource):
             'image',
         )
 
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
-
 
 class GameResource(BaseResource):
 
@@ -212,8 +177,3 @@ class GameResource(BaseResource):
             'generation',
             'release_year',
         )
-
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
