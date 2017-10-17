@@ -230,3 +230,209 @@ class EvolutionTriggerResource(BaseResource):
 
     def __repr__(self):
         return '<Evolution_Trigger - %s>' % self.name.capitalize()
+
+
+class GenerationResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Generation'
+        resource_name = 'generation'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'abilities',
+            'names',
+            'main_region',
+            'moves',
+            'pokemon_species',
+            'types',
+            'version_groups'
+        )
+
+    def __repr__(self):
+        return '<Generation - %s>' % self.name.capitalize()
+
+
+class PokedexResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Pokedex'
+        resource_name = 'pokedex'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'is_main_series',
+            'descriptions',
+            'names',
+            'pokemon_entries',
+            'region',
+            'version_groups'
+        )
+
+    def __repr__(self):
+        return '<Pokedex - %s>' % self.name.capitalize()
+
+
+class VersionResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Version'
+        resource_name = 'version'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'names',
+            'version_group'
+        )
+
+    def __repr__(self):
+        return '<Version - %s>' % self.name.capitalize()
+
+
+class VersionGroupResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Version_Group'
+        resource_name = 'version-group'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'order',
+            'generation',
+            'move_learn_methods',
+            'pokedexes',
+            'regions',
+            'versions'
+        )
+
+    def __repr__(self):
+        return '<Version_Group - %s>' % self.name.capitalize()
+
+
+class ItemResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Item'
+        resource_name = 'item'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'cost',
+            'fling_power',
+            'fling_effect',
+            'attributes',
+            'category',
+            'effect_entries',
+            'flavor_text_entries',
+            'game_indices',
+            'names',
+            'sprites',
+            'held_by_pokemon',
+            'baby_trigger_for',
+            'machines'
+        )
+
+    def __repr__(self):
+        return '<Item - %s>' % self.name.capitalize()
+
+
+class ItemAttributeResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Item_Attribute'
+        resource_name = 'item-attribute'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'items',
+            'names',
+            'descriptions'
+        )
+
+    def __repr__(self):
+        return '<Item_Attribute - %s>' % self.name.capitalize()
+
+
+class ItemCategoryResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Item_Category'
+        resource_name = 'item-category'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'items',
+            'names',
+            'pocket'
+        )
+
+    def __repr__(self):
+        return '<Item_Category - %s>' % self.name.capitalize()
+
+
+class ItemFlingEffectResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Item_Fling_Effect'
+        resource_name = 'item-fling-effect'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'effect_entries',
+            'items'
+        )
+
+    def __repr__(self):
+        return '<Item_Fling_Effect - %s>' % self.name.capitalize()
+
+
+class ItemPocketResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Item_Pocket'
+        resource_name = 'item-pocket'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'categories',
+            'names'
+        )
+
+    def __repr__(self):
+        return '<Item_Pocket - %s>' % self.name.capitalize()

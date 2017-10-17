@@ -16,7 +16,9 @@ from resourcesV2 import (
     BerryResource, BerryFirmnessResource, BerryFlavorResource, ContestTypeResource,
     ContestEffectResource, SuperContestEffectResource, EncounterMethodResource,
     EncounterConditionResource, EncounterConditionValueResource, EvolutionChainResource,
-    EvolutionTriggerResource
+    EvolutionTriggerResource, GenerationResource, PokedexResource, VersionResource,
+    VersionGroupResource, ItemResource, ItemAttributeResource, ItemCategoryResource,
+    ItemFlingEffectResource, ItemPocketResource
 )
 
 
@@ -54,5 +56,14 @@ class V2Client(BaseClient):
             EncounterConditionResource,
             EncounterConditionValueResource,
             EvolutionChainResource,
-            EvolutionTriggerResource
+            EvolutionTriggerResource,
+            GenerationResource,
+            PokedexResource,
+            VersionResource,
+            VersionGroupResource,
+            ItemResource,
+            ItemAttributeResource,
+            ItemCategoryResource,
+            ItemFlingEffectResource,
+            ItemPocketResource
         )
