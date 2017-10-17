@@ -42,6 +42,9 @@ class PokemonResource(BaseResource):
             'sprites',
         )
 
+    def __repr__(self):
+        return '<Pokemon - %s>' % self.name.capitalize()
+
 
 class MoveResource(BaseResource):
 
@@ -62,6 +65,9 @@ class MoveResource(BaseResource):
             'pp',
             'name',
         )
+
+    def __repr__(self):
+        return '<Move - %s>' % self.name.capitalize()
 
 
 class TypeResource(BaseResource):
@@ -84,6 +90,9 @@ class TypeResource(BaseResource):
             'weakness',
         )
 
+    def __repr__(self):
+        return '<Type - %s>' % self.name.capitalize()
+
 
 class AbilityResource(BaseResource):
 
@@ -102,6 +111,9 @@ class AbilityResource(BaseResource):
             'description',
         )
 
+    def __repr__(self):
+        return '<Ability - %s>' % self.name.capitalize()
+
 
 class EggResource(BaseResource):
 
@@ -119,6 +131,9 @@ class EggResource(BaseResource):
             'name',
             'pokemon',
         )
+
+    def __repr__(self):
+        return '<Egg - %s>' % self.name.capitalize()
 
 
 class DescriptionResource(BaseResource):
@@ -140,6 +155,9 @@ class DescriptionResource(BaseResource):
             'games',
         )
 
+    def __repr__(self):
+        return '<Description - %s>' % self.name.capitalize()
+
 
 class SpriteResource(BaseResource):
 
@@ -159,6 +177,9 @@ class SpriteResource(BaseResource):
             'image',
         )
 
+    def __repr__(self):
+        return '<Sprite - %s>' % self.name.capitalize()
+
 
 class GameResource(BaseResource):
 
@@ -177,3 +198,6 @@ class GameResource(BaseResource):
             'generation',
             'release_year',
         )
+
+    def __repr__(self):
+        return '<Game - %s>' % self.name.capitalize()

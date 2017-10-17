@@ -33,7 +33,7 @@ Even simpler:
 
     >>> import pykemon
     >>> client = pykemon.V1Client()
-    >>> p = client.get_pokemon(uid=1)
+    >>> client.get_pokemon(uid=1)
     [<Pokemon - Bulbasaur>]
 
 
