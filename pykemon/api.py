@@ -12,6 +12,12 @@ from resourcesV1 import (
     PokedexResource, PokemonResource, TypeResource, MoveResource, AbilityResource,
     EggResource, DescriptionResource, SpriteResource, GameResource
 )
+from resourcesV2 import (
+    BerryResource, BerryFirmnessResource, BerryFlavorResource, ContestTypeResource,
+    ContestEffectResource, SuperContestEffectResource, EncounterMethodResource,
+    EncounterConditionResource, EncounterConditionValueResource, EvolutionChainResource,
+    EvolutionTriggerResource
+)
 
 
 class V1Client(BaseClient):
@@ -28,7 +34,7 @@ class V1Client(BaseClient):
             EggResource,
             DescriptionResource,
             SpriteResource,
-            GameResource,
+            GameResource
         )
 
 
@@ -38,5 +44,15 @@ class V2Client(BaseClient):
         name = 'pykemon-v2-client'
         base_url = 'https://pokeapi.co/api/v2'
         resources = (
-            # TODO
+            BerryResource,
+            BerryFirmnessResource,
+            BerryFlavorResource,
+            ContestTypeResource,
+            ContestEffectResource,
+            SuperContestEffectResource,
+            EncounterMethodResource,
+            EncounterConditionResource,
+            EncounterConditionValueResource,
+            EvolutionChainResource,
+            EvolutionTriggerResource
         )

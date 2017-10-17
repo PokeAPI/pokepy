@@ -60,7 +60,7 @@ class PokemonResource(BaseResource):
             'weight',
             'male_female_ratio',
             'happiness',
-            'sprites',
+            'sprites'
         )
 
     def __repr__(self):
@@ -85,7 +85,7 @@ class TypeResource(BaseResource):
             'no_effect',
             'resistance',
             'super_effective',
-            'weakness',
+            'weakness'
         )
 
     def __repr__(self):
@@ -110,7 +110,7 @@ class MoveResource(BaseResource):
             'power',
             'accuracy',
             'category',
-            'pp',
+            'pp'
         )
 
     def __repr__(self):
@@ -131,7 +131,7 @@ class AbilityResource(BaseResource):
             'id',
             'created',
             'modified',
-            'description',
+            'description'
         )
 
     def __repr__(self):
@@ -152,7 +152,7 @@ class EggResource(BaseResource):
             'id',
             'created',
             'modified',
-            'pokemon',
+            'pokemon'
         )
 
     def __repr__(self):
@@ -175,7 +175,7 @@ class DescriptionResource(BaseResource):
             'modified',
             'games',
             'pokemon',
-            'description',
+            'description'
         )
 
     def __repr__(self):
@@ -197,7 +197,7 @@ class SpriteResource(BaseResource):
             'created',
             'modified',
             'pokemon',
-            'image',
+            'image'
         )
 
     def __repr__(self):
@@ -219,7 +219,7 @@ class GameResource(BaseResource):
             'created',
             'modified',
             'release_year',
-            'generation',
+            'generation'
         )
 
     def __repr__(self):

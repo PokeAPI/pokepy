@@ -7,8 +7,7 @@ __version__ = '0.2.0'
 __copyright__ = 'Copyright Paul Hallett 2016'
 __license__ = 'BSD'
 
-from api import V1Client  # NOQA
-# TODO from api import V2Client
+from api import V1Client, V2Client  # NOQA
 
 
 """
