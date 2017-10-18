@@ -28,7 +28,7 @@ class BerryResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Berry - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class BerryFirmnessResource(BaseResource):
@@ -48,7 +48,7 @@ class BerryFirmnessResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Berry_Firmness - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class BerryFlavorResource(BaseResource):
@@ -69,7 +69,7 @@ class BerryFlavorResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Berry_Flavor - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class ContestTypeResource(BaseResource):
@@ -89,7 +89,7 @@ class ContestTypeResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Contest_Type - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class ContestEffectResource(BaseResource):
@@ -110,7 +110,7 @@ class ContestEffectResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Contest_Effect - %s>' % self.id
+        return '<%s - %s>' % (self.Meta.name, self.id)
 
 
 class SuperContestEffectResource(BaseResource):
@@ -130,7 +130,7 @@ class SuperContestEffectResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Super_Contest_Effect - %s>' % self.id
+        return '<%s - %s>' % (self.Meta.name, self.id)
 
 
 class EncounterMethodResource(BaseResource):
@@ -150,7 +150,7 @@ class EncounterMethodResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Encounter_Method - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class EncounterConditionResource(BaseResource):
@@ -170,7 +170,7 @@ class EncounterConditionResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Encounter_Condition - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class EncounterConditionValueResource(BaseResource):
@@ -190,7 +190,7 @@ class EncounterConditionValueResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Encounter_Condition_Value - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class EvolutionChainResource(BaseResource):
@@ -209,7 +209,7 @@ class EvolutionChainResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Evolution_Chain - %s>' % self.id
+        return '<%s - %s>' % (self.Meta.name, self.id)
 
 
 class EvolutionTriggerResource(BaseResource):
@@ -229,7 +229,7 @@ class EvolutionTriggerResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Evolution_Trigger - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class GenerationResource(BaseResource):
@@ -254,7 +254,7 @@ class GenerationResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Generation - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class PokedexResource(BaseResource):
@@ -278,7 +278,7 @@ class PokedexResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Pokedex - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class VersionResource(BaseResource):
@@ -298,7 +298,7 @@ class VersionResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Version - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class VersionGroupResource(BaseResource):
@@ -322,7 +322,7 @@ class VersionGroupResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Version_Group - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class ItemResource(BaseResource):
@@ -353,7 +353,7 @@ class ItemResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Item - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class ItemAttributeResource(BaseResource):
@@ -374,7 +374,7 @@ class ItemAttributeResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Item_Attribute - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class ItemCategoryResource(BaseResource):
@@ -395,7 +395,7 @@ class ItemCategoryResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Item_Category - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class ItemFlingEffectResource(BaseResource):
@@ -415,7 +415,7 @@ class ItemFlingEffectResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Item_Fling_Effect - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class ItemPocketResource(BaseResource):
@@ -435,7 +435,7 @@ class ItemPocketResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Item_Pocket - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class MachineResource(BaseResource):
@@ -455,7 +455,7 @@ class MachineResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Machine - %s>' % self.id
+        return '<%s - %s>' % (self.Meta.name, self.id)
 
 
 class MoveResource(BaseResource):
@@ -494,7 +494,7 @@ class MoveResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Move - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class MoveAilmentResource(BaseResource):
@@ -514,7 +514,7 @@ class MoveAilmentResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Move_Ailment - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class MoveBattleStyleResource(BaseResource):
@@ -533,7 +533,7 @@ class MoveBattleStyleResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Move_Battle_Style - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class MoveCategoryResource(BaseResource):
@@ -553,7 +553,7 @@ class MoveCategoryResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Move_Category - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class MoveDamageClassResource(BaseResource):
@@ -574,7 +574,7 @@ class MoveDamageClassResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Move_Damage_Class - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class MoveLearnMethodResource(BaseResource):
@@ -595,7 +595,7 @@ class MoveLearnMethodResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Move_Learn_Method - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class MoveTargetResource(BaseResource):
@@ -616,7 +616,7 @@ class MoveTargetResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Move_Target - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class LocationResource(BaseResource):
@@ -638,7 +638,7 @@ class LocationResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Location - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class LocationAreaResource(BaseResource):
@@ -661,7 +661,7 @@ class LocationAreaResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Location_Area - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class PalParkAreaResource(BaseResource):
@@ -681,7 +681,7 @@ class PalParkAreaResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Pal_Park_Area - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class RegionResource(BaseResource):
@@ -704,7 +704,7 @@ class RegionResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Region - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class AbilityResource(BaseResource):
@@ -729,7 +729,7 @@ class AbilityResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Ability - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class CharacteristicResource(BaseResource):
@@ -749,7 +749,7 @@ class CharacteristicResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Characteristic - %s>' % self.id
+        return '<%s - %s>' % (self.Meta.name, self.id)
 
 
 class EggGroupResource(BaseResource):
@@ -769,7 +769,7 @@ class EggGroupResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Egg_Group - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class GenderResource(BaseResource):
@@ -789,38 +789,14 @@ class GenderResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Gender - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class XXXXXXXXXResource(BaseResource):
+class GrowthRateResource(BaseResource):
 
     class Meta(BaseResource.Meta):
-        name = 'Gender'
-        resource_name = 'gender'
+        name = 'Growth_Rate'
+        resource_name = 'growth-rate'
         identifier = 'id'
         methods = (
             'get',
@@ -828,9 +804,292 @@ class XXXXXXXXXResource(BaseResource):
         attributes = (
             'id',
             'name',
-            'pokemon_species_details',
-            'required_for_evolution'
+            'formula',
+            'descriptions',
+            'levels',
+            'pokemon_species'
         )
 
     def __repr__(self):
-        return '<Gender - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
+
+
+class NatureResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Nature'
+        resource_name = 'nature'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'decreased_stat',
+            'increased_stat',
+            'hates_flavor',
+            'likes_flavor',
+            'pokeathlon_stat_changes',
+            'move_battle_style_preferences',
+            'names'
+        )
+
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
+
+
+class PokeathlonStatResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'PokeathlonStat'
+        resource_name = 'pokeathlon-stat'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'names',
+            'affecting_natures'
+        )
+
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
+
+
+class PokemonResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Pokemon'
+        resource_name = 'pokemon'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'base_experience',
+            'height',
+            'is_default',
+            'order',
+            'weight',
+            'abilities',
+            'forms',
+            'game_indices',
+            'held_items',
+            'location_area_encounters',
+            'moves',
+            'sprites',
+            'species',
+            'stats',
+            'types'
+        )
+
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
+
+
+class PokemonColorResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Pokemon_Color'
+        resource_name = 'pokemon-color'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'names',
+            'pokemon_species',
+        )
+
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
+
+
+class PokemonFormResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Pokemon_Form'
+        resource_name = 'pokemon-form'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'order',
+            'form_order',
+            'is_default',
+            'is_battle_only',
+            'is_mega',
+            'form_name',
+            'pokemon',
+            'sprites',
+            'version_group',
+            'names',
+            'form_names'
+        )
+
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
+
+
+class PokemonHabitatResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Pokemon_Habitat'
+        resource_name = 'pokemon-habitat'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'names',
+            'pokemon_species'
+        )
+
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
+
+
+class PokemonShapeResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Pokemon_Shape'
+        resource_name = 'pokemon-shape'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'awesome_names',
+            'names',
+            'pokemon_species'
+        )
+
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
+
+
+class PokemonSpeciesResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Pokemon_Species'
+        resource_name = 'pokemon-species'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'order',
+            'gender_rate',
+            'capture_rate',
+            'base_happiness',
+            'is_baby',
+            'hatch_counter',
+            'has_gender_differences',
+            'forms_switchable',
+            'growth_rate',
+            'pokedex_numbers',
+            'egg_groups',
+            'color',
+            'shape',
+            'evolves_from_species',
+            'evolution_chain',
+            'habitat',
+            'generation',
+            'names',
+            'pal_park_encounters',
+            'flavor_text_entries',
+            'form_descriptions',
+            'genera',
+            'varieties'
+        )
+
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
+
+
+class StatResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Stat'
+        resource_name = 'stat'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'game_index',
+            'is_battle_only',
+            'affecting_moves',
+            'affecting_natures',
+            'characteristics',
+            'move_damage_class',
+            'names'
+        )
+
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
+
+
+class TypeResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Type'
+        resource_name = 'type'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'damage_relations',
+            'game_indices',
+            'generation',
+            'move_damage_class',
+            'names',
+            'pokemon',
+            'moves'
+        )
+
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
+
+
+class LanguageResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Language'
+        resource_name = 'language'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name',
+            'official',
+            'iso639',
+            'iso3166',
+            'names'
+        )
+
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())

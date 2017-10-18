@@ -20,7 +20,7 @@ class PokedexResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Pokedex - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class PokemonResource(BaseResource):
@@ -64,7 +64,7 @@ class PokemonResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Pokemon - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class TypeResource(BaseResource):
@@ -89,7 +89,7 @@ class TypeResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Type - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class MoveResource(BaseResource):
@@ -114,7 +114,7 @@ class MoveResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Move - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class AbilityResource(BaseResource):
@@ -135,7 +135,7 @@ class AbilityResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Ability - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class EggResource(BaseResource):
@@ -156,7 +156,7 @@ class EggResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Egg - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class DescriptionResource(BaseResource):
@@ -179,7 +179,7 @@ class DescriptionResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Description - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class SpriteResource(BaseResource):
@@ -201,7 +201,7 @@ class SpriteResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Sprite - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class GameResource(BaseResource):
@@ -223,4 +223,4 @@ class GameResource(BaseResource):
         )
 
     def __repr__(self):
-        return '<Game - %s>' % self.name.capitalize()
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())

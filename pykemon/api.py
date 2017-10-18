@@ -71,5 +71,17 @@ class V2Client(BaseClient):
             rV2.AbilityResource,
             rV2.CharacteristicResource,
             rV2.EggGroupResource,
-            rV2.GenderResource
+            rV2.GenderResource,
+            rV2.GrowthRateResource,
+            rV2.NatureResource,
+            rV2.PokeathlonStatResource,
+            rV2.PokemonResource,
+            rV2.PokemonColorResource,
+            rV2.PokemonFormResource,
+            rV2.PokemonHabitatResource,
+            rV2.PokemonShapeResource,
+            rV2.PokemonSpeciesResource,
+            rV2.StatResource,
+            rV2.TypeResource,
+            rV2.LanguageResource
         )
