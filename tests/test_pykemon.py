@@ -22,11 +22,12 @@ def base_test(self, resource, method="name"):
 
     :param self: One of the available two TestCase instances
     :param resource: Resource to be tested
-    :param method: 'name' or 'id' (sometimes resources only have one or the other)
+    :param method: 'name' or 'id' (sometimes resources only have one)
     """
     with requests_mock.mock() as mock:
         mock.get('%s/%s/1' % (self.base_url, resource), text=self.mock_data)
-        response = getattr(self.client, 'get_%s' % resource.replace("-", "_"))(uid=1)[0]
+        response = getattr(self.client,
+                           'get_%s' % resource.replace("-", "_"))(uid=1)[0]
 
         if method == "name":
             assert response.name == 'test_name'

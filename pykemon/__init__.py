@@ -3,7 +3,8 @@
 
 __author__ = 'Paul Hallett'
 __email__ = 'hello@phalt.co'
-__version__ = '0.2.0'
+__credits__ = ["Paul Hallett", "Owen Hallett", "Kronopt"]
+__version__ = '0.3.0'
 __copyright__ = 'Copyright Paul Hallett 2016'
 __license__ = 'BSD'
 
@@ -22,11 +23,14 @@ Usage:
 
 >>> import pykemon
 >>> clientV1 = pykemon.V1Client()
->>> bulbasaur = clientV1.get_pokemon(uid='bulbasaur')[0]
->>> bulbasaur.name
-u'Bulbasaur'
->>> mew = clientV1.get_pokemon(uid=151)[0]
->>> mew.name
-u'Mew'
+>>> clientV1.get_pokemon(uid='bulbasaur')[0]
+<Pokemon - Bulbasaur>
+
+Or:
+
+>>> import pykemon
+>>> clientV2 = pykemon.V2Client()
+>>> clientV2.get_pokemon(uid='bulbasaur')[0]
+<Pokemon - Bulbasaur>
 
 """

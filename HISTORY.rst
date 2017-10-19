@@ -3,6 +3,13 @@
 History
 -------
 
+0.3.0 (2017-10-19)
+++++++++++++++++++
+
+* V2 support added
+* Added some missing V1 resources
+* Removed files related to API 0.1
+
 0.2.0 (2016-06-11)
 ++++++++++++++++++
 

@@ -12,26 +12,18 @@ pykemon.api module
     :undoc-members:
     :show-inheritance:
 
-pykemon.exceptions module
--------------------------
+pykemon.resourcesV1 module
+--------------------------
 
-.. automodule:: pykemon.exceptions
+.. automodule:: pykemon.resourcesV1
     :members:
     :undoc-members:
     :show-inheritance:
 
-pykemon.models module
----------------------
+pykemon.resourcesV2 module
+--------------------------
 
-.. automodule:: pykemon.models
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pykemon.request module
-----------------------
-
-.. automodule:: pykemon.request
+.. automodule:: pykemon.resourcesV2
     :members:
     :undoc-members:
     :show-inheritance:
