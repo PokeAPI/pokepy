@@ -842,7 +842,7 @@ class NatureResource(BaseResource):
 class PokeathlonStatResource(BaseResource):
 
     class Meta(BaseResource.Meta):
-        name = 'PokeathlonStat'
+        name = 'Pokeathlon_Stat'
         resource_name = 'pokeathlon-stat'
         identifier = 'id'
         methods = (
