@@ -30,9 +30,9 @@ def base_test(self, resource, method="name"):
                            'get_%s' % resource.replace("-", "_"))(uid=1)[0]
 
         if method == "name":
-            assert response.name == 'test_name'
+            self.assertEqual(response.name, 'test_name')
         elif method == "id":
-            assert response.id == 1
+            self.assertEqual(response.id, 1)
 
 
 class TestV1Client(unittest.TestCase):
