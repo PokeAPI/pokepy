@@ -1,6 +1,314 @@
 # -*- coding: utf-8 -*-
 
-from beckett.resources import BaseResource
+from beckett.resources import BaseResource, SubResource
+
+
+# Common Models (SubResources)
+
+
+class APIResourceSubResource(SubResource):
+    class Meta:
+        name = 'API_Resource'
+        identifier = 'url'
+        attributes = (
+            'url'
+        )
+
+
+class NamedAPIResourceSubResource(SubResource):
+    class Meta:
+        name = 'Named_API_Resource'
+        identifier = 'name'
+        attributes = (
+            'name',
+            'url'
+        )
+
+
+class DescriptionSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Description'
+        resource_name = 'description'
+        identifier = 'description'
+        attributes = (
+            'description',
+        )
+        subresources = {
+            'language': NamedAPIResourceSubResource
+        }
+
+
+class EffectSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Effect'
+        resource_name = 'effect'
+        identifier = 'effect'
+        attributes = (
+            'effect',
+        )
+        subresources = {
+            'language': NamedAPIResourceSubResource
+        }
+
+
+class EncounterSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Encounter'
+        resource_name = 'encounter'
+        identifier = 'chance'
+        attributes = (
+            'min_level',
+            'max_level',
+            'chance'
+        )
+        subresources = {
+            'condition_values': NamedAPIResourceSubResource,
+            'method': NamedAPIResourceSubResource
+        }
+
+
+class FlavorTextSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Flavor_Text'
+        resource_name = 'flavor-text'
+        identifier = 'flavor_text'
+        attributes = (
+            'flavor_text',
+        )
+        subresources = {
+            'language': NamedAPIResourceSubResource
+        }
+
+
+class GenerationGameIndexSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Generation_Game_Index'
+        resource_name = 'generation-game-index'
+        identifier = 'game_index'
+        attributes = (
+            'game_index',
+        )
+        subresources = {
+            'generation': NamedAPIResourceSubResource
+        }
+
+
+class MachineVersionDetailSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Machine_Version_Detail'
+        resource_name = 'machine-version-detail'
+        identifier = 'machine'
+        subresources = {
+            'machine': APIResourceSubResource,
+            'version_group': NamedAPIResourceSubResource
+        }
+
+
+class NameSubResource(BaseResource):
+    class Meta:
+        name = 'Name'
+        resource_name = 'name'
+        identifier = 'name'
+        attributes = (
+            'name',
+        )
+        subresources = {
+            'language': NamedAPIResourceSubResource
+        }
+
+
+class VerboseEffectSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Verbose_Effect'
+        resource_name = 'verbose-effect'
+        identifier = 'effect'
+        attributes = (
+            'effect',
+            'short_effect'
+        )
+        subresources = {
+            'language': NamedAPIResourceSubResource
+        }
+
+
+class VersionEncounterDetailSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Version_Encounter_Detail'
+        resource_name = 'verbose-encounter-detail'
+        identifier = 'max_chance'
+        attributes = (
+            'max_chance'
+        )
+        subresources = {
+            'version': NamedAPIResourceSubResource,
+            'encounter_details': EncounterSubResource
+        }
+
+
+class VersionGameIndexSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Version_Game_Index'
+        resource_name = 'version-Game-index'
+        identifier = 'game_index'
+        attributes = (
+            'game_index'
+        )
+        subresources = {
+            'version': NamedAPIResourceSubResource
+        }
+
+
+class VersionGroupFlavorTextSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Version_Group_Flavor_Text'
+        resource_name = 'version-Group-flavor-text'
+        identifier = 'text'
+        attributes = (
+            'text'
+        )
+        subresources = {
+            'language': NamedAPIResourceSubResource,
+            'version_group': NamedAPIResourceSubResource
+        }
+
+
+# SubResources
+
+
+class BerryFlavorMapSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Berry_Flavor_Map'
+        resource_name = 'berry-flavor-map'
+        identifier = 'potency'
+        attributes = (
+            'potency',
+        )
+        subresources = {
+            'flavor': NamedAPIResourceSubResource
+        }
+
+
+class FlavorBerryMapSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Flavor_Berry_Map'
+        resource_name = 'flavor-berry-map'
+        identifier = 'potency'
+        attributes = (
+            'potency',
+        )
+        subresources = {
+            'berry': NamedAPIResourceSubResource
+        }
+
+
+class ContestNameSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Contest_Name'
+        resource_name = 'contest-name'
+        identifier = 'name'
+        attributes = (
+            'name',
+            'color'
+        )
+        subresources = {
+            'language': NamedAPIResourceSubResource
+        }
+
+
+class EvolutionDetailSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Evolution_Detail'
+        resource_name = 'evolution-detail'
+        identifier = 'gender'
+        attributes = (
+            'gender',
+            'min_level',
+            'min_happiness',
+            'min_beauty',
+            'min_affection',
+            'needs_overworld_rain',
+            'relative_physical_stats',
+            'time_of_day',
+            'turn_upside_down'
+        )
+        subresources = {
+            'item': NamedAPIResourceSubResource,
+            'trigger': NamedAPIResourceSubResource,
+            'held_item': NamedAPIResourceSubResource,
+            'known_move': NamedAPIResourceSubResource,
+            'known_move_type': NamedAPIResourceSubResource,
+            'location': NamedAPIResourceSubResource,
+            'party_species': NamedAPIResourceSubResource,
+            'party_type': NamedAPIResourceSubResource,
+            'trade_species': NamedAPIResourceSubResource
+        }
+
+
+class ChainLinkSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Chain_Link'
+        resource_name = 'chain-link'
+        identifier = 'is_baby'
+        attributes = (
+            'is_baby'
+        )
+        subresources = {
+            'species': NamedAPIResourceSubResource,
+            'evolution_details': EvolutionDetailSubResource,
+            # 'evolves_to': lambda **kwargs: ChainLinkSubResource  # TODO - Not working correctly...
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Resources
 
 
 class BerryResource(BaseResource):
@@ -20,12 +328,14 @@ class BerryResource(BaseResource):
             'natural_gift_power',
             'size',
             'smoothness',
-            'soil_dryness',
-            'firmness',
-            'flavors',
-            'item',
-            'natural_gift_type'
+            'soil_dryness'
         )
+        subresources = {
+            'firmness': NamedAPIResourceSubResource,
+            'flavors': BerryFlavorMapSubResource,
+            'item': NamedAPIResourceSubResource,
+            'natural_gift_type': NamedAPIResourceSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -43,9 +353,11 @@ class BerryFirmnessResource(BaseResource):
         attributes = (
             'id',
             'name',
-            'berries',
-            'names'
         )
+        subresources = {
+            'berries': NamedAPIResourceSubResource,
+            'names': NameSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -63,10 +375,12 @@ class BerryFlavorResource(BaseResource):
         attributes = (
             'id',
             'name',
-            'berries',
-            'contest_type',
-            'names'
         )
+        subresources = {
+            'berries': FlavorBerryMapSubResource,
+            'contest_type': NamedAPIResourceSubResource,
+            'names': NameSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -84,9 +398,11 @@ class ContestTypeResource(BaseResource):
         attributes = (
             'id',
             'name',
-            'berry_flavor',
-            'names'
         )
+        subresources = {
+            'berry_flavor': NamedAPIResourceSubResource,
+            'names': ContestNameSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -105,9 +421,11 @@ class ContestEffectResource(BaseResource):
             'id',
             'appeal',
             'jam',
-            'effect_entries',
-            'flavor_text_entries'
         )
+        subresources = {
+            'effect_entries': EffectSubResource,
+            'flavor_text_entries': FlavorTextSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.id)
@@ -125,9 +443,11 @@ class SuperContestEffectResource(BaseResource):
         attributes = (
             'id',
             'appeal',
-            'flavor_text_entries',
-            'moves'
         )
+        subresources = {
+            'flavor_text_entries': FlavorTextSubResource,
+            'moves': NamedAPIResourceSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.id)
@@ -146,8 +466,10 @@ class EncounterMethodResource(BaseResource):
             'id',
             'name',
             'order',
-            'names'
         )
+        subresources = {
+            'names': NameSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -165,9 +487,11 @@ class EncounterConditionResource(BaseResource):
         attributes = (
             'id',
             'name',
-            'names',
-            'values'
         )
+        subresources = {
+            'names': NameSubResource,
+            'values': NamedAPIResourceSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -185,9 +509,11 @@ class EncounterConditionValueResource(BaseResource):
         attributes = (
             'id',
             'name',
-            'condition',
-            'names'
         )
+        subresources = {
+            'condition': NamedAPIResourceSubResource,
+            'names': NameSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -204,9 +530,11 @@ class EvolutionChainResource(BaseResource):
         )
         attributes = (
             'id',
-            'baby_trigger_item',
-            'chain'
         )
+        subresources = {
+            # 'baby_trigger_item': NamedAPIResourceSubResource,  # TODO - Throws error when null is returned
+            'chain': ChainLinkSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.id)
@@ -224,9 +552,11 @@ class EvolutionTriggerResource(BaseResource):
         attributes = (
             'id',
             'name',
-            'names',
-            'pokemon_species'
         )
+        subresources = {
+            'names': NameSubResource,
+            'pokemon_species': NamedAPIResourceSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
