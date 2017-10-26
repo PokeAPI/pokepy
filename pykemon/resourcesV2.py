@@ -11,7 +11,7 @@ class APIResourceSubResource(SubResource):
         name = 'API_Resource'
         identifier = 'url'
         attributes = (
-            'url'
+            'url',
         )
 
 
@@ -137,7 +137,7 @@ class VersionEncounterDetailSubResource(BaseResource):
         resource_name = 'verbose-encounter-detail'
         identifier = 'max_chance'
         attributes = (
-            'max_chance'
+            'max_chance',
         )
         subresources = {
             'version': NamedAPIResourceSubResource,
@@ -151,7 +151,7 @@ class VersionGameIndexSubResource(BaseResource):
         resource_name = 'version-Game-index'
         identifier = 'game_index'
         attributes = (
-            'game_index'
+            'game_index',
         )
         subresources = {
             'version': NamedAPIResourceSubResource
@@ -164,7 +164,7 @@ class VersionGroupFlavorTextSubResource(BaseResource):
         resource_name = 'version-Group-flavor-text'
         identifier = 'text'
         attributes = (
-            'text'
+            'text',
         )
         subresources = {
             'language': NamedAPIResourceSubResource,
@@ -250,44 +250,201 @@ class ChainLinkSubResource(BaseResource):
         resource_name = 'chain-link'
         identifier = 'is_baby'
         attributes = (
-            'is_baby'
+            'is_baby',
         )
         subresources = {
             'species': NamedAPIResourceSubResource,
             'evolution_details': EvolutionDetailSubResource,
-            # 'evolves_to': lambda **kwargs: ChainLinkSubResource  # TODO - Not working correctly...
+            'evolves_to': lambda *args, **kwargs: ChainLinkSubResource  # TODO - see if this works
         }
 
 
+class PokemonEntrySubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Pokemon_Entry'
+        resource_name = 'pokemon-entry'
+        identifier = 'entry_number'
+        attributes = (
+            'entry_number',
+        )
+        subresources = {
+            'pokemon_species': NamedAPIResourceSubResource
+        }
 
 
+class ItemSpritesSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Item_Sprites'
+        resource_name = 'item-sprites'
+        identifier = 'default'
+        attributes = (
+            'default',
+        )
 
 
+class ItemHolderPokemonVersionDetailSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Item_Holder_Pokemon_Version_Detail'
+        resource_name = 'item-holder-pokemon-version-detail'
+        identifier = 'rarity'
+        attributes = (
+            'rarity',
+        )
+        subresources = {
+            'version': NamedAPIResourceSubResource
+        }
 
 
+class ItemHolderPokemonSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Item_Holder_Pokemon'
+        resource_name = 'item-holder-pokemon'
+        identifier = 'pokemon'
+        attributes = (
+            'pokemon',
+        )
+        subresources = {
+            'version_details': ItemHolderPokemonVersionDetailSubResource
+        }
 
 
+class ContestComboDetailSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Contest_Combo_Detail'
+        resource_name = 'contest-combo-detail'
+        identifier = 'use_before'
+        subresources = {
+            'use_before': NamedAPIResourceSubResource,
+            'use_after': NamedAPIResourceSubResource
+        }
 
 
+class ContestComboSetsSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Contest_Combo_Sets'
+        resource_name = 'contest-combo-sets'
+        identifier = 'normal'
+        subresources = {
+            'normal': ContestComboDetailSubResource,
+            'super': ContestComboDetailSubResource
+        }
 
 
+class MoveFlavorTextSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Move_Flavor_Text'
+        resource_name = 'move-flavor-text'
+        identifier = 'flavor_text'
+        attributes = (
+            'flavor_text',
+        )
+        subresources = {
+            'language': NamedAPIResourceSubResource,
+            'version_group': NamedAPIResourceSubResource
+        }
 
 
+class MoveMetaDataSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Move_Meta_Data'
+        resource_name = 'move-meta-data'
+        identifier = 'min_hits'
+        attributes = (
+            'min_hits',
+            'max_hits',
+            'min_turns',
+            'max_turns',
+            'drain',
+            'healing',
+            'crit_rate',
+            'ailment_chance',
+            'flinch_chance',
+            'stat_chance'
+        )
+        subresources = {
+            'ailment': NamedAPIResourceSubResource,
+            'category': NamedAPIResourceSubResource
+        }
 
 
+class MoveStatChangeSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Move_Stat_Change'
+        resource_name = 'move-stat-change'
+        identifier = 'change'
+        attributes = (
+            'change',
+        )
+        subresources = {
+            'stat': NamedAPIResourceSubResource
+        }
 
 
+class PastMoveStatValuesSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Past_Move_Stat_Values'
+        resource_name = 'past-move-stat-values'
+        identifier = 'accuracy'
+        attributes = (
+            'accuracy',
+            'effect_chance',
+            'power',
+            'pp'
+        )
+        subresources = {
+            'effect_entries': VerboseEffectSubResource,
+            'type': NamedAPIResourceSubResource,
+            'version_group': NamedAPIResourceSubResource
+        }
 
 
+class EncounterVersionDetailsSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Encounter_Version_Details'
+        resource_name = 'encounter-version-details'
+        identifier = 'rate'
+        attributes = (
+            'rate',
+        )
+        subresources = {
+            'version': NamedAPIResourceSubResource
+        }
 
 
+class EncounterMethodRateSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Encounter_Method_Rate'
+        resource_name = 'encounter-method-rate'
+        identifier = 'encounter_method'
+        subresources = {
+            'encounter_method': NamedAPIResourceSubResource,
+            'version_details': EncounterVersionDetailsSubResource
+        }
 
 
+class PokemonEncounterSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Pokemon_Encounter'
+        resource_name = 'pokemon-encounter'
+        identifier = 'pokemon'
+        subresources = {
+            'pokemon': NamedAPIResourceSubResource,
+            'version_details': VersionEncounterDetailSubResource
+        }
 
 
-
-
-
+class PalParkEncounterSpeciesSubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Pal_Park_Encounter_Species'
+        resource_name = 'pal-park-encounter-species'
+        identifier = 'rate'
+        attributes = (
+            'base_score',
+            'rate'
+        )
+        subresources = {
+            'pokemon_species': NamedAPIResourceSubResource
+        }
 
 
 
@@ -352,7 +509,7 @@ class BerryFirmnessResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
+            'name'
         )
         subresources = {
             'berries': NamedAPIResourceSubResource,
@@ -374,7 +531,7 @@ class BerryFlavorResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
+            'name'
         )
         subresources = {
             'berries': FlavorBerryMapSubResource,
@@ -397,7 +554,7 @@ class ContestTypeResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
+            'name'
         )
         subresources = {
             'berry_flavor': NamedAPIResourceSubResource,
@@ -420,7 +577,7 @@ class ContestEffectResource(BaseResource):
         attributes = (
             'id',
             'appeal',
-            'jam',
+            'jam'
         )
         subresources = {
             'effect_entries': EffectSubResource,
@@ -442,7 +599,7 @@ class SuperContestEffectResource(BaseResource):
         )
         attributes = (
             'id',
-            'appeal',
+            'appeal'
         )
         subresources = {
             'flavor_text_entries': FlavorTextSubResource,
@@ -465,7 +622,7 @@ class EncounterMethodResource(BaseResource):
         attributes = (
             'id',
             'name',
-            'order',
+            'order'
         )
         subresources = {
             'names': NameSubResource
@@ -486,7 +643,7 @@ class EncounterConditionResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
+            'name'
         )
         subresources = {
             'names': NameSubResource,
@@ -508,7 +665,7 @@ class EncounterConditionValueResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
+            'name'
         )
         subresources = {
             'condition': NamedAPIResourceSubResource,
@@ -532,7 +689,7 @@ class EvolutionChainResource(BaseResource):
             'id',
         )
         subresources = {
-            # 'baby_trigger_item': NamedAPIResourceSubResource,  # TODO - Throws error when null is returned
+            'baby_trigger_item': lambda *args, **kwargs: NamedAPIResourceSubResource,  # TODO - see if this works
             'chain': ChainLinkSubResource
         }
 
@@ -551,7 +708,7 @@ class EvolutionTriggerResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
+            'name'
         )
         subresources = {
             'names': NameSubResource,
@@ -573,15 +730,17 @@ class GenerationResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
-            'abilities',
-            'names',
-            'main_region',
-            'moves',
-            'pokemon_species',
-            'types',
-            'version_groups'
+            'name'
         )
+        subresources = {
+            'abilities': NamedAPIResourceSubResource,
+            'names': NameSubResource,
+            'main_region': NamedAPIResourceSubResource,
+            'moves': NamedAPIResourceSubResource,
+            'pokemon_species': NamedAPIResourceSubResource,
+            'types': NamedAPIResourceSubResource,
+            'version_groups': NamedAPIResourceSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -599,13 +758,15 @@ class PokedexResource(BaseResource):
         attributes = (
             'id',
             'name',
-            'is_main_series',
-            'descriptions',
-            'names',
-            'pokemon_entries',
-            'region',
-            'version_groups'
+            'is_main_series'
         )
+        subresources = {
+            'descriptions': DescriptionSubResource,
+            'names': NameSubResource,
+            'pokemon_entries': PokemonEntrySubResource,
+            'region': NamedAPIResourceSubResource,
+            'version_groups': NamedAPIResourceSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -622,10 +783,12 @@ class VersionResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
-            'names',
-            'version_group'
+            'name'
         )
+        subresources = {
+            'names': NameSubResource,
+            'version_group': NamedAPIResourceSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -643,13 +806,38 @@ class VersionGroupResource(BaseResource):
         attributes = (
             'id',
             'name',
-            'order',
-            'generation',
-            'move_learn_methods',
-            'pokedexes',
-            'regions',
-            'versions'
+            'order'
         )
+        subresources = {
+            'generation': NamedAPIResourceSubResource,
+            'move_learn_methods': NamedAPIResourceSubResource,
+            'pokedexes': NamedAPIResourceSubResource,
+            'regions': NamedAPIResourceSubResource,
+            'versions': NamedAPIResourceSubResource
+        }
+
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
+
+
+class ItemCategoryResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Item_Category'
+        resource_name = 'item-category'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'id',
+            'name'
+        )
+        subresources = {
+            'items': NamedAPIResourceSubResource,
+            'names': NameSubResource,
+            'pocket': NamedAPIResourceSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -668,19 +856,21 @@ class ItemResource(BaseResource):
             'id',
             'name',
             'cost',
-            'fling_power',
-            'fling_effect',
-            'attributes',
-            'category',
-            'effect_entries',
-            'flavor_text_entries',
-            'game_indices',
-            'names',
-            'sprites',
-            'held_by_pokemon',
-            'baby_trigger_for',
-            'machines'
+            'fling_power'
         )
+        subresources = {
+            'fling_effect': NamedAPIResourceSubResource,
+            'attributes': NamedAPIResourceSubResource,
+            'category': ItemCategoryResource,
+            'effect_entries': VerboseEffectSubResource,
+            'flavor_text_entries': VersionGroupFlavorTextSubResource,
+            'game_indices': GenerationGameIndexSubResource,
+            'names': NameSubResource,
+            'sprites': ItemSpritesSubResource,
+            'held_by_pokemon': ItemHolderPokemonSubResource,
+            'baby_trigger_for': APIResourceSubResource,
+            'machines': MachineVersionDetailSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -697,32 +887,13 @@ class ItemAttributeResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
-            'items',
-            'names',
-            'descriptions'
+            'name'
         )
-
-    def __repr__(self):
-        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
-
-
-class ItemCategoryResource(BaseResource):
-
-    class Meta(BaseResource.Meta):
-        name = 'Item_Category'
-        resource_name = 'item-category'
-        identifier = 'id'
-        methods = (
-            'get',
-        )
-        attributes = (
-            'id',
-            'name',
-            'items',
-            'names',
-            'pocket'
-        )
+        subresources = {
+            'items': NamedAPIResourceSubResource,
+            'names': NameSubResource,
+            'descriptions': DescriptionSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -739,10 +910,12 @@ class ItemFlingEffectResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
-            'effect_entries',
-            'items'
+            'name'
         )
+        subresources = {
+            'effect_entries': EffectSubResource,
+            'items': NamedAPIResourceSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -759,10 +932,12 @@ class ItemPocketResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
-            'categories',
-            'names'
+            'name'
         )
+        subresources = {
+            'categories': NamedAPIResourceSubResource,
+            'names': NameSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -779,10 +954,12 @@ class MachineResource(BaseResource):
         )
         attributes = (
             'id',
-            'item',
-            'move',
-            'version_group'
         )
+        subresources = {
+            'item': NamedAPIResourceSubResource,
+            'move': NamedAPIResourceSubResource,
+            'version_group': NamedAPIResourceSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.id)
@@ -804,24 +981,26 @@ class MoveResource(BaseResource):
             'effect_chance',
             'pp',
             'priority',
-            'power',
-            'contest_combos',
-            'contest_type',
-            'contest_effect',
-            'damage_class',
-            'effect_entries',
-            'effect_changes',
-            'flavor_text_entries',
-            'generation',
-            'machines',
-            'meta',
-            'names',
-            'past_values',
-            'stat_changes',
-            'super_contest_effect',
-            'target',
-            'type'
+            'power'
         )
+        subresources = {
+            'contest_combos': ContestComboSetsSubResource,
+            'contest_type': NamedAPIResourceSubResource,
+            'contest_effect': APIResourceSubResource,
+            'damage_class': NamedAPIResourceSubResource,
+            'effect_entries': VerboseEffectSubResource,
+            'effect_changes': lambda *args, **kwargs: AbilityEffectChangeResource,  # TODO - see if this works
+            'flavor_text_entries': MoveFlavorTextSubResource,
+            'generation': NamedAPIResourceSubResource,
+            'machines': MachineVersionDetailSubResource,
+            'meta': MoveMetaDataSubResource,
+            'names': NameSubResource,
+            'past_values': PastMoveStatValuesSubResource,
+            'stat_changes': MoveStatChangeSubResource,
+            'super_contest_effect': APIResourceSubResource,
+            'target': NamedAPIResourceSubResource,
+            'type': NamedAPIResourceSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -838,10 +1017,12 @@ class MoveAilmentResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
-            'moves',
-            'names'
+            'name'
         )
+        subresources = {
+            'moves': NamedAPIResourceSubResource,
+            'names': NameSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -858,9 +1039,11 @@ class MoveBattleStyleResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
-            'names'
+            'name'
         )
+        subresources = {
+            'names': NameSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -877,10 +1060,12 @@ class MoveCategoryResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
-            'moves',
-            'descriptions'
+            'name'
         )
+        subresources = {
+            'moves': NamedAPIResourceSubResource,
+            'descriptions': DescriptionSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -897,11 +1082,13 @@ class MoveDamageClassResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
-            'descriptions',
-            'moves',
-            'names'
+            'name'
         )
+        subresources = {
+            'descriptions': DescriptionSubResource,
+            'moves': NamedAPIResourceSubResource,
+            'names': NameSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -918,11 +1105,13 @@ class MoveLearnMethodResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
-            'descriptions',
-            'names',
-            'version_groups'
+            'name'
         )
+        subresources = {
+            'descriptions': DescriptionSubResource,
+            'names': NameSubResource,
+            'version_groups': NamedAPIResourceSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -939,11 +1128,13 @@ class MoveTargetResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
-            'descriptions',
-            'moves',
-            'names'
+            'name'
         )
+        subresources = {
+            'descriptions': DescriptionSubResource,
+            'moves': NamedAPIResourceSubResource,
+            'names': NameSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -960,12 +1151,14 @@ class LocationResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
-            'region',
-            'names',
-            'game_indices',
-            'areas'
+            'name'
         )
+        subresources = {
+            'region': NamedAPIResourceSubResource,
+            'names': NameSubResource,
+            'game_indices': GenerationGameIndexSubResource,
+            'areas': NamedAPIResourceSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -983,12 +1176,14 @@ class LocationAreaResource(BaseResource):
         attributes = (
             'id',
             'name',
-            'game_index',
-            'encounter_method_rates',
-            'location',
-            'names',
-            'pokemon_encounters'
+            'game_index'
         )
+        subresources = {
+            'encounter_method_rates': EncounterMethodRateSubResource,
+            'location': NamedAPIResourceSubResource,
+            'names': NameSubResource,
+            'pokemon_encounters:': PokemonEncounterSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -1005,10 +1200,12 @@ class PalParkAreaResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
-            'names',
-            'pokemon_encounters'
+            'name'
         )
+        subresources = {
+            'names': NameSubResource,
+            'pokemon_encounters': PalParkEncounterSpeciesSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -1025,13 +1222,15 @@ class RegionResource(BaseResource):
         )
         attributes = (
             'id',
-            'name',
-            'locations',
-            'main_generation',
-            'names',
-            'pokedexes',
-            'version_groups'
+            'name'
         )
+        subresources = {
+            'locations': NamedAPIResourceSubResource,
+            'main_generation': NamedAPIResourceSubResource,
+            'names': NameSubResource,
+            'pokedexes': NamedAPIResourceSubResource,
+            'version_groups': NamedAPIResourceSubResource
+        }
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
@@ -1235,7 +1434,7 @@ class PokemonColorResource(BaseResource):
             'id',
             'name',
             'names',
-            'pokemon_species',
+            'pokemon_species'
         )
 
     def __repr__(self):
