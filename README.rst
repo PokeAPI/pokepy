@@ -32,8 +32,8 @@ Even simpler:
 .. code-block:: python
 
     >>> import pykemon
-    >>> client = pykemon.V1Client()
-    >>> p = client.get_pokemon(uid=1)
+    >>> client = pykemon.V2Client()
+    >>> client.get_pokemon(uid=1)
     [<Pokemon - Bulbasaur>]
 
 

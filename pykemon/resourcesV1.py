@@ -1,9 +1,35 @@
 # -*- coding: utf-8 -*-
 
+""" Resources related to the V1 API
+
+Refer to the documentation for more information (https://pokeapi.co/docsv1/)
+"""
+
 from beckett.resources import BaseResource
 
 
+class PokedexResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Pokedex'
+        resource_name = 'pokedex'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'name',
+            'created',
+            'pokemon',
+            'modified'
+        )
+
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
+
+
 class PokemonResource(BaseResource):
+
     class Meta(BaseResource.Meta):
         name = 'Pokemon'
         resource_name = 'pokemon'
@@ -12,9 +38,10 @@ class PokemonResource(BaseResource):
             'get',
         )
         attributes = (
+            'name',
+            'national_id',
             'created',
             'modified',
-            'national_id',
             'abilities',
             'egg_groups',
             'evolutions',
@@ -26,52 +53,23 @@ class PokemonResource(BaseResource):
             'hp',
             'attack',
             'defense',
-            'name',
             'sp_atk',
             'sp_def',
-            'speed',
             'total',
+            'speed',
             'egg_cycles',
             'ev_yield',
             'exp',
             'growth_rate',
             'height',
             'weight',
-            'happiness',
             'male_female_ratio',
-            'sprites',
+            'happiness',
+            'sprites'
         )
 
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
-
-
-class MoveResource(BaseResource):
-
-    class Meta(BaseResource.Meta):
-        name = 'Move'
-        resource_name = 'move'
-        identifier = 'id'
-        methods = (
-            'get',
-        )
-        attributes = (
-            'created',
-            'modified',
-            'id',
-            'accuracy',
-            'category',
-            'power',
-            'pp',
-            'name',
-        )
-
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class TypeResource(BaseResource):
@@ -84,20 +82,44 @@ class TypeResource(BaseResource):
             'get',
         )
         attributes = (
+            'name',
+            'id',
             'created',
             'modified',
-            'id',
-            'name',
             'ineffective',
+            'no_effect',
             'resistance',
             'super_effective',
-            'weakness',
+            'weakness'
         )
 
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
+
+
+class MoveResource(BaseResource):
+
+    class Meta(BaseResource.Meta):
+        name = 'Move'
+        resource_name = 'move'
+        identifier = 'id'
+        methods = (
+            'get',
+        )
+        attributes = (
+            'name',
+            'id',
+            'created',
+            'modified',
+            'description',
+            'power',
+            'accuracy',
+            'category',
+            'pp'
+        )
+
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class AbilityResource(BaseResource):
@@ -110,17 +132,15 @@ class AbilityResource(BaseResource):
             'get',
         )
         attributes = (
+            'name',
+            'id',
             'created',
             'modified',
-            'id',
-            'name',
-            'description',
+            'description'
         )
 
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class EggResource(BaseResource):
@@ -133,17 +153,15 @@ class EggResource(BaseResource):
             'get',
         )
         attributes = (
+            'name',
+            'id',
             'created',
             'modified',
-            'id',
-            'name',
-            'pokemon',
+            'pokemon'
         )
 
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class DescriptionResource(BaseResource):
@@ -156,19 +174,17 @@ class DescriptionResource(BaseResource):
             'get',
         )
         attributes = (
+            'name',
+            'id',
             'created',
             'modified',
-            'id',
-            'name',
-            'description',
-            'pokemon',
             'games',
+            'pokemon',
+            'description'
         )
 
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class SpriteResource(BaseResource):
@@ -181,18 +197,16 @@ class SpriteResource(BaseResource):
             'get',
         )
         attributes = (
+            'name',
+            'id',
             'created',
             'modified',
-            'id',
-            'name',
             'pokemon',
-            'image',
+            'image'
         )
 
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
 class GameResource(BaseResource):
@@ -205,15 +219,13 @@ class GameResource(BaseResource):
             'get',
         )
         attributes = (
+            'name',
+            'id',
             'created',
             'modified',
-            'id',
-            'name',
-            'generation',
             'release_year',
+            'generation'
         )
 
-    @staticmethod
-    def get_single_resource_url(url, uid, **kwargs):
-        # Needs a slash on the end!
-        return '{}/{}/'.format(url, uid)
+    def __repr__(self):
+        return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
