@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+""" Resources related to the V1 API
+
+Refer to the documentation for more information (https://pokeapi.co/docsv1/)
+"""
+
 from beckett.resources import BaseResource
 
 
