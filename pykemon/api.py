@@ -6,7 +6,7 @@
 User interaction with this package is done through this file.
 """
 
-from beckett.clients import BaseClient
+from .beckett_tweaks import BaseClient
 from . import resourcesV2 as rV2
 
 

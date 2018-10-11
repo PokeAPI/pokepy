@@ -12,10 +12,10 @@ pykemon.api module
     :undoc-members:
     :show-inheritance:
 
-pykemon.beckett_fix module
+pykemon.beckett_tweaks module
 --------------------------
 
-.. automodule:: pykemon.beckett_fix
+.. automodule:: pykemon.beckett_tweaks
     :members:
     :undoc-members:
     :show-inheritance:

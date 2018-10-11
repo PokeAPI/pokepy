@@ -8,7 +8,7 @@ History
 
 * Removed code from pre-beckett versions
 * Removed V1 API support, as it is now deprecated
-* Added a fix to the beckett package
+* Added some tweaks to the beckett package
 
 0.3.0 (2017-10-19)
 ++++++++++++++++++

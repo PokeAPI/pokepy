@@ -23,7 +23,7 @@ Usage:
 
 >>> import pykemon
 >>> clientV2 = pykemon.V2Client()
->>> clientV2.get_pokemon(uid='bulbasaur')[0]
+>>> clientV2.get_pokemon('bulbasaur')[0]
 <Pokemon - Bulbasaur>
 
 """

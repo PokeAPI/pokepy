@@ -7,7 +7,7 @@ Refer to the documentation for more information
 """
 
 from beckett.resources import SubResource
-from .beckett_fix import BaseResource
+from .beckett_tweaks import BaseResource
 
 
 # Common Models (SubResources)
