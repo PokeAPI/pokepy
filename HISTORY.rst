@@ -3,6 +3,20 @@
 History
 -------
 
+0.4.0 (2018-10-11)
+++++++++++++++++++
+
+* Removed code from pre-beckett versions
+* Removed V1 API support, as it is now deprecated
+* Added a fix to the beckett package
+
+0.3.0 (2017-10-19)
+++++++++++++++++++
+
+* V2 support added
+* Added some missing V1 resources
+* Removed files related to API 0.1
+
 0.2.0 (2016-06-11)
 ++++++++++++++++++
 
@@ -24,5 +38,5 @@ History
 ++++++++++++++++++
 
 * First release on PyPI.
-* All PokeAPI resources fully supported and represented in an object-oriented style.
+* All PokeAPI resources fully supported and represented in an object-oriented style
 * Easy-to-use API: just one method!

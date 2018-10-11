@@ -19,7 +19,7 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
     name='pykemon',
-    version='0.2.0',
+    version='0.4.0',
     description='A Python wrapper for PokeAPI',
     long_description=readme + '\n\n' + history,
     author='Paul Hallett',
@@ -30,9 +30,7 @@ setup(
     ],
     package_dir={'pykemon': 'pykemon'},
     include_package_data=True,
-    install_requires=[
-        'requests==2.10.0', 'simplejson==3.3.1', 'beckett==0.4.0'
-    ],
+    install_requires=["beckett==0.8.0"],
     license="BSD",
     zip_safe=False,
     keywords='pykemon',
@@ -41,8 +39,11 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
-        "Programming Language :: Python :: 2",
+        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     test_suite='tests',
 )

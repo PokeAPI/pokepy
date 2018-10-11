@@ -4,83 +4,104 @@ Usage
 
 To use Pykemon in a project::
 
->>> import pykemon
+    >>> import pykemon
 
-=======
-New API
-=======
+======
+API
+======
 
 Since version 0.2.0, Pykemon now works with `Beckett <https://phalt.github.io/beckett>`_, an easy to use API Client Framework::
 
-   >>> client = pykemon.V1Client()
+   >>> client = pykemon.V2Client()
    >>> bulba = client.get_pokemon(uid=1)[0]
-   <Pokemon | Bulbasaur>
+   <Pokemon - Bulbasaur>
    >>> bulba.name
    Bulbasaur
 
-The following methods work with this client and all take a `uid` parameter:
+The following methods work with the V2 client and all take a `uid` parameter:
 
-* get_pokemon
+* get_berry
+* get_berry_firmness
+* get_berry_flavor
+* get_contest_type
+* get_contest_effect
+* get_super_contest_effect
+* get_encounter_method
+* get_encounter_condition
+* get_encounter_condition_value
+* get_evolution_chain
+* get_evolution_trigger
+* get_generation
+* get_pokedex
+* get_version
+* get_version_group
+* get_item
+* get_item_attribute
+* get_item_category
+* get_item_fling_effect
+* get_item_pocket
+* get_machine
 * get_move
-* get_sprite
+* get_move_ailment
+* get_move_battle_style
+* get_move_category
+* get_move_damage_class
+* get_move_learn_method
+* get_move_target
+* get_location
+* get_location_area
+* get_pal_park_area
+* get_region
 * get_ability
-* get_game
+* get_characteristic
+* get_egg_group
+* get_gender
+* get_growth_rate
+* get_nature
+* get_pokeathlon_stat
+* get_pokemon
+* get_pokemon_color
+* get_pokemon_form
+* get_pokemon_habitat
+* get_pokemon_shape
+* get_pokemon_species
+* get_stat
 * get_type
-* get_egg
+* get_language
 
-
-================
-Version 0.1* API
-================
+Please refer to the pokeapi documentation (https://pokeapi.co/docs/v2.html/) for more information on what each of these methods returns
 
 Then you can start grabbing stuff from the API::
 
-    >>> pykemon.get(pokemon='mew')
+    >>> pykemon.V2Client().get_pokemon(uid='mew')[0]
     <Pokemon - Mew>
-    >>> pykemon.get(pokemon_id=1)
+    >>> pykemon.V2Client().get_pokemon(uid=1)[0]
     <Pokemon - Bulbasaur>
-
-Fully supports all the resources on PokeAPI::
-
-    >>> pykemon.get(move_id=15)
+    >>> pykemon.V2Client().get_move(uid=15)[0]
     <Move - Cut>
-    >>> pykemon.get(ability_id=1)
+    >>> pykemon.V2Client().get_ability(uid=15)[0]
     <Ability - stench>
 
 Resources that have other abilities linked are displayed as dicts::
 
-    >>> p = pykemon.get(pokemon_id=1)
+    >>> p = pykemon.V2Client().get_pokemon(uid=1)[0]
     >>> p
     <Pokemon - Bulbasaur>
-    >>> p.evolutions
-    {'Ivysaur': '/api/v1/pokemon/2/'}
+    >>> p.types
+    [{u'slot': 2, u'type': {u'url': u'https://pokeapi.co/api/v2/type/4/', u'name': u'poison'}}, {u'slot': 1, u'type': {u'url': u'https://pokeapi.co/api/v2/type/12/', u'name': u'grass'}}]
+
 
 With the resource uri information you can request the linked resources easily.
 
-
-=====
+==========
 Options
-====
+==========
 
-Each resource is accessible, with it's own object-oriented representation.
-Every resource can be accessed with the term::
+Most resources can be requested by using either the name or id::
 
-    resource_id
-
-Where 'resource' is replaced depending on the resource you want::
-
-    pokemon_id
-    move_id
-    ability_id
-    egg_id
-    type_id
-    description_id
-    game_id
-    sprite_id
-
-The Pokemon resource can also be requested using the name:
-
-    >>> pykemon.get(pokemon='rotom')
+    >>> pykemon.V2Client().get_pokemon(uid='rotom')[0]
+    <Pokemon - Rotom>
+    >>> pykemon.V2Client().get_pokemon(uid=479)[0]
     <Pokemon - Rotom>
 
 Make sure you use lower case strings!

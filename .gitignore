@@ -44,3 +44,9 @@ docs/_build
 
 # htmlcov
 htmlcov/
+
+# Pycharm
+.idea/
+
+# virtual environment
+venv/
