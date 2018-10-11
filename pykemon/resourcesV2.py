@@ -432,7 +432,7 @@ class MoveMetaDataSubResource(BaseResource):
         }
 
     def __repr__(self):
-        return '<%s>' % self.Meta.nam
+        return '<%s>' % self.Meta.name
 
 
 class MoveStatChangeSubResource(BaseResource):
