@@ -31,7 +31,7 @@ jobs:
       - run:
           command: |
             pip install -r requirements.txt --user
-            python -m unittest tests.test_pykemon"
+            python -m unittest tests.test_pykemon
 
 workflows:
   version: 2
