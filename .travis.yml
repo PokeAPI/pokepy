@@ -4,9 +4,15 @@ language: python
 
 python:
   - "2.7"
+  - "3.6"
+  - "3.7"
+
+# Travis still doesn't support Python 3.7 yet, so the following 2 lines are needed
+dist: xenial
+sudo: true
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: pip install -r requirements.txt
 
 # command to run tests, e.g. python setup.py test
-script: py.test test
+script: python -m unittest tests.test_pykemon

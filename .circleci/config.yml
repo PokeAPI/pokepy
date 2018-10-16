@@ -1,0 +1,42 @@
+# Config file for automatic testing at circleci.com
+
+version: 2
+
+jobs:
+  py27_tests:
+    docker:
+      - image: circleci/python:2.7.15
+    steps:
+      - checkout
+      - run:
+          command: |
+            pip install -r requirements.txt --user
+            python -m unittest tests.test_pykemon
+
+  py36_tests:
+    docker:
+      - image: circleci/python:3.6.6
+    steps:
+      - checkout
+      - run:
+          command: |
+            pip install -r requirements.txt --user
+            python -m unittest tests.test_pykemon
+
+  py37_tests:
+    docker:
+      - image: circleci/python:3.7.0
+    steps:
+      - checkout
+      - run:
+          command: |
+            pip install -r requirements.txt --user
+            python -m unittest tests.test_pykemon
+
+workflows:
+  version: 2
+  run_tests:
+    jobs:
+      - py27_tests
+      - py36_tests
+      - py37_tests

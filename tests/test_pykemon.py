@@ -9,206 +9,340 @@ Tests for `pykemon` module.
 """
 
 import unittest
-import simplejson
-
+import requests_mock
 import pykemon
+from beckett.exceptions import InvalidStatusCodeError
 
-import responses
+
+def base_get_test(self, resource, method="name"):
+    """
+    Base get test function for V2Client
+
+    :param self: TestV2Client instance (self)
+    :param resource: Resource to be tested
+    :param method: 'name' or 'id' (sometimes resources only have one of them)
+    """
+    with requests_mock.mock() as mock:
+        mock.get('%s/%s/1' % (self.base_url, resource), text=self.mock_data)
+        response = getattr(self.client,
+                           'get_%s' % resource.replace("-", "_"))(uid=1)[0]
+
+        if method == "name":
+            self.assertEqual(response.name, 'test_name')
+        elif method == "id":
+            self.assertEqual(response.id, 1)
 
 
-class TestPykemon(unittest.TestCase):
+def base_404_test(self, resource):
+    """
+    Base 404 error test function for V2Client
+
+    :param self: TestV2Client instance (self)
+    :param resource: Resource to be tested
+    """
+    with requests_mock.mock() as mock:
+        mock.get('%s/%s/1' % (self.base_url, resource), status_code=404)
+        self.assertRaises(
+            InvalidStatusCodeError,
+            lambda: getattr(self.client,
+                            'get_%s' % resource.replace("-", "_"))(uid=1)[0])
+
+
+class TestV2Client(unittest.TestCase):
 
     def setUp(self):
-        self.poke_one = pykemon.get(pokemon='bulbasaur')
-        self.move_one = pykemon.get(move_id=15)  # Cut
-        self.type_one = pykemon.get(type_id=10)  # Fire
-        self.ability_one = pykemon.get(ability_id=1)  # Stench
-        self.egg_one = pykemon.get(egg_id=1)  # Monster
-        self.description_one = pykemon.get(description_id=2)
-        self.sprite_one = pykemon.get(sprite_id=152)  # Mew_auto
-        self.game_one = pykemon.get(game_id=4)  # Red
+        self.client = pykemon.V2Client()
+        self.mock_data = '{"id": 1, "name": "test_name"}'
+        self.base_url = 'https://pokeapi.co/api/v2'
 
-    def test_name_attribute(self):
-        self.assertEquals(self.poke_one.name, 'Bulbasaur')
-        self.assertEquals(self.move_one.name, 'Cut')
-        self.assertEquals(self.type_one.name, 'Fire')
-        self.assertEquals(self.ability_one.name, 'Stench')
-        self.assertEquals(self.egg_one.name, 'Monster')
-        self.assertEquals(self.description_one.name, 'Bulbasaur_gen_1')
-        self.assertEquals(self.sprite_one.name, 'Mew_auto')
-        self.assertEquals(self.game_one.name, 'Red')
+    def test_get_berry_resource(self):
+        base_get_test(self, "berry")
 
-    def test_repr(self):
-        self.assertEquals(str(self.poke_one), '<Pokemon - Bulbasaur>')
-        self.assertEquals(str(self.move_one), '<Move - Cut>')
-        self.assertEquals(str(self.type_one), '<Type - Fire>')
-        self.assertEquals(str(self.ability_one), '<Ability - Stench>')
-        self.assertEquals(str(self.egg_one), '<Egg - Monster>')
-        self.assertEquals(
-            str(self.description_one), '<Description - Bulbasaur_gen_1>')
-        self.assertEquals(str(self.sprite_one), '<Sprite - Mew_auto>')
-        self.assertEquals(str(self.game_one), '<Game - Red>')
+    def test_get_berry_firmness_resource(self):
+        base_get_test(self, "berry-firmness")
 
-    def test_resource_uri_attribute(self):
-        self.assertEquals(self.poke_one.resource_uri, '/api/v1/pokemon/1/')
-        self.assertEquals(self.move_one.resource_uri, '/api/v1/move/15/')
-        self.assertEquals(self.type_one.resource_uri, '/api/v1/type/10/')
-        self.assertEquals(self.ability_one.resource_uri, '/api/v1/ability/1/')
-        self.assertEquals(self.egg_one.resource_uri, '/api/v1/egg/1/')
-        self.assertEquals(
-            self.description_one.resource_uri, '/api/v1/description/2/')
-        self.assertEquals(self.sprite_one.resource_uri, '/api/v1/sprite/152/')
-        self.assertEquals(self.game_one.resource_uri, '/api/v1/game/4/')
+    def test_get_berry_flavor_firmness_resource(self):
+        base_get_test(self, "berry-flavor")
 
-    def test_pokemon_complex_attribs(self):
-        self.assertIn('Ivysaur', self.poke_one.evolutions)
-        self.assertIn('Cut', self.poke_one.moves)
-        self.assertIn('grass', self.poke_one.types)
-        self.assertIn('overgrow', self.poke_one.abilities)
-        self.assertIn('Monster', self.poke_one.egg_groups)
-        self.assertIn('bulbasaur_gen_1', self.poke_one.descriptions)
-        self.assertIn('bulbasaur', self.poke_one.sprites)
+    def test_get_contest_type_resource(self):
+        base_get_test(self, "contest-type")
 
-    def test_type_complex_attribs(self):
-        self.assertIn('grass', self.type_one.super_effective)
-        self.assertIn('water', self.type_one.weakness)
-        self.assertIn('fire', self.type_one.ineffective)
-        self.assertNotIn('Test', self.type_one.resistance)
+    def test_get_contest_effect_resource(self):
+        base_get_test(self, "contest-effect", "id")
 
-    def test_egg_complex_attribs(self):
-        self.assertIn('Blastoise', self.egg_one.pokemon)
+    def test_get_super_contest_effect_resource(self):
+        base_get_test(self, "super-contest-effect", "id")
 
-    def test_description_complex_attribs(self):
-        self.assertIn('red(JPN)', self.description_one.games)
+    def test_get_encounter_method_resource(self):
+        base_get_test(self, "encounter-method")
 
-    def get_client(self):
-        return pykemon.V1Client()
+    def test_get_encounter_condition_resource(self):
+        base_get_test(self, "encounter-condition")
 
-    @responses.activate
-    def test_v1_move_resource(self):
-        responses.add(responses.GET, 'http://pokeapi.co/api/v1/move/1/',
-                      body='''
-                        {"id": 1, "name": "move"}''',
-                      status=200,
-                      content_type='application/json')
+    def test_get_encounter_condition_value_resource(self):
+        base_get_test(self, "encounter-condition-value")
 
-        client = self.get_client()
-        response = client.get_move(uid=1)[0]
-        assert response.name == 'move'
+    def test_get_evolution_chain_resource(self):
+        base_get_test(self, "evolution-chain", "id")
 
-    @responses.activate
-    def test_v1_pokemon_resource(self):
-        responses.add(responses.GET, 'http://pokeapi.co/api/v1/pokemon/1/',
-                      body='''
-                        {"id": 1, "name": "pokemon"}''',
-                      status=200,
-                      content_type='application/json')
+    def test_get_evolution_trigger_resource(self):
+        base_get_test(self, "evolution-trigger")
 
-        client = self.get_client()
-        response = client.get_pokemon(uid=1)[0]
-        assert response.name == 'pokemon'
+    def test_get_generation_resource(self):
+        base_get_test(self, "generation")
 
-    @responses.activate
-    def test_v1_type_resource(self):
-        responses.add(responses.GET, 'http://pokeapi.co/api/v1/type/1/',
-                      body='''
-                        {"id": 1, "name": "types"}''',
-                      status=200,
-                      content_type='application/json')
+    def test_get_pokedex_resource(self):
+        base_get_test(self, "pokedex")
 
-        client = self.get_client()
-        response = client.get_type(uid=1)[0]
-        assert response.name == 'types'
+    def test_get_version_resource(self):
+        base_get_test(self, "version")
 
-    @responses.activate
-    def test_v1_ability_resource(self):
-        responses.add(responses.GET, 'http://pokeapi.co/api/v1/ability/1/',
-                      body='''
-                        {"id": 1, "name": "abilities"}''',
-                      status=200,
-                      content_type='application/json')
+    def test_get_version_group_resource(self):
+        base_get_test(self, "version-group")
 
-        client = self.get_client()
-        response = client.get_ability(uid=1)[0]
-        assert response.name == 'abilities'
+    def test_get_item_resource(self):
+        base_get_test(self, "item")
 
-    @responses.activate
-    def test_v1_egg_resource(self):
-        responses.add(responses.GET, 'http://pokeapi.co/api/v1/egg/1/',
-                      body='''
-                        {"id": 1, "name": "eggz"}''',
-                      status=200,
-                      content_type='application/json')
+    def test_get_item_attribute_resource(self):
+        base_get_test(self, "item-attribute")
 
-        client = self.get_client()
-        response = client.get_egg(uid=1)[0]
-        assert response.name == 'eggz'
+    def test_get_item_category_resource(self):
+        base_get_test(self, "item-category")
 
-    @responses.activate
-    def test_v1_description_resource(self):
-        responses.add(responses.GET, 'http://pokeapi.co/api/v1/description/1/',
-                      body='''
-                        {"id": 1, "name": "description"}''',
-                      status=200,
-                      content_type='application/json')
+    def test_get_item_fling_effect_resource(self):
+        base_get_test(self, "item-fling-effect")
 
-        client = self.get_client()
-        response = client.get_description(uid=1)[0]
-        assert response.name == 'description'
+    def test_get_item_pocket_resource(self):
+        base_get_test(self, "item-pocket")
 
-    @responses.activate
-    def test_v1_sprite_resource(self):
-        responses.add(responses.GET, 'http://pokeapi.co/api/v1/sprite/1/',
-                      body='''
-                        {"id": 1, "name": "spritez"}''',
-                      status=200,
-                      content_type='application/json')
+    def test_get_machine_resource(self):
+        base_get_test(self, "machine", "id")
 
-        client = self.get_client()
-        response = client.get_sprite(uid=1)[0]
-        assert response.name == 'spritez'
+    def test_get_move_resource(self):
+        base_get_test(self, "move")
 
-    @responses.activate
-    def test_v1_game_resource(self):
-        responses.add(responses.GET, 'http://pokeapi.co/api/v1/game/1/',
-                      body='''
-                        {"id": 1, "name": "gamez"}''',
-                      status=200,
-                      content_type='application/json')
+    def test_get_move_ailment_resource(self):
+        base_get_test(self, "move-ailment")
 
-        client = self.get_client()
-        response = client.get_game(uid=1)[0]
-        assert response.name == 'gamez'
+    def test_get_move_battle_style_resource(self):
+        base_get_test(self, "move-battle-style")
 
+    def test_get_move_category_resource(self):
+        base_get_test(self, "move-category")
 
-class Testexceptions(unittest.TestCase):
-    " Test error handling "
+    def test_get_move_damage_class_resource(self):
+        base_get_test(self, "move-damage-class")
 
-    def test_no_params(self):
-        self.assertRaises(TypeError, pykemon.get, '')
+    def test_get_move_learn_method_resource(self):
+        base_get_test(self, "move-learn-method")
 
-    def test_two_params(self):
-        self.assertRaises(ValueError, pykemon.get, test='test', two='two')
+    def test_get_move_target_resource(self):
+        base_get_test(self, "move-target")
 
-    def test_invalid_args(self):
-        self.assertRaises(ValueError, pykemon.get, test='test')
+    def test_get_location_resource(self):
+        base_get_test(self, "location")
 
-    def test_unknown_resource(self):
-        self.assertRaises(
-            pykemon.exceptions.ResourceNotFoundError,
-            pykemon.request._request,
-            'http://pokeapi.co/api/v1/pokemon/abcdef/')
+    def test_get_location_area_resource(self):
+        base_get_test(self, "location-area")
 
-    def test_to_json_error_handling(self):
-        self.assertRaises(
-            simplejson.JSONDecodeError,
-            pykemon.request._to_json, 'content')
+    def test_get_pal_park_area_resource(self):
+        base_get_test(self, "pal-park-area")
 
-    def test_make_request_error_handling(self):
-        self.assertRaises(
-            pykemon.exceptions.ResourceNotFoundError,
-            pykemon.request.make_request,
-            {'pokemon': 'Elinor'})
+    def test_get_region_resource(self):
+        base_get_test(self, "region")
+
+    def test_get_ability_resource(self):
+        base_get_test(self, "ability")
+
+    def test_get_characteristic_resource(self):
+        base_get_test(self, "characteristic", "id")
+
+    def test_get_egg_group_resource(self):
+        base_get_test(self, "egg-group")
+
+    def test_get_gender_resource(self):
+        base_get_test(self, "gender")
+
+    def test_get_growth_rate_resource(self):
+        base_get_test(self, "growth-rate")
+
+    def test_get_nature_resource(self):
+        base_get_test(self, "nature")
+
+    def test_get_pokeathlon_stat_resource(self):
+        base_get_test(self, "pokeathlon-stat")
+
+    def test_get_pokemon_resource(self):
+        base_get_test(self, "pokemon")
+
+    def test_get_pokemon_color_resource(self):
+        base_get_test(self, "pokemon-color")
+
+    def test_get_pokemon_form_resource(self):
+        base_get_test(self, "pokemon-form")
+
+    def test_get_pokemon_habitat_resource(self):
+        base_get_test(self, "pokemon-habitat")
+
+    def test_get_pokemon_shape_resource(self):
+        base_get_test(self, "pokemon-shape")
+
+    def test_get_pokemon_species_resource(self):
+        base_get_test(self, "pokemon-species")
+
+    def test_get_stat_resource(self):
+        base_get_test(self, "stat")
+
+    def test_get_type_resource(self):
+        base_get_test(self, "type")
+
+    def test_get_language_resource(self):
+        base_get_test(self, "language")
+
+    def test_404_berry_resource(self):
+        base_404_test(self, "berry")
+
+    def test_404_berry_firmness_resource(self):
+        base_404_test(self, "berry-firmness")
+
+    def test_404_berry_flavor_firmness_resource(self):
+        base_404_test(self, "berry-flavor")
+
+    def test_404_contest_type_resource(self):
+        base_404_test(self, "contest-type")
+
+    def test_404_contest_effect_resource(self):
+        base_404_test(self, "contest-effect")
+
+    def test_404_super_contest_effect_resource(self):
+        base_404_test(self, "super-contest-effect")
+
+    def test_404_encounter_method_resource(self):
+        base_404_test(self, "encounter-method")
+
+    def test_404_encounter_condition_resource(self):
+        base_404_test(self, "encounter-condition")
+
+    def test_404_encounter_condition_value_resource(self):
+        base_404_test(self, "encounter-condition-value")
+
+    def test_404_evolution_chain_resource(self):
+        base_404_test(self, "evolution-chain")
+
+    def test_404_evolution_trigger_resource(self):
+        base_404_test(self, "evolution-trigger")
+
+    def test_404_generation_resource(self):
+        base_404_test(self, "generation")
+
+    def test_404_pokedex_resource(self):
+        base_404_test(self, "pokedex")
+
+    def test_404_version_resource(self):
+        base_404_test(self, "version")
+
+    def test_404_version_group_resource(self):
+        base_404_test(self, "version-group")
+
+    def test_404_item_resource(self):
+        base_404_test(self, "item")
+
+    def test_404_item_attribute_resource(self):
+        base_404_test(self, "item-attribute")
+
+    def test_404_item_category_resource(self):
+        base_404_test(self, "item-category")
+
+    def test_404_item_fling_effect_resource(self):
+        base_404_test(self, "item-fling-effect")
+
+    def test_404_item_pocket_resource(self):
+        base_404_test(self, "item-pocket")
+
+    def test_404_machine_resource(self):
+        base_404_test(self, "machine")
+
+    def test_404_move_resource(self):
+        base_404_test(self, "move")
+
+    def test_404_move_ailment_resource(self):
+        base_404_test(self, "move-ailment")
+
+    def test_404_move_battle_style_resource(self):
+        base_404_test(self, "move-battle-style")
+
+    def test_404_move_category_resource(self):
+        base_404_test(self, "move-category")
+
+    def test_404_move_damage_class_resource(self):
+        base_404_test(self, "move-damage-class")
+
+    def test_404_move_learn_method_resource(self):
+        base_404_test(self, "move-learn-method")
+
+    def test_404_move_target_resource(self):
+        base_404_test(self, "move-target")
+
+    def test_404_location_resource(self):
+        base_404_test(self, "location")
+
+    def test_404_location_area_resource(self):
+        base_404_test(self, "location-area")
+
+    def test_404_pal_park_area_resource(self):
+        base_404_test(self, "pal-park-area")
+
+    def test_404_region_resource(self):
+        base_404_test(self, "region")
+
+    def test_404_ability_resource(self):
+        base_404_test(self, "ability")
+
+    def test_404_characteristic_resource(self):
+        base_404_test(self, "characteristic")
+
+    def test_404_egg_group_resource(self):
+        base_404_test(self, "egg-group")
+
+    def test_404_gender_resource(self):
+        base_404_test(self, "gender")
+
+    def test_404_growth_rate_resource(self):
+        base_404_test(self, "growth-rate")
+
+    def test_404_nature_resource(self):
+        base_404_test(self, "nature")
+
+    def test_404_pokeathlon_stat_resource(self):
+        base_404_test(self, "pokeathlon-stat")
+
+    def test_404_pokemon_resource(self):
+        base_404_test(self, "pokemon")
+
+    def test_404_pokemon_color_resource(self):
+        base_404_test(self, "pokemon-color")
+
+    def test_404_pokemon_form_resource(self):
+        base_404_test(self, "pokemon-form")
+
+    def test_404_pokemon_habitat_resource(self):
+        base_404_test(self, "pokemon-habitat")
+
+    def test_404_pokemon_shape_resource(self):
+        base_404_test(self, "pokemon-shape")
+
+    def test_404_pokemon_species_resource(self):
+        base_404_test(self, "pokemon-species")
+
+    def test_404_stat_resource(self):
+        base_404_test(self, "stat")
+
+    def test_404_type_resource(self):
+        base_404_test(self, "type")
+
+    def test_404_language_resource(self):
+        base_404_test(self, "language")
+
 
 if __name__ == '__main__':
     unittest.main()

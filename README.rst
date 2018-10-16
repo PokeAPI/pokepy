@@ -8,7 +8,7 @@ Pykemon
 .. image:: https://circleci.com/gh/PokeAPI/pykemon.svg?style=svg
     :target: https://circleci.com/gh/PokeAPI/pykemon
 
-A python wrapper for `PokeAPI <http://pokeapi.co>`_
+A python wrapper for `PokeAPI <https://pokeapi.co>`_
 
 * Free software: BSD license
 * Documentation: http://pykemon.rtfd.org.
@@ -32,14 +32,13 @@ Even simpler:
 .. code-block:: python
 
     >>> import pykemon
-    >>> client = pykemon.V1Client()
-    >>> p = client.get_pokemon(uid=1)
-    [<Pokemon - Bulbasaur>]
+    >>> client = pykemon.V2Client()
+    >>> client.get_pokemon(1)[0]
+    <Pokemon - Bulbasaur>
 
 
 Features
 --------
 
 * Generate Python objects from PokeAPI resources.
-
 * Human-friendly API
