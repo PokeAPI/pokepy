@@ -10,9 +10,8 @@ jobs:
       - checkout
       - run:
           command: |
-            sudo pip install pipenv
-            pipenv install -r requirements.txt
-            pipenv run "python -m unittest tests.test_pykemon"
+            pip install -r requirements.txt
+            python -m unittest tests.test_pykemon
 
   py36_tests:
     docker:
@@ -21,9 +20,8 @@ jobs:
       - checkout
       - run:
           command: |
-            sudo pip install pipenv
-            pipenv install -r requirements.txt
-            pipenv run "python -m unittest tests.test_pykemon"
+            pip install -r requirements.txt
+            python -m unittest tests.test_pykemon
 
   py37_tests:
     docker:
@@ -32,9 +30,8 @@ jobs:
       - checkout
       - run:
           command: |
-            sudo pip install pipenv
-            pipenv install -r requirements.txt
-            pipenv run "python -m unittest tests.test_pykemon"
+            pip install -r requirements.txt
+            python -m unittest tests.test_pykemon"
 
 workflows:
   version: 2
