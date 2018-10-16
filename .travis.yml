@@ -7,7 +7,7 @@ python:
   - "3.6"
   - "3.7"
 
-# Travis still doesn't support Python 3.7, so the following 2 lines are needed
+# Travis still doesn't support Python 3.7 yet, so the following 2 lines are needed
 dist: xenial
 sudo: true
 
