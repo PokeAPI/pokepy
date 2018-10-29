@@ -10,8 +10,8 @@ Tests for `pykemon` module.
 
 import unittest
 import requests_mock
-import pykemon
 from beckett.exceptions import InvalidStatusCodeError
+import pykemon
 
 
 def base_get_test(self, resource, method="name"):
