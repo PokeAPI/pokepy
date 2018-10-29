@@ -37,7 +37,7 @@ jobs:
           command: pip install -r requirements.txt -r requirements-dev.txt --user
       - run:
           name: Lint
-          command: pylint pykemon tests setup.py
+          command: python -m pylint pykemon tests setup.py
       - run:
           name: Run Tests
           command: python -m unittest tests.test_pykemon
