@@ -1,6 +1,1 @@
-beckett==0.8.0          # main functionality
-Sphinx==1.8.1           # docs
-pylint==2.1.1           # tests - style
-coverage==4.5.1         # tests - coverage
-requests-mock==1.5.2    # tests
-tox==3.5.2              # tests
+beckett==0.8.0

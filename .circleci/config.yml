@@ -10,7 +10,7 @@ jobs:
       - checkout
       - run:
           name: Install Requirements
-          command: pip install -r requirements.txt --user
+          command: pip install -r requirements.txt -r requirements-dev27.txt --user
       - run:
           name: Run Tests
           command: python -m unittest tests.test_pykemon
@@ -22,7 +22,7 @@ jobs:
       - checkout
       - run:
           name: Install Requirements
-          command: pip install -r requirements.txt --user
+          command: pip install -r requirements.txt -r requirements-dev27.txt --user
       - run:
           name: Run Tests
           command: python -m unittest tests.test_pykemon
@@ -34,7 +34,10 @@ jobs:
       - checkout
       - run:
           name: Install Requirements
-          command: pip install -r requirements.txt --user
+          command: pip install -r requirements.txt -r requirements-dev.txt --user
+      - run:
+          name: Lint
+          command: pylint pykemon tests setup.py
       - run:
           name: Run Tests
           command: python -m unittest tests.test_pykemon

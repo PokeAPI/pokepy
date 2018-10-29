@@ -74,13 +74,12 @@ Ready to contribute? Here's how to set up `pykemon` for local development.
    
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8, pep8 and the tests, including testing other Python versions with tox::
+5. When you're done making changes, check that your changes pass pylint and the tests, including testing other Python versions with tox::
 
-    $ pep8 pykemon
-    $ flake8 pykemon tests
+    $ pylint pykemon tests setup.py
     $ tox
 
-   To get pep8, flake8 and tox, just pip install them into your virtualenv.
+   To get pylint and tox, just pip install them into your virtualenv.
 
 6. Commit your changes and push your branch to GitHub::
 
