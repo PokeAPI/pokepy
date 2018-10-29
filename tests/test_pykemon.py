@@ -25,7 +25,7 @@ def base_get_test(self, resource, method="name"):
     with requests_mock.mock() as mock:
         mock.get('%s/%s/1' % (self.base_url, resource), text=self.mock_data)
         response = getattr(self.client,
-                           'get_%s' % resource.replace("-", "_"))(uid=1)[0]
+                           'get_%s' % resource.replace("-", "_"))(1)[0]
 
         if method == "name":
             self.assertEqual(response.name, 'test_name')
@@ -45,7 +45,7 @@ def base_404_test(self, resource):
         self.assertRaises(
             InvalidStatusCodeError,
             lambda: getattr(self.client,
-                            'get_%s' % resource.replace("-", "_"))(uid=1)[0])
+                            'get_%s' % resource.replace("-", "_"))(1)[0])
 
 
 class TestV2Client(unittest.TestCase):
