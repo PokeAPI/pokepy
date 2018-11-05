@@ -1,0 +1,4 @@
+Sphinx==1.8.1           # docs
+coverage==4.5.1         # coverage
+requests-mock==1.5.2    # tests
+tox==3.5.2              # tests

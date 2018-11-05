@@ -1,7 +1,2 @@
 beckett==0.8.0          # main functionality
-coverage==4.5.1         # tests
-flake8==3.5.0           # tests
-pep8==1.7.1             # tests
-requests-mock==1.5.2    # tests
-Sphinx==1.8.1           # docs
-tox==3.5.2              # tests
+requests==2.20.0        # used by beckett (bumped to avoid CVE-2018-18074)

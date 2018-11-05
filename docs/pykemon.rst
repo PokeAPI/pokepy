@@ -20,10 +20,10 @@ pykemon.beckett_tweaks module
     :undoc-members:
     :show-inheritance:
 
-pykemon.resourcesV2 module
+pykemon.resources_v2 module
 --------------------------
 
-.. automodule:: pykemon.resourcesV2
+.. automodule:: pykemon.resources_v2
     :members:
     :undoc-members:
     :show-inheritance:

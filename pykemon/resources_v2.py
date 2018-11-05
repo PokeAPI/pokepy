@@ -10,7 +10,9 @@ from beckett.resources import SubResource
 from .beckett_tweaks import BaseResource
 
 
+##############################
 # Common Models (SubResources)
+##############################
 
 
 class APIResourceSubResource(SubResource):
@@ -212,7 +214,9 @@ class VersionGroupFlavorTextSubResource(BaseResource):
                               self.text.capitalize()[:10] + "...")
 
 
+##############
 # SubResources
+##############
 
 
 class BerryFlavorMapSubResource(BaseResource):
@@ -292,6 +296,45 @@ class EvolutionDetailSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
+# A ChainLink is tricky to implement with beckett because it is recursive.
+# The current solution is to have 3 nearly identical ChainLink classes
+# (so far, the maximum number of chaining evolutions depth is 3)
+# the last one not having the evolves_to subresource, ending the recursion.
+
+
+class ChainLink2SubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Chain_Link2'
+        identifier = 'is_baby'
+        attributes = (
+            'is_baby',
+        )
+        subresources = {
+            'species': NamedAPIResourceSubResource,
+            'evolution_details': EvolutionDetailSubResource
+        }
+
+    def __repr__(self):
+        return '<%s>' % self.Meta.name
+
+
+class ChainLink1SubResource(BaseResource):
+    class Meta(BaseResource.Meta):
+        name = 'Chain_Link1'
+        identifier = 'is_baby'
+        attributes = (
+            'is_baby',
+        )
+        subresources = {
+            'species': NamedAPIResourceSubResource,
+            'evolution_details': EvolutionDetailSubResource,
+            'evolves_to': ChainLink2SubResource
+        }
+
+    def __repr__(self):
+        return '<%s>' % self.Meta.name
+
+
 class ChainLinkSubResource(BaseResource):
     class Meta(BaseResource.Meta):
         name = 'Chain_Link'
@@ -302,7 +345,7 @@ class ChainLinkSubResource(BaseResource):
         subresources = {
             'species': NamedAPIResourceSubResource,
             'evolution_details': EvolutionDetailSubResource,
-            'evolves_to': lambda *args, **kwargs: ChainLinkSubResource  # TODO - This doesn't work...
+            'evolves_to': ChainLink1SubResource
         }
 
     def __repr__(self):
@@ -961,7 +1004,9 @@ class TypeRelationsSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
+###########
 # Resources
+###########
 
 
 class BerryResource(BaseResource):
