@@ -105,3 +105,38 @@ Most resources can be requested by using either the name or id::
     <Pokemon - Rotom>
 
 Make sure you use lower case strings!
+
+========
+Cache
+========
+
+If you use the API to get the same resources often, you can enable cache to avoid overloading the pokeapi server.
+You can either enable `in-memory` or `in-disk` cache.
+
+`in-memory` cache saves resources in RAM. Cache is kept per get method::
+
+    >>> client = pykemon.V2Client(cache='in_memory')
+
+To check the state of the cache of a particular method::
+
+    >>> client.get_pokemon(1)
+    >>> client.get_pokemon.cache_info()
+    CacheInfo(hits=0, misses=1, maxsize=None, currsize=1)
+
+Calling the same resource as before will retrieve the resource from the cache::
+
+    >>> client.get_pokemon(1)
+    >>> client.get_pokemon.cache_info()
+    CacheInfo(hits=1, misses=1, maxsize=None, currsize=1)
+
+To clear the cache::
+
+    >>> client.get_pokemon.cache_clear()
+    >>> client.get_pokemon.cache_info()
+    CacheInfo(hits=0, misses=0, maxsize=None, currsize=0)
+
+`in-disk` cache saves resources to the disk. Cache is kept per get method::
+
+    >>> pykemon.V2Client(cache='in_disk', cache_location='/temp', in_disk_expire=None)
+
+

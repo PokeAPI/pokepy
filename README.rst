@@ -41,4 +41,5 @@ Features
 --------
 
 * Generate Python objects from PokeAPI resources.
+* Cache
 * Human-friendly API
