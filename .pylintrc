@@ -65,6 +65,7 @@ disable=missing-docstring,
         too-many-lines,
         no-member,
         keyword-arg-before-vararg,
+        fixme,
 
         # Disabled by default:
 
