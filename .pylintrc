@@ -64,6 +64,7 @@ disable=missing-docstring,
         function-redefined,
         too-many-lines,
         no-member,
+        keyword-arg-before-vararg,
 
         # Disabled by default:
 

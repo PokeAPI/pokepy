@@ -36,13 +36,14 @@ class BaseClient(BaseClient):
             seconds until arguments cached expire
             (optional)
         """
-        # TODO FanoutCache.memoize is only saving the last function call and not each call with different parameters
+        # TODO FanoutCache.memoize only saving last function call instead
+        #  of each call with different parameters
         # TODO FanoutCache.memoize cache isn't reloaded with each restart
         if cache == 'in_memory':
             cache_function = functools.partial(functools.lru_cache, maxsize=None)
         elif cache == 'in_disk':
-            cache_function = functools.partial(diskcache.FanoutCache(cache_location, shards=1, timeout=1).memoize,
-                                               expire=in_disk_expire)
+            cache_function = functools.partial(diskcache.FanoutCache(
+                cache_location, shards=1, timeout=1).memoize, expire=in_disk_expire)
             # # TODO must have cache_info() and cache_clear() as in in_memory
             # def in_disk():
             #     fanout_cache = diskcache.FanoutCache(cache_location, shards=1, timeout=1)
