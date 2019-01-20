@@ -1,4 +1,4 @@
-# Pokepy
+# Pokepy <img heigth=50 width=50 src="https://veekun.com/dex/media/pokemon/global-link/63.png">
 [![pypi](https://img.shields.io/pypi/v/pokepy.svg "pypi package")](https://pypi.org/project/pokepy)
 [![python versions](https://img.shields.io/pypi/pyversions/pokepy.svg "supported python versions")](https://pypi.org/project/pokepy)
 [![build status](https://circleci.com/gh/PokeAPI/pokepy.svg?style=svg "build status")](https://circleci.com/gh/PokeAPI/pokepy)
