@@ -36,8 +36,8 @@ is open to whoever wants to implement it.
 Write Documentation
 ~~~~~~~~~~~~~~~~~~~
 
-Pokepy could always use more documentation, whether as part of the
-official pokepy docs, in docstrings, or even on the web in blog posts,
+Pokepy could always use more documentation, whether as part of the 
+official Pokepy docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
 Submit Feedback
@@ -106,4 +106,3 @@ Tips
 To run a subset of tests::
 
 	$ python -m unittest tests.test_pokepy
-
