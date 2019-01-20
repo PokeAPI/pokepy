@@ -41,6 +41,15 @@ jobs:
       - run:
           name: Run Tests
           command: python -m unittest tests.test_pokepy
+      - run:
+          name: Run Coverage tool
+          command: coverage run --source pokepy setup.py test
+      - run:
+          name: Generate XML coverage report
+          command: coverage xml
+      - run:
+          name: Upload Coverage report to CodeCov
+          command: bash <(curl -s https://codecov.io/bash)
 
 workflows:
   version: 2
