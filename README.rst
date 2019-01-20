@@ -2,7 +2,7 @@
 Pokepy
 ===============================
 
-Evolution of [`pykemon`](https://github.com/PokeAPI/pokepy/tree/bb72105f4c5402aaa5d4fd2b9c142bf9b678b254)
+Evolution of `Pykemon <https://github.com/PokeAPI/pokepy/tree/bb72105f4c5402aaa5d4fd2b9c142bf9b678b254>`_
 
 .. image:: https://badge.fury.io/py/pokepy.png
     :target: http://badge.fury.io/py/pokepy
