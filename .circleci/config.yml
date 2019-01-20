@@ -34,13 +34,22 @@ jobs:
       - checkout
       - run:
           name: Install Requirements
-          command: pip install -r requirements.txt -r requirements-dev.txt --user
+          command: sudo pip install -r requirements.txt -r requirements-dev.txt -r requirements-dev27.txt
       - run:
           name: Lint
           command: python -m pylint pokepy tests setup.py
       - run:
           name: Run Tests
           command: python -m unittest tests.test_pokepy
+      - run:
+          name: Run Coverage tool
+          command: coverage run --source pokepy setup.py tests
+      - run:
+          name: Generate XML coverage report
+          command: coverage xml
+      - run:
+          name: Upload Coverage report to CodeCov
+          command: bash <(curl -s https://codecov.io/bash)
 
 workflows:
   version: 2
