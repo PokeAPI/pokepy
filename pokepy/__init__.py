@@ -16,7 +16,7 @@ Usage:
 __author__ = 'Paul Hallett'
 __email__ = 'hello@phalt.co'
 __credits__ = ["Paul Hallett", "Owen Hallett", "Kronopt"]
-__version__ = '0.4'
+__version__ = '0.5.0'
 __copyright__ = 'Copyright Paul Hallett 2016'
 __license__ = 'BSD'
 
