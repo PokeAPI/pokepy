@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 import os
 import sys
@@ -14,8 +14,9 @@ if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     sys.exit()
 
-readme = open('README.md').read()
-history = open('HISTORY.rst').read().replace('.. :changelog:', '')
+with open('README.md') as readme_md, open('HISTORY.rst') as history_rst:
+    readme = readme_md.read()
+    history = history_rst.read().replace('.. :changelog:', '')
 
 setup(
     name='pokepy',
