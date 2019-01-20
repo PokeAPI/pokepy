@@ -43,7 +43,7 @@ jobs:
           command: python -m unittest tests.test_pokepy
       - run:
           name: Run Coverage tool
-          command: coverage run --source pokepy,tests setup.py
+          command: coverage run --source pokepy setup.py
       - run:
           name: Generate XML coverage report
           command: coverage xml
