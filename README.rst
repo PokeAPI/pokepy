@@ -10,6 +10,9 @@ Evolution of `Pykemon <https://github.com/PokeAPI/pokepy/tree/bb72105f4c5402aaa5
 .. image:: https://circleci.com/gh/PokeAPI/pokepy.svg?style=svg
     :target: https://circleci.com/gh/PokeAPI/pokepy
 
+.. image:: https://codecov.io/gh/PokeAPI/pokepy/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/PokeAPI/pokepy
+
 A python wrapper for `PokeAPI <https://pokeapi.co>`_
 
 * Free software: BSD license
