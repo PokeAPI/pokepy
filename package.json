@@ -1,0 +1,27 @@
+{
+  "name": "pokepy",
+  "version": "0.4.0",
+  "description": "A python wrapper for Pokeapi",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gh-pages -d docs/_build/html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PokeAPI/pokepy.git"
+  },
+  "author": "",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/PokeAPI/pokepy/issues"
+  },
+  "homepage": "https://github.com/PokeAPI/pokepy#readme",
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
+  }
+}

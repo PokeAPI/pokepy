@@ -42,8 +42,8 @@ docs:
 	rm -f docs/pokepy.rst
 	rm -f docs/modules.rst
 	sphinx-apidoc -o docs/ pokepy
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
+	make -C docs clean
+	make -C docs html
 	open docs/_build/html/index.html
 
 release: clean sdist
