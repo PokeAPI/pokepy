@@ -1,35 +1,39 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 """
-test_pykemon
-----------------------------------
+test_pokepy
 
-Tests for `pykemon` module.
+Tests for pokepy module
 """
 
 import unittest
 import requests_mock
 from beckett.exceptions import InvalidStatusCodeError
-import pykemon
+import pokepy
 
 
-def base_get_test(self, resource, method="name"):
+def base_get_test(self, resource, method='name'):
     """
-    Base get test function for V2Client
+    Base 'get' test function for V2Client
 
-    :param self: TestV2Client instance (self)
-    :param resource: Resource to be tested
-    :param method: 'name' or 'id' (sometimes resources only have one of them)
+    Parameters
+    ----------
+    self: TestV2Client
+        TestV2Client instance (self)
+    resource: str
+        Resource to be tested
+    method: str
+        'name' or 'id' (sometimes resources only have one of them)
     """
     with requests_mock.mock() as mock:
         mock.get('%s/%s/1' % (self.base_url, resource), text=self.mock_data)
         response = getattr(self.client,
-                           'get_%s' % resource.replace("-", "_"))(1)[0]
+                           'get_%s' % resource.replace('-', '_'))(1)[0]
 
-        if method == "name":
+        if method == 'name':
             self.assertEqual(response.name, 'test_name')
-        elif method == "id":
+        elif method == 'id':
             self.assertEqual(response.id, 1)
 
 
@@ -37,21 +41,25 @@ def base_404_test(self, resource):
     """
     Base 404 error test function for V2Client
 
-    :param self: TestV2Client instance (self)
-    :param resource: Resource to be tested
+    Parameters
+    ----------
+    self: TestV2Client
+        TestV2Client instance (self)
+    resource: str
+        Resource to be tested
     """
     with requests_mock.mock() as mock:
         mock.get('%s/%s/1' % (self.base_url, resource), status_code=404)
         self.assertRaises(
             InvalidStatusCodeError,
             lambda: getattr(self.client,
-                            'get_%s' % resource.replace("-", "_"))(1)[0])
+                            'get_%s' % resource.replace('-', '_'))(1)[0])
 
 
 class TestV2Client(unittest.TestCase):
 
     def setUp(self):
-        self.client = pykemon.V2Client()
+        self.client = pokepy.V2Client()
         self.mock_data = '{"id": 1, "name": "test_name"}'
         self.base_url = 'https://pokeapi.co/api/v2'
 

@@ -2,17 +2,17 @@
 Usage
 ========
 
-To use Pykemon in a project::
+To use Pokepy in a project::
 
-    >>> import pykemon
+    >>> import pokepy
 
 ======
 API
 ======
 
-Since version 0.2.0, Pykemon now works with `Beckett <https://phalt.github.io/beckett>`_, an easy to use API Client Framework::
+Since version 0.2.0, pokepy now works with `Beckett <https://phalt.github.io/beckett>`_, an easy to use API Client Framework::
 
-   >>> client = pykemon.V2Client()
+   >>> client = pokepy.V2Client()
    >>> bulba = client.get_pokemon(1)[0]
    <Pokemon - Bulbasaur>
    >>> bulba.name
@@ -73,18 +73,18 @@ Please refer to the pokeapi documentation (https://pokeapi.co/docs/v2.html/) for
 
 Then you can start grabbing stuff from the API::
 
-    >>> pykemon.V2Client().get_pokemon('mew')[0]
+    >>> pokepy.V2Client().get_pokemon('mew')[0]
     <Pokemon - Mew>
-    >>> pykemon.V2Client().get_pokemon(1)[0]
+    >>> pokepy.V2Client().get_pokemon(1)[0]
     <Pokemon - Bulbasaur>
-    >>> pykemon.V2Client().get_move(15)[0]
+    >>> pokepy.V2Client().get_move(15)[0]
     <Move - Cut>
-    >>> pykemon.V2Client().get_ability(15)[0]
+    >>> pokepy.V2Client().get_ability(15)[0]
     <Ability - stench>
 
 Resources that have other abilities linked are displayed as dicts::
 
-    >>> p = pykemon.V2Client().get_pokemon(1)[0]
+    >>> p = pokepy.V2Client().get_pokemon(1)[0]
     >>> p
     <Pokemon - Bulbasaur>
     >>> p.types
@@ -99,9 +99,9 @@ Options
 
 Most resources can be requested by using either the name or id::
 
-    >>> pykemon.V2Client().get_pokemon('rotom')[0]
+    >>> pokepy.V2Client().get_pokemon('rotom')[0]
     <Pokemon - Rotom>
-    >>> pykemon.V2Client().get_pokemon(479)[0]
+    >>> pokepy.V2Client().get_pokemon(479)[0]
     <Pokemon - Rotom>
 
 Make sure you use lower case strings!
@@ -112,31 +112,38 @@ Cache
 
 If you use the API to get the same resources often, you can enable cache to avoid overloading the pokeapi server.
 You can either enable `in-memory` or `in-disk` cache.
+Cache is kept per get method.
 
-`in-memory` cache saves resources in RAM. Cache is kept per get method::
+`in-memory` cache saves resources in RAM::
 
-    >>> client = pykemon.V2Client(cache='in_memory')
+    >>> client = pokepy.V2Client(cache='in_memory')
 
 To check the state of the cache of a particular method::
 
     >>> client.get_pokemon(1)
     >>> client.get_pokemon.cache_info()
-    CacheInfo(hits=0, misses=1, maxsize=None, currsize=1)
+    CacheInfo(hits=0, misses=1, size=1)
 
 Calling the same resource as before will retrieve the resource from the cache::
 
     >>> client.get_pokemon(1)
     >>> client.get_pokemon.cache_info()
-    CacheInfo(hits=1, misses=1, maxsize=None, currsize=1)
+    CacheInfo(hits=1, misses=1, size=1)
 
 To clear the cache::
 
     >>> client.get_pokemon.cache_clear()
     >>> client.get_pokemon.cache_info()
-    CacheInfo(hits=0, misses=0, maxsize=None, currsize=0)
+    CacheInfo(hits=0, misses=0, size=0)
 
 `in-disk` cache saves resources to the disk. Cache is kept per get method::
 
-    >>> pykemon.V2Client(cache='in_disk', cache_location='/temp', in_disk_expire=None)
+    >>> pokepy.V2Client(cache='in_disk', cache_location='/temp')
 
+The same methods are used as with `in-memory` to check the state and clear the cache.
+You can also check the cache directory::
 
+    >>> client.get_pokemon.cache_location()
+    /temp
+
+Disk-based cache is reloaded automatically between runs if the same cache directory is specified.

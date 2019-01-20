@@ -4,4 +4,5 @@ Installation
 
 At the command line::
 
-    $ pip install pykemon
+    $ pip install pokepy
+

@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
-""" Resources related to the V2 API
+"""
+Resources related to the V2 API
 
 Refer to the documentation for more information
 (https://pokeapi.co/docs/v2.html)

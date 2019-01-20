@@ -3,6 +3,12 @@
 History
 -------
 
+0.5.0 (2019-01-19)
+++++++++++++++++++
+
+* Pykemon is now Pokepy!
+* Cache (disk- and memory-based)
+
 0.4.0 (2018-10-11)
 ++++++++++++++++++
 

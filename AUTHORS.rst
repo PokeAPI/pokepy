@@ -13,4 +13,9 @@ Contributors
 * Owen Hallett
 * Kronopt
 
+Maintainer
+----------
+
+* Kronopt
+
 Made a commit? Add your name to the list!

@@ -1,29 +1,29 @@
-pykemon package
+pokepy package
 ===============
 
 Submodules
 ----------
 
-pykemon.api module
+pokepy.api module
 ------------------
 
-.. automodule:: pykemon.api
+.. automodule:: pokepy.api
     :members:
     :undoc-members:
     :show-inheritance:
 
-pykemon.beckett_tweaks module
+pokepy.beckett_tweaks module
 --------------------------
 
-.. automodule:: pykemon.beckett_tweaks
+.. automodule:: pokepy.beckett_tweaks
     :members:
     :undoc-members:
     :show-inheritance:
 
-pykemon.resources_v2 module
+pokepy.resources_v2 module
 --------------------------
 
-.. automodule:: pykemon.resources_v2
+.. automodule:: pokepy.resources_v2
     :members:
     :undoc-members:
     :show-inheritance:
@@ -32,7 +32,7 @@ pykemon.resources_v2 module
 Module contents
 ---------------
 
-.. automodule:: pykemon
+.. automodule:: pokepy
     :members:
     :undoc-members:
     :show-inheritance:

@@ -1,21 +1,16 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 """
+Pokepy
 
-========
-Pykemon
-========
-
-A Python wrapper for PokeAPI (https://pokeapi.co/)
+A Python wrapper for PokeAPI (https://pokeapi.co)
 
 Usage:
-
->>> import pykemon
->>> clientV2 = pykemon.V2Client()
+>>> import pokepy
+>>> clientV2 = pokepy.V2Client()
 >>> clientV2.get_pokemon('bulbasaur')[0]
 <Pokemon - Bulbasaur>
-
 """
 
 __author__ = 'Paul Hallett'
