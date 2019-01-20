@@ -18,7 +18,8 @@ def caching(disk_or_memory, cache_directory=None):
     """
     Decorator that allows caching the outputs of the BaseClient get methods.
     Cache can be either disk- or memory-based.
-    Disk-based cache is reloaded automatically between runs if the same cache directory is specified.
+    Disk-based cache is reloaded automatically between runs if the same
+    cache directory is specified.
     Cache is kept per each unique uid.
 
     ex:
@@ -41,29 +42,31 @@ def caching(disk_or_memory, cache_directory=None):
     # Because of the way the BaseClient get methods are generated, they don't get a proper __name__.
     # As such, it is hard to generate a specific cache directory name for each get method.
     # Therefore, I decided to just generate a number for each folder, starting at zero.
-    # The same get methods get the same number every time because the order of the methods doesn't change.
-    get_methods_id = 0
+    # The same get methods get the same number every time because their order doesn't change.
+    # Also, variable is incremented inside a list because nonlocals are only python 3.0 and up.
+    get_methods_id = [0]
 
     def memoize(func):
         if disk_or_memory == 'disk':
-            nonlocal get_methods_id
-            cache = FileCache('pokepy', flag='cs', app_cache_dir=os.path.join(cache_directory, str(get_methods_id)))
-            get_methods_id += 1
+            cache = FileCache('pokepy', flag='cs',
+                              app_cache_dir=os.path.join(cache_directory, str(get_methods_id[0])))
+            get_methods_id[0] += 1
         else:  # 'memory'
             cache = {}
 
         cache_info_ = namedtuple('CacheInfo', ['hits', 'misses', 'size'])
-        hits = misses = 0
+        hits = [0]
+        misses = [0]
 
         def cache_info():
-            return cache_info_(hits, misses, len(cache))
+            return cache_info_(hits[0], misses[0], len(cache))
 
         def cache_clear():
             cache.clear()  # for disk-based cache, files are deleted but not the directories
             if disk_or_memory == 'disk':
                 cache.create()  # recreate cache file handles
-            nonlocal hits, misses
-            hits = misses = 0
+            hits[0] = 0
+            misses[0] = 0
 
         def cache_location():
             return 'ram' if disk_or_memory == 'memory' else cache.cache_dir
@@ -73,12 +76,11 @@ def caching(disk_or_memory, cache_directory=None):
             # arguments to the get methods can be a value or uid=value
             key = str(args[1]) if len(args) > 1 else str(kwargs.get("uid"))
 
-            nonlocal hits, misses
             if key not in cache:
-                misses += 1
+                misses[0] += 1
                 cache[key] = func(*args, **kwargs)
             else:
-                hits += 1
+                hits[0] += 1
             return cache[key]
 
         memoizer.cache_info = cache_info
