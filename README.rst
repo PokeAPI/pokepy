@@ -1,17 +1,19 @@
 ===============================
-Pykemon
+Pokepy
 ===============================
 
-.. image:: https://badge.fury.io/py/pykemon.png
-    :target: http://badge.fury.io/py/pykemon
+Evolution of [`pykemon`](https://github.com/PokeAPI/pokepy/tree/bb72105f4c5402aaa5d4fd2b9c142bf9b678b254)
 
-.. image:: https://circleci.com/gh/PokeAPI/pykemon.svg?style=svg
-    :target: https://circleci.com/gh/PokeAPI/pykemon
+.. image:: https://badge.fury.io/py/pokepy.png
+    :target: http://badge.fury.io/py/pokepy
+
+.. image:: https://circleci.com/gh/PokeAPI/pokepy.svg?style=svg
+    :target: https://circleci.com/gh/PokeAPI/pokepy
 
 A python wrapper for `PokeAPI <https://pokeapi.co>`_
 
 * Free software: BSD license
-* Documentation: http://pykemon.rtfd.org.
+* Documentation: https://pokeapi.github.io/pokepy.
 
 
 Installation
@@ -21,7 +23,7 @@ Nice and simple:
 
 .. code-block:: bash
 
-    $ pip install pykemon
+    $ pip install pokepy
 
 
 Usage
@@ -31,8 +33,8 @@ Even simpler:
 
 .. code-block:: python
 
-    >>> import pykemon
-    >>> client = pykemon.V2Client()
+    >>> import pokepy
+    >>> client = pokepy.V2Client()
     >>> client.get_pokemon(1)[0]
     <Pokemon - Bulbasaur>
 

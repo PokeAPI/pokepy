@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" pykemon.api
+""" pokepy.api
 
 User interaction with this package is done through this file.
 """
@@ -14,7 +14,7 @@ class V2Client(BaseClient):
     """Pokeapi client"""
 
     class Meta(BaseClient.Meta):
-        name = 'pykemon-v2-client'
+        name = 'pokepy-v2-client'
         base_url = 'https://pokeapi.co/api/v2'
         resources = (
             rv2.BerryResource,

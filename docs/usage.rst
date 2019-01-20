@@ -2,17 +2,17 @@
 Usage
 ========
 
-To use Pykemon in a project::
+To use Pokepy in a project::
 
-    >>> import pykemon
+    >>> import pokepy
 
 ======
 API
 ======
 
-Since version 0.2.0, Pykemon now works with `Beckett <https://phalt.github.io/beckett>`_, an easy to use API Client Framework::
+Since version 0.2.0, Pokepy now works with `Beckett <https://phalt.github.io/beckett>`_, an easy to use API Client Framework::
 
-   >>> client = pykemon.V2Client()
+   >>> client = pokepy.V2Client()
    >>> bulba = client.get_pokemon(1)[0]
    <Pokemon - Bulbasaur>
    >>> bulba.name
@@ -73,18 +73,18 @@ Please refer to the pokeapi documentation (https://pokeapi.co/docs/v2.html/) for
 
 Then you can start grabbing stuff from the API::
 
-    >>> pykemon.V2Client().get_pokemon('mew')[0]
+    >>> pokepy.V2Client().get_pokemon('mew')[0]
     <Pokemon - Mew>
-    >>> pykemon.V2Client().get_pokemon(1)[0]
+    >>> pokepy.V2Client().get_pokemon(1)[0]
     <Pokemon - Bulbasaur>
-    >>> pykemon.V2Client().get_move(15)[0]
+    >>> pokepy.V2Client().get_move(15)[0]
     <Move - Cut>
-    >>> pykemon.V2Client().get_ability(15)[0]
+    >>> pokepy.V2Client().get_ability(15)[0]
     <Ability - stench>
 
 Resources that have other abilities linked are displayed as dicts::
 
-    >>> p = pykemon.V2Client().get_pokemon(1)[0]
+    >>> p = pokepy.V2Client().get_pokemon(1)[0]
     >>> p
     <Pokemon - Bulbasaur>
     >>> p.types
@@ -99,9 +99,9 @@ Options
 
 Most resources can be requested by using either the name or id::
 
-    >>> pykemon.V2Client().get_pokemon('rotom')[0]
+    >>> pokepy.V2Client().get_pokemon('rotom')[0]
     <Pokemon - Rotom>
-    >>> pykemon.V2Client().get_pokemon(479)[0]
+    >>> pokepy.V2Client().get_pokemon(479)[0]
     <Pokemon - Rotom>
 
 Make sure you use lower case strings!

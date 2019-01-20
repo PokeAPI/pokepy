@@ -1,7 +1,7 @@
-pykemon
+pokepy
 =======
 
 .. toctree::
    :maxdepth: 4
 
-   pykemon
+   pokepy

@@ -1,2 +1,3 @@
 -r requirements-dev27.txt
 pylint==2.1.1           # style
+twine

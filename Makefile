@@ -24,31 +24,31 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 lint:
-	pylint pykemon tests setup.py
+	pylint pokepy tests setup.py
 
 test:
-	python -m unittest tests.test_pykemon
+	python -m unittest tests.test_pokepy
 
 test-all:
 	tox
 
 coverage:
-	coverage run --source pykemon setup.py test
+	coverage run --source pokepy setup.py test
 	coverage report -m
 	coverage html
 	open htmlcov/index.html
 
 docs:
-	rm -f docs/pykemon.rst
+	rm -f docs/pokepy.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ pykemon
+	sphinx-apidoc -o docs/ pokepy
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	open docs/_build/html/index.html
 
-release: clean
-	python setup.py bdist_wheel upload
+release: clean sdist
+	twine upload dist/*
 
 sdist: clean
-	python setup.py sdist
+	python setup.py sdist bdist_wheel
 	ls -l dist

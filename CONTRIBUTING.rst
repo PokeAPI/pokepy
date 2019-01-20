@@ -13,7 +13,7 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/PokeAPI/pykemon/issues.
+Report bugs at https://github.com/PokeAPI/pokepy/issues.
 
 If you are reporting a bug, please include:
 
@@ -36,14 +36,14 @@ is open to whoever wants to implement it.
 Write Documentation
 ~~~~~~~~~~~~~~~~~~~
 
-Pykemon could always use more documentation, whether as part of the 
-official Pykemon docs, in docstrings, or even on the web in blog posts,
+Pokepy could always use more documentation, whether as part of the 
+official Pokepy docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to file an issue at https://github.com/PokeAPI/pykemon/issues.
+The best way to send feedback is to file an issue at https://github.com/PokeAPI/pokepy/issues.
 
 If you are proposing a feature:
 
@@ -55,17 +55,17 @@ If you are proposing a feature:
 Get Started!
 ------------
 
-Ready to contribute? Here's how to set up `pykemon` for local development.
+Ready to contribute? Here's how to set up `pokepy` for local development.
 
-1. Fork the `pykemon` repo on GitHub.
+1. Fork the `pokepy` repo on GitHub.
 2. Clone your fork locally::
 
-    $ git clone git@github.com:your_name_here/pykemon.git
+    $ git clone git@github.com:your_name_here/pokepy.git
 
 3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
 
-    $ mkvirtualenv pykemon
-    $ cd pykemon/
+    $ mkvirtualenv pokepy
+    $ cd pokepy/
     $ python setup.py develop
 
 4. Create a branch for local development::
@@ -76,7 +76,7 @@ Ready to contribute? Here's how to set up `pykemon` for local development.
 
 5. When you're done making changes, check that your changes pass pylint and the tests, including testing other Python versions with tox::
 
-    $ pylint pykemon tests setup.py
+    $ pylint pokepy tests setup.py
     $ tox
 
    To get pylint and tox, just pip install them into your virtualenv.
@@ -105,4 +105,4 @@ Tips
 
 To run a subset of tests::
 
-	$ python -m unittest tests.test_pykemon
+	$ python -m unittest tests.test_pokepy

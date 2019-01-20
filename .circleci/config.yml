@@ -13,7 +13,7 @@ jobs:
           command: pip install -r requirements.txt -r requirements-dev27.txt --user
       - run:
           name: Run Tests
-          command: python -m unittest tests.test_pykemon
+          command: python -m unittest tests.test_pokepy
 
   py36_tests:
     docker:
@@ -25,7 +25,7 @@ jobs:
           command: pip install -r requirements.txt -r requirements-dev27.txt --user
       - run:
           name: Run Tests
-          command: python -m unittest tests.test_pykemon
+          command: python -m unittest tests.test_pokepy
 
   py37_tests:
     docker:
@@ -37,10 +37,10 @@ jobs:
           command: pip install -r requirements.txt -r requirements-dev.txt --user
       - run:
           name: Lint
-          command: python -m pylint pykemon tests setup.py
+          command: python -m pylint pokepy tests setup.py
       - run:
           name: Run Tests
-          command: python -m unittest tests.test_pykemon
+          command: python -m unittest tests.test_pokepy
 
 workflows:
   version: 2

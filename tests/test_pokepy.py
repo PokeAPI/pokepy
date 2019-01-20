@@ -2,16 +2,16 @@
 # -*- coding: utf-8 -*-
 
 """
-test_pykemon
+test_pokepy
 ----------------------------------
 
-Tests for `pykemon` module.
+Tests for `pokepy` module.
 """
 
 import unittest
 import requests_mock
 from beckett.exceptions import InvalidStatusCodeError
-import pykemon
+import pokepy
 
 
 def base_get_test(self, resource, method="name"):
@@ -51,7 +51,7 @@ def base_404_test(self, resource):
 class TestV2Client(unittest.TestCase):
 
     def setUp(self):
-        self.client = pykemon.V2Client()
+        self.client = pokepy.V2Client()
         self.mock_data = '{"id": 1, "name": "test_name"}'
         self.base_url = 'https://pokeapi.co/api/v2'
 

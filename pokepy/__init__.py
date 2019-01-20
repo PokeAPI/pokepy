@@ -4,15 +4,15 @@
 """
 
 ========
-Pykemon
+Pokepy
 ========
 
 A Python wrapper for PokeAPI (https://pokeapi.co/)
 
 Usage:
 
->>> import pykemon
->>> clientV2 = pykemon.V2Client()
+>>> import pokepy
+>>> clientV2 = pokepy.V2Client()
 >>> clientV2.get_pokemon('bulbasaur')[0]
 <Pokemon - Bulbasaur>
 
