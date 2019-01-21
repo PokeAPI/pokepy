@@ -34,7 +34,7 @@ jobs:
       - checkout
       - run:
           name: Install Requirements
-          command: pip install -r requirements.txt -r requirements-dev.txt --user
+          command: sudo pip install -r requirements.txt -r requirements-dev.txt
       - run:
           name: Lint
           command: python -m pylint pokepy tests setup.py
