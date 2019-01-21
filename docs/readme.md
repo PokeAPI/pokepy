@@ -1,5 +1,5 @@
 #test
 
-{% include_relative ../README.md %}
+{% include_relative /pokepy/README.md %}
 
 # another test
