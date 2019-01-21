@@ -1,2 +1,3 @@
 beckett==0.8.0          # main functionality
+fcache==0.4.7           # disk-based cache
 requests==2.20.0        # used by beckett (bumped to avoid CVE-2018-18074)

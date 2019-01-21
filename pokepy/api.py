@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
-""" pokepy.api
+"""
+pokepy.api
 
 User interaction with this package is done through this file.
 """

@@ -1,27 +1,27 @@
 pokepy package
-==============
+===============
 
 Submodules
 ----------
 
 pokepy.api module
------------------
+------------------
 
 .. automodule:: pokepy.api
     :members:
     :undoc-members:
     :show-inheritance:
 
-pokepy.beckett\_tweaks module
------------------------------
+pokepy.beckett_tweaks module
+--------------------------
 
 .. automodule:: pokepy.beckett_tweaks
     :members:
     :undoc-members:
     :show-inheritance:
 
-pokepy.resources\_v2 module
----------------------------
+pokepy.resources_v2 module
+--------------------------
 
 .. automodule:: pokepy.resources_v2
     :members:

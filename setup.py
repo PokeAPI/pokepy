@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 import os
 import sys
@@ -14,23 +14,24 @@ if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     sys.exit()
 
-readme = open('README.rst').read()
-history = open('HISTORY.rst').read().replace('.. :changelog:', '')
+with open('README.md') as readme_md, open('HISTORY.rst') as history_rst:
+    readme = readme_md.read()
+    history = history_rst.read().replace('.. :changelog:', '')
 
 setup(
     name='pokepy',
-    version='0.4.0',
+    version='0.5.0',
     description='A Python wrapper for PokeAPI',
     long_description=readme + '\n\n' + history,
     author='Paul Hallett',
     author_email='hello@phalt.co',
-    url='https://github.com/pokeapi/pokepy',
+    url='https://github.com/PokeAPI/pokepy',
     packages=[
         'pokepy',
     ],
     package_dir={'pokepy': 'pokepy'},
     include_package_data=True,
-    install_requires=["beckett==0.8.0"],
+    install_requires=["beckett==0.8.0", "fcache==0.4.7", "requests==2.20.0"],
     license="BSD",
     zip_safe=False,
     keywords='pokepy',

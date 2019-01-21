@@ -1,5 +1,4 @@
 pokepy
-======
 
 .. toctree::
    :maxdepth: 4

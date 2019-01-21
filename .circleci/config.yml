@@ -17,7 +17,7 @@ jobs:
 
   py36_tests:
     docker:
-      - image: circleci/python:3.6.6
+      - image: circleci/python:3.6.8
     steps:
       - checkout
       - run:
@@ -29,7 +29,7 @@ jobs:
 
   py37_tests:
     docker:
-      - image: circleci/python:3.7.0
+      - image: circleci/python:3.7.2
     steps:
       - checkout
       - run:
@@ -43,7 +43,7 @@ jobs:
           command: python -m unittest tests.test_pokepy
       - run:
           name: Run Coverage tool
-          command: coverage run --source pokepy setup.py test
+          command: coverage run --source pokepy -m unittest tests.test_pokepy
       - run:
           name: Generate XML coverage report
           command: coverage xml
