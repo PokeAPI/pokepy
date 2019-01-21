@@ -1,15 +1,20 @@
-# Credits
+=======
+Credits
+=======
 
-## Development Lead
+Development Lead
+----------------
 
 * Paul Hallett <paulandrewhallett@gmail.com>
 
-## Contributors
+Contributors
+------------
 
 * Owen Hallett
 * Kronopt
 
-## Maintainer
+Maintainer
+----------
 
 * Kronopt
 
