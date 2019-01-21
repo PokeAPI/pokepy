@@ -3,7 +3,7 @@
 version: 2
 
 jobs:
-  py27_tests:
+  py27:
     docker:
       - image: circleci/python:2.7.15
     steps:
@@ -15,7 +15,7 @@ jobs:
           name: Run Tests
           command: python -m unittest tests.test_pokepy
 
-  py36_tests:
+  py36:
     docker:
       - image: circleci/python:3.6.8
     steps:
@@ -27,14 +27,14 @@ jobs:
           name: Run Tests
           command: python -m unittest tests.test_pokepy
 
-  py37_tests:
+  py37:
     docker:
       - image: circleci/python:3.7.2
     steps:
       - checkout
       - run:
           name: Install Requirements
-          command: sudo pip install -r requirements.txt -r requirements-dev.txt -r requirements-dev27.txt
+          command: pip install -r requirements.txt -r requirements-dev.txt --user
       - run:
           name: Lint
           command: python -m pylint pokepy tests setup.py
@@ -55,6 +55,6 @@ workflows:
   version: 2
   run_tests:
     jobs:
-      - py27_tests
-      - py36_tests
-      - py37_tests
+      - py27
+      - py36
+      - py37
