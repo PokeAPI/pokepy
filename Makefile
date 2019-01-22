@@ -7,7 +7,8 @@ help:
 	@echo "test - run tests quickly with the default Python"
 	@echo "testall - run tests on every Python version with tox"
 	@echo "coverage - check code coverage quickly with the default Python"
-	@echo "docs - generate Sphinx HTML documentation, including API docs"
+	@echo "docs - generate MkDocs HTML documentation"
+	@echo "docs-test - live test the current documentation"
 	@echo "release - package and upload a release"
 	@echo "sdist - package"
 
@@ -39,12 +40,11 @@ coverage:
 	open htmlcov/index.html
 
 docs:
-	rm -f docs/pokepy.rst
-	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ pokepy
-	make -C docs clean
-	make -C docs html
-	open docs/_build/html/index.html
+    mkdocs build
+    open site/index.html
+
+docs-test:
+    mkdocs serve
 
 release: clean sdist
 	twine upload dist/*
