@@ -31,6 +31,6 @@ For more information, check the documentation: https://pokeapi.github.io/pokepy
 
 # Features
 
-* Generate Python objects from PokeAPI resources
+* Generate Python objects from PokéAPI resources
 * Cache
 * Human-friendly API
