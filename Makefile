@@ -33,7 +33,7 @@ test-all:
 	tox
 
 coverage:
-	coverage run --source pokepy setup.py test
+	coverage run --source pokepy -m unittest tests.test_pokepy
 	coverage report -m
 	coverage html
 	open htmlcov/index.html
