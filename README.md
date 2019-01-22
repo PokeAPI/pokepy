@@ -11,7 +11,7 @@ A python wrapper for [PokeAPI](https://pokeapi.co). (former [pykemon](https://gi
 Maintainer: [Kronopt](https://github.com/Kronopt)
 
 # Installation
-Nice and simple (soon a new pypi page will be created):
+Nice and simple:
 
 ```
 $ pip install pokepy
