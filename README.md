@@ -14,7 +14,7 @@ Maintainer: [Kronopt](https://github.com/Kronopt)
 Nice and simple (soon a new pypi page will be created):
 
 ```
-$ pip install git+https://github.com/PokeAPI/pokepy.git@master
+$ pip install pokepy
 ```
 
 # Usage
