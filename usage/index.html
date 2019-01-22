@@ -1,0 +1,601 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.2.0">
+    
+    
+      
+        <title>Usage - Pokepy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.572ca0f0.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.8c900955.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#usage" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="Pokepy" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                Pokepy
+              </span>
+              <span class="md-header-nav__topic">
+                Usage
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="Pokepy" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Pokepy
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../installation/" title="Installation" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Usage
+      </label>
+    
+    <a href="./" title="Usage" class="md-nav__link md-nav__link--active">
+      Usage
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#api" title="API" class="md-nav__link">
+    API
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#options" title="Options" class="md-nav__link">
+    Options
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache" title="Cache" class="md-nav__link">
+    Cache
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#in-memory" title="In-memory" class="md-nav__link">
+    In-memory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#in-disk" title="In-disk" class="md-nav__link">
+    In-disk
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../contributing/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../authors/" title="Authors" class="md-nav__link">
+      Authors
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../history/" title="History" class="md-nav__link">
+      History
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#api" title="API" class="md-nav__link">
+    API
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#options" title="Options" class="md-nav__link">
+    Options
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cache" title="Cache" class="md-nav__link">
+    Cache
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#in-memory" title="In-memory" class="md-nav__link">
+    In-memory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#in-disk" title="In-disk" class="md-nav__link">
+    In-disk
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="usage">Usage</h1>
+<p>To use Pokepy in a project:</p>
+<pre><code class="python">&gt;&gt;&gt; import pokepy
+</code></pre>
+
+<h3 id="api">API</h3>
+<p>Pokepy works with <a href="https://phalt.github.io/beckett">Beckett</a>, since version 0.2.0:</p>
+<pre><code class="python">&gt;&gt;&gt; client = pokepy.V2Client()
+&gt;&gt;&gt; kakuna = client.get_pokemon(14)[0]
+&lt;Pokemon - Kakuna&gt;
+&gt;&gt;&gt; kakuna.name
+Kakuna
+</code></pre>
+
+<p>The following methods are defined for the <code>V2Client</code> and all take a single parameter (<code>uid</code>):</p>
+<ul>
+<li>get_berry</li>
+<li>get_berry_firmness</li>
+<li>get_berry_flavor</li>
+<li>get_contest_type</li>
+<li>get_contest_effect</li>
+<li>get_super_contest_effect</li>
+<li>get_encounter_method</li>
+<li>get_encounter_condition</li>
+<li>get_encounter_condition_value</li>
+<li>get_evolution_chain</li>
+<li>get_evolution_trigger</li>
+<li>get_generation</li>
+<li>get_pokedex</li>
+<li>get_version</li>
+<li>get_version_group</li>
+<li>get_item</li>
+<li>get_item_attribute</li>
+<li>get_item_category</li>
+<li>get_item_fling_effect</li>
+<li>get_item_pocket</li>
+<li>get_machine</li>
+<li>get_move</li>
+<li>get_move_ailment</li>
+<li>get_move_battle_style</li>
+<li>get_move_category</li>
+<li>get_move_damage_class</li>
+<li>get_move_learn_method</li>
+<li>get_move_target</li>
+<li>get_location</li>
+<li>get_location_area</li>
+<li>get_pal_park_area</li>
+<li>get_region</li>
+<li>get_ability</li>
+<li>get_characteristic</li>
+<li>get_egg_group</li>
+<li>get_gender</li>
+<li>get_growth_rate</li>
+<li>get_nature</li>
+<li>get_pokeathlon_stat</li>
+<li>get_pokemon</li>
+<li>get_pokemon_color</li>
+<li>get_pokemon_form</li>
+<li>get_pokemon_habitat</li>
+<li>get_pokemon_shape</li>
+<li>get_pokemon_species</li>
+<li>get_stat</li>
+<li>get_type</li>
+<li>get_language</li>
+</ul>
+<p>Please refer to the <a href="https://pokeapi.co/docs/v2.html/">Pokeapi documentation</a>
+for more information on what each of these methods returns.</p>
+<p>Then you can start grabbing stuff from the API:</p>
+<pre><code class="python">&gt;&gt;&gt; pokepy.V2Client().get_pokemon('mew')[0]
+&lt;Pokemon - Mew&gt;
+&gt;&gt;&gt; pokepy.V2Client().get_pokemon(14)[0]
+&lt;Pokemon - Kakuna&gt;
+&gt;&gt;&gt; pokepy.V2Client().get_move(15)[0]
+&lt;Move - Cut&gt;
+&gt;&gt;&gt; pokepy.V2Client().get_ability(15)[0]
+&lt;Ability - stench&gt;
+</code></pre>
+
+<p>Some resources have subresources:</p>
+<pre><code class="python">&gt;&gt;&gt; kakuna = pokepy.V2Client().get_pokemon(1)[0]
+&gt;&gt;&gt; kakuna
+&lt;Pokemon - Kakuna&gt;
+&gt;&gt;&gt; kakuna.types
+[&lt;Pokemon_Type&gt;, &lt;Pokemon_Type&gt;]
+</code></pre>
+
+<h3 id="options">Options</h3>
+<p>Most resources can be requested by using either the name or id:</p>
+<pre><code class="python">&gt;&gt;&gt; pokepy.V2Client().get_pokemon('rotom')[0]
+&lt;Pokemon - Rotom&gt;
+&gt;&gt;&gt; pokepy.V2Client().get_pokemon(479)[0]
+&lt;Pokemon - Rotom&gt;
+</code></pre>
+
+<h3 id="cache">Cache</h3>
+<p>If you use the API to get the same resources often, you can enable cache to avoid making unnecessary requests to the pokeapi server.
+You can either enable <code>in-memory</code> or <code>in-disk</code> cache.
+Cache is kept per get method.</p>
+<h4 id="in-memory">In-memory</h4>
+<p><code>in-memory</code> cache saves resources in RAM. Cache is kept per get method:</p>
+<pre><code class="python">&gt;&gt;&gt; client = pokepy.V2Client(cache='in_memory')
+</code></pre>
+
+<p>To check the state of the cache of a particular method::</p>
+<pre><code class="python">&gt;&gt;&gt; kakuna = client.get_pokemon(14)
+&gt;&gt;&gt; kakuna.get_pokemon.cache_info()
+CacheInfo(hits=0, misses=1, size=1)
+</code></pre>
+
+<p>Calling the same resource as before will retrieve the resource from the cache:</p>
+<pre><code class="python">&gt;&gt;&gt; kakuna = client.get_pokemon(14)
+&gt;&gt;&gt; client.get_pokemon.cache_info()
+CacheInfo(hits=1, misses=1, size=1)
+</code></pre>
+
+<p>To clear the cache of a specific get method:</p>
+<pre><code class="python">&gt;&gt;&gt; client.get_pokemon.cache_clear()
+&gt;&gt;&gt; client.get_pokemon.cache_info()
+CacheInfo(hits=0, misses=0, size=0)
+</code></pre>
+
+<h4 id="in-disk">In-disk</h4>
+<p><code>in-disk</code> cache saves resources to the disk. Cache is kept per get method:</p>
+<pre><code class="python">&gt;&gt;&gt; client = pokepy.V2Client(cache='in_disk', cache_location='/temp')
+</code></pre>
+
+<p>The same methods are used as with <code>in-memory</code> to check the state and clear the cache.
+You can also check the cache directory:</p>
+<pre><code class="python">&gt;&gt;&gt; client.get_pokemon.cache_location()
+/temp
+</code></pre>
+
+<p>Disk-based cache is reloaded automatically between runs if the same cache directory is specified.</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../installation/" title="Installation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Installation
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../contributing/" title="Contributing" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Contributing
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.b41f3d20.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>
