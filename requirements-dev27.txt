@@ -1,4 +1,5 @@
-Sphinx==1.8.1           # docs
-coverage==4.5.1         # coverage
-requests-mock==1.5.2    # tests
-tox==3.5.2              # tests
+mkdocs==1.0.*           # docs
+mkdocs-material==3.2.*  # docs
+coverage==4.5.*         # coverage
+requests-mock==1.5.*    # tests
+tox==3.5.*              # tests
