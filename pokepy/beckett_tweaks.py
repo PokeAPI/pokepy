@@ -148,6 +148,7 @@ class BaseClient(BaseClient):
                 method_name=method_name,
                 valid_status_codes=valid_status_codes,
                 resource=resource_class, data=None, **kwargs):
+            uid = uid.lower() if isinstance(uid, str) else uid
             return self.call_api(
                 method_type, method_name,
                 valid_status_codes, resource,
