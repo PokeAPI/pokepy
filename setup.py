@@ -14,9 +14,9 @@ if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     sys.exit()
 
-with open('README.md') as readme_md, open('HISTORY.rst') as history_rst:
+with open('README.md') as readme_md, open('docs/history.md') as history_md:
     readme = readme_md.read()
-    history = history_rst.read().replace('.. :changelog:', '')
+    history = history_md.read()
 
 setup(
     name='pokepy',
