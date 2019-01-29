@@ -102,9 +102,9 @@ Some resources have subresources:
 >>> kakuna = pokepy.V2Client().get_pokemon(14)
 >>> kakuna
 [<Pokemon - Kakuna>]
->>> kakuna.types
+>>> kakuna[0].types
 [<Pokemon_Type>, <Pokemon_Type>]
->>> kakuna.types[0].type.name
+>>> kakuna[0].types[0].type.name
 poison
 ```
 
