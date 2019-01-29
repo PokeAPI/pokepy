@@ -12,7 +12,7 @@ from . import resources_v2 as rv2
 
 
 class V2Client(BaseClient):
-    """Pokeapi client"""
+    """Pokéapi client"""
 
     class Meta(BaseClient.Meta):
         name = 'pokepy-v2-client'

@@ -5,141 +5,185 @@ To use Pokepy in a project:
 ```
 
 ### API
-Pokepy works with [Beckett](https://phalt.github.io/beckett), since version 0.2.0:
+Pokepy is composed of a single class, `V2Client`, which implements the whole 
+[v2 PokéAPI](https://pokeapi.co/docs/v2.html).
+This class is usually instantiated without parameters:
 ```python
 >>> client = pokepy.V2Client()
->>> kakuna = client.get_pokemon(14)[0]
-<Pokemon - Kakuna>
->>> kakuna.name
-Kakuna
 ```
+Unless you want to use the caching feature, which is discussed [further below](#cache).
 
-The following methods are defined for the `V2Client` and all take a single parameter (`uid`):
+Each endpoint of PokéAPI is represented in `V2Client` by a `get_<endpoint_name>` method,
+all taking a single parameter (`uid`), which can be either an `integer` (for most endpoints) or a `string`.
 
-* get_berry
-* get_berry_firmness
-* get_berry_flavor
-* get_contest_type
-* get_contest_effect
-* get_super_contest_effect
-* get_encounter_method
-* get_encounter_condition
-* get_encounter_condition_value
-* get_evolution_chain
-* get_evolution_trigger
-* get_generation
-* get_pokedex
-* get_version
-* get_version_group
-* get_item
-* get_item_attribute
-* get_item_category
-* get_item_fling_effect
-* get_item_pocket
-* get_machine
-* get_move
-* get_move_ailment
-* get_move_battle_style
-* get_move_category
-* get_move_damage_class
-* get_move_learn_method
-* get_move_target
-* get_location
-* get_location_area
-* get_pal_park_area
-* get_region
-* get_ability
-* get_characteristic
-* get_egg_group
-* get_gender
-* get_growth_rate
-* get_nature
-* get_pokeathlon_stat
-* get_pokemon
-* get_pokemon_color
-* get_pokemon_form
-* get_pokemon_habitat
-* get_pokemon_shape
-* get_pokemon_species
-* get_stat
-* get_type
-* get_language
+The following is an exhaustive list of all the endpoints with links to their respective PokéAPI documentation:
 
-Please refer to the [Pokeapi documentation](https://pokeapi.co/docs/v2.html/)
-for more information on what each of these methods returns.
+* [get_berry](https://pokeapi.co/docs/v2.html/#berries)
+* [get_berry_firmness](https://pokeapi.co/docs/v2.html/#berry-firmnesses)
+* [get_berry_flavor](https://pokeapi.co/docs/v2.html/#berry-flavors)
+* [get_contest_type](https://pokeapi.co/docs/v2.html/#contest-types)
+* [get_contest_effect](https://pokeapi.co/docs/v2.html/#contest-effects)
+* [get_super_contest_effect](https://pokeapi.co/docs/v2.html/#super-contest-effects)
+* [get_encounter_method](https://pokeapi.co/docs/v2.html/#encounter-methods)
+* [get_encounter_condition](https://pokeapi.co/docs/v2.html/#encounter-conditions)
+* [get_encounter_condition_value](https://pokeapi.co/docs/v2.html/#encounter-condition-values)
+* [get_evolution_chain](https://pokeapi.co/docs/v2.html/#evolution-chains)
+* [get_evolution_trigger](https://pokeapi.co/docs/v2.html/#evolution-triggers)
+* [get_generation](https://pokeapi.co/docs/v2.html/#generations)
+* [get_pokedex](https://pokeapi.co/docs/v2.html/#pokedexes)
+* [get_version](https://pokeapi.co/docs/v2.html/#version)
+* [get_version_group](https://pokeapi.co/docs/v2.html/#version-groups)
+* [get_item](https://pokeapi.co/docs/v2.html/#item)
+* [get_item_attribute](https://pokeapi.co/docs/v2.html/#item-attributes)
+* [get_item_category](https://pokeapi.co/docs/v2.html/#item-categories)
+* [get_item_fling_effect](https://pokeapi.co/docs/v2.html/#item-fling-effects)
+* [get_item_pocket](https://pokeapi.co/docs/v2.html/#item-pockets)
+* [get_location](https://pokeapi.co/docs/v2.html/#locations)
+* [get_location_area](https://pokeapi.co/docs/v2.html/#location-areas)
+* [get_pal_park_area](https://pokeapi.co/docs/v2.html/#pal-park-areas)
+* [get_region](https://pokeapi.co/docs/v2.html/#regions)
+* [get_machine](https://pokeapi.co/docs/v2.html/#machines)
+* [get_move](https://pokeapi.co/docs/v2.html/#moves)
+* [get_move_ailment](https://pokeapi.co/docs/v2.html/#move-ailments)
+* [get_move_battle_style](https://pokeapi.co/docs/v2.html/#move-battle-styles)
+* [get_move_category](https://pokeapi.co/docs/v2.html/#move-categories)
+* [get_move_damage_class](https://pokeapi.co/docs/v2.html/#move-damage-classes)
+* [get_move_learn_method](https://pokeapi.co/docs/v2.html/#move-learn-methods)
+* [get_move_target](https://pokeapi.co/docs/v2.html/#move-targets)
+* [get_ability](https://pokeapi.co/docs/v2.html/#abilities)
+* [get_characteristic](https://pokeapi.co/docs/v2.html/#characteristics)
+* [get_egg_group](https://pokeapi.co/docs/v2.html/#egg-groups)
+* [get_gender](https://pokeapi.co/docs/v2.html/#genders)
+* [get_growth_rate](https://pokeapi.co/docs/v2.html/#growth-rates)
+* [get_nature](https://pokeapi.co/docs/v2.html/#natures)
+* [get_pokeathlon_stat](https://pokeapi.co/docs/v2.html/#pokeathlon-stats)
+* [get_pokemon](https://pokeapi.co/docs/v2.html/#pokemon)
+* [get_pokemon_color](https://pokeapi.co/docs/v2.html/#pok%C3%A9mon-colors)
+* [get_pokemon_form](https://pokeapi.co/docs/v2.html/#pok%C3%A9mon-forms)
+* [get_pokemon_habitat](https://pokeapi.co/docs/v2.html/#pok%C3%A9mon-habitats)
+* [get_pokemon_shape](https://pokeapi.co/docs/v2.html/#pok%C3%A9mon-shapes)
+* [get_pokemon_species](https://pokeapi.co/docs/v2.html/#pok%C3%A9mon-species)
+* [get_stat](https://pokeapi.co/docs/v2.html/#stats)
+* [get_type](https://pokeapi.co/docs/v2.html/#types)
+* [get_language](https://pokeapi.co/docs/v2.html/#languages)
+
+Each method returns an object containing as many python attributes as there are named attributes.
+Please refer to the [PokéAPI documentation](https://pokeapi.co/docs/v2.html/)
+for more information on what each of these methods returns, its description and type.
 
 Then you can start grabbing stuff from the API:
 ```python
->>> pokepy.V2Client().get_pokemon('mew')[0]
-<Pokemon - Mew>
->>> pokepy.V2Client().get_pokemon(14)[0]
-<Pokemon - Kakuna>
->>> pokepy.V2Client().get_move(15)[0]
-<Move - Cut>
->>> pokepy.V2Client().get_ability(15)[0]
-<Ability - stench>
+>>> mew = pokepy.V2Client().get_pokemon('mew')
+>>> mew
+[<Pokemon - Mew>]
+>>> mew[0].name
+mew
+```
+
+```python
+>>> kakuna = pokepy.V2Client().get_pokemon(14)
+>>> kakuna
+[<Pokemon - Kakuna>]
+>>> kakuna[0].weigth
+100
+```
+
+```python
+>>> cut = pokepy.V2Client().get_move(15)
+>>> cut
+[<Move - Cut>]
+>>> cut[0].power
+50
 ```
 
 Some resources have subresources:
+
 ```python
->>> kakuna = pokepy.V2Client().get_pokemon(1)[0]
+>>> kakuna = pokepy.V2Client().get_pokemon(14)
 >>> kakuna
-<Pokemon - Kakuna>
+[<Pokemon - Kakuna>]
 >>> kakuna.types
 [<Pokemon_Type>, <Pokemon_Type>]
+>>> kakuna.types[0].type.name
+poison
 ```
 
-### Options
-Most resources can be requested by using either the name or id:
 ```python
->>> pokepy.V2Client().get_pokemon('rotom')[0]
-<Pokemon - Rotom>
->>> pokepy.V2Client().get_pokemon(479)[0]
-<Pokemon - Rotom>
+>>> insomnia = pokepy.V2Client().get_ability(15)
+>>> insomnia
+[<Ability - Insomnia>]
+>>> insomnia[0].effect_entries[0].short_effect
+Prevents sleep.
+```
+
+### Parameters
+Most resources can be requested by using either the `name` or `id` of the resource:
+```python
+>>> pokepy.V2Client().get_pokemon('rotom')
+[<Pokemon - Rotom>]
+>>> pokepy.V2Client().get_pokemon(479)
+[<Pokemon - Rotom>]
+>>> pokepy.V2Client().get_pokemon('479')
+[<Pokemon - Rotom>]
 ```
 
 ### Cache
-If you use the API to get the same resources often, you can enable cache to avoid making unnecessary requests to the pokeapi server.
+If you use the API to get the same resources often,
+you can enable cache to avoid making unnecessary requests to the PokéAPI server.
 You can either enable `in-memory` or `in-disk` cache.
 Cache is kept per get method.
 
 #### In-memory
 `in-memory` cache saves resources in RAM. Cache is kept per get method:
 ```python
->>> client = pokepy.V2Client(cache='in_memory')
+>>> client_mem_cache = pokepy.V2Client(cache='in_memory')
 ```
 
-To check the state of the cache of a particular method::
+To check the state of the cache of a particular method:
 ```python
->>> kakuna = client.get_pokemon(14)
->>> kakuna.get_pokemon.cache_info()
+>>> client_mem_cache.get_pokemon.cache_info()
+CacheInfo(hits=0, misses=0, size=0)
+```
+`hits` is the number of previously cached parametes which were returned,
+`misses` is the number given parameters not previously cached (which are now cached),
+and `size` is the total number of cached parameters.
+
+When calling a certain endpoint, the `cache_info` reflects that call:
+```python
+>>> kakuna = client_mem_cache.get_pokemon(14)
+>>> client_mem_cache.get_pokemon.cache_info()
 CacheInfo(hits=0, misses=1, size=1)
 ```
 
-Calling the same resource as before will retrieve the resource from the cache:
+Calling the same resource as before with the same parameters will retrieve
+the cached resource instead of getting it from the server:
 ```python
->>> kakuna = client.get_pokemon(14)
->>> client.get_pokemon.cache_info()
+>>> kakuna = client_mem_cache.get_pokemon(14)
+>>> client_mem_cache.get_pokemon.cache_info()
 CacheInfo(hits=1, misses=1, size=1)
 ```
 
 To clear the cache of a specific get method:
 ```python
->>> client.get_pokemon.cache_clear()
->>> client.get_pokemon.cache_info()
+>>> client_mem_cache.get_pokemon.cache_clear()
+>>> client_mem_cache.get_pokemon.cache_info()
 CacheInfo(hits=0, misses=0, size=0)
 ```
 
 #### In-disk
 `in-disk` cache saves resources to the disk. Cache is kept per get method:
 ```python
->>> client = pokepy.V2Client(cache='in_disk', cache_location='/temp')
+>>> client_disk_cache = pokepy.V2Client(cache='in_disk', cache_location='/temp')
 ```
 
+For disk-based cache it's possible to specify the cache directory with `cache_location`.
+If no cache directory is specified a system-appropriate cache directory is automatically determined by
+[appdirs](https://pypi.org/project/appdirs/).
+ 
 The same methods are used as with `in-memory` to check the state and clear the cache.
 You can also check the cache directory:
 ```python
->>> client.get_pokemon.cache_location()
+>>> client_disk_cache.get_pokemon.cache_location()
 /temp
 ```
 

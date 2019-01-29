@@ -23,8 +23,8 @@ Even simpler:
 ```python
 >>> import pokepy
 >>> client = pokepy.V2Client()
->>> client.get_pokemon(14)[0]
-<Pokemon - Kakuna>
+>>> client.get_pokemon(14)
+[<Pokemon - Kakuna>]
 ```
 
 For more information, check the documentation: https://pokeapi.github.io/pokepy

@@ -26,21 +26,6 @@ pip-log.txt
 .coverage
 .tox
 
-# Translations
-*.mo
-
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
-
-# Complexity
-output/*.html
-output/*/index.html
-
-# Sphinx
-docs/_build
-
 # htmlcov
 htmlcov/
 
@@ -49,6 +34,9 @@ htmlcov/
 
 # virtual environment
 venv/
+
+# Mkdocs build dir
+site/
 
 package-lock.json
 node_modules

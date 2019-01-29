@@ -21,7 +21,7 @@ with open('README.md') as readme_md, open('docs/history.md') as history_md:
 setup(
     name='pokepy',
     version='0.5.0',
-    description='A Python wrapper for PokeAPI',
+    description='A Python wrapper for PokéAPI',
     long_description=readme + '\n\n' + history,
     author='Paul Hallett',
     author_email='hello@phalt.co',

@@ -4,13 +4,13 @@
 """
 Pokepy
 
-A Python wrapper for PokeAPI (https://pokeapi.co)
+A Python wrapper for PokéAPI (https://pokeapi.co)
 
 Usage:
 >>> import pokepy
 >>> clientV2 = pokepy.V2Client()
->>> clientV2.get_pokemon('bulbasaur')[0]
-<Pokemon - Bulbasaur>
+>>> clientV2.get_pokemon('bulbasaur')
+[<Pokemon - Bulbasaur>]
 """
 
 __author__ = 'Paul Hallett'
