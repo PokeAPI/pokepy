@@ -1,5 +1,0 @@
-mkdocs==1.0.*           # docs
-mkdocs-material==3.2.*  # docs
-coverage==4.5.*         # coverage
-requests-mock==1.5.*    # tests
-tox==3.5.*              # tests

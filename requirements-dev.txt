@@ -1,3 +1,0 @@
--r requirements-dev27.txt
-pylint==2.1.*           # style
-twine==1.12.*           # pypi tools
