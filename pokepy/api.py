@@ -9,13 +9,14 @@ User interaction with this package is done through this file.
 
 from .beckett_tweaks import BaseClient
 from . import resources_v2 as rv2
+from . import __version__
 
 
 class V2Client(BaseClient):
     """Pokéapi client"""
 
     class Meta(BaseClient.Meta):
-        name = 'pokepy-v2-client'
+        name = 'pokepy-v2-client-' + __version__
         base_url = 'https://pokeapi.co/api/v2'
         resources = (
             rv2.BerryResource,
