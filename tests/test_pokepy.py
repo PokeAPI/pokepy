@@ -28,13 +28,21 @@ def base_get_test(self, resource, method='name'):
     """
     with requests_mock.mock() as mock:
         mock.get('%s/%s/1' % (self.base_url, resource), text=self.mock_data)
-        response = getattr(self.client,
-                           'get_%s' % resource.replace('-', '_'))(1)[0]
+
+        # test int uid
+        response_int = getattr(self.client,
+                               'get_%s' % resource.replace('-', '_'))(1)[0]
+
+        # test str uid
+        response_str = getattr(self.client,
+                               'get_%s' % resource.replace('-', '_'))("1")[0]
 
         if method == 'name':
-            self.assertEqual(response.name, 'test_name')
+            self.assertEqual(response_int.name, 'test_name')
+            self.assertEqual(response_str.name, 'test_name')
         elif method == 'id':
-            self.assertEqual(response.id, 1)
+            self.assertEqual(response_int.id, 1)
+            self.assertEqual(response_str.id, 1)
 
 
 def base_404_test(self, resource):
