@@ -27,7 +27,8 @@ Even simpler:
 [<Pokemon - Kakuna>]
 ```
 
-For more information, check the documentation: https://pokeapi.github.io/pokepy
+# Documentation
+For more information, check the documentation at https://pokeapi.github.io/pokepy
 
 # Features
 
