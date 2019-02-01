@@ -52,8 +52,11 @@ def caching(disk_or_memory, cache_directory=None):
 
     def memoize(func):
         if disk_or_memory == 'disk':
-            cache = FileCache('pokepy', flag='cs',
-                              app_cache_dir=os.path.join(cache_directory, str(get_methods_id[0])))
+            if cache_directory:
+                cache_dir = os.path.join(cache_directory, 'pokepy_cache', str(get_methods_id[0]))
+            else:
+                cache_dir = None
+            cache = FileCache('pokepy', flag='cs', app_cache_dir=cache_dir)
             get_methods_id[0] += 1
         else:  # 'memory'
             cache = {}
