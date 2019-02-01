@@ -13,6 +13,11 @@ from beckett.exceptions import InvalidStatusCodeError
 import pokepy
 
 
+BASE_URL = 'https://pokeapi.co/api/v2'
+MOCK_DATA = '{"id": "1", "name": "test_name"}'
+MOCK_DATA2 = '{"id": "2", "name": "test_name2"}'
+
+
 def base_get_test(self, resource, method='name'):
     """
     Base 'get' test function for V2Client
@@ -27,22 +32,21 @@ def base_get_test(self, resource, method='name'):
         'name' or 'id' (sometimes resources only have one of them)
     """
     with requests_mock.mock() as mock:
-        mock.get('%s/%s/1' % (self.base_url, resource), text=self.mock_data)
+        mock.get('%s/%s/1' % (BASE_URL, resource), text=MOCK_DATA)
 
         # test int uid
         response_int = getattr(self.client,
                                'get_%s' % resource.replace('-', '_'))(1)[0]
-
         # test str uid
         response_str = getattr(self.client,
-                               'get_%s' % resource.replace('-', '_'))("1")[0]
+                               'get_%s' % resource.replace('-', '_'))('1')[0]
 
         if method == 'name':
             self.assertEqual(response_int.name, 'test_name')
             self.assertEqual(response_str.name, 'test_name')
         elif method == 'id':
-            self.assertEqual(response_int.id, 1)
-            self.assertEqual(response_str.id, 1)
+            self.assertEqual(response_int.id, '1')
+            self.assertEqual(response_str.id, '1')
 
 
 def base_404_test(self, resource):
@@ -57,19 +61,66 @@ def base_404_test(self, resource):
         Resource to be tested
     """
     with requests_mock.mock() as mock:
-        mock.get('%s/%s/1' % (self.base_url, resource), status_code=404)
+        mock.get('%s/%s/1' % (BASE_URL, resource), status_code=404)
         self.assertRaises(
             InvalidStatusCodeError,
             lambda: getattr(self.client,
                             'get_%s' % resource.replace('-', '_'))(1)[0])
 
 
+def base_cache_test(self, resource):
+    """
+    Base cache test function for V2Client
+
+    Parameters
+    ----------
+    self: TestV2ClientCacheInMemory
+        TestV2ClientCacheInMemory instance (self)
+    resource: str
+        Resource to be tested
+    """
+    with requests_mock.mock() as mock:
+        mock.get('%s/%s/1' % (BASE_URL, resource), text=MOCK_DATA)
+        mock.get('%s/%s/2' % (BASE_URL, resource), text=MOCK_DATA2)
+        resource_get_method = getattr(self.client,
+                                      'get_%s' % resource.replace('-', '_'))
+
+        # starts with 0 hits, 0 misses, and 0 cache
+        self.assertEqual(resource_get_method.cache_info(), (0, 0, 0))
+
+        # call resource
+        _ = resource_get_method(1)
+        # 1 miss and 1 cached
+        self.assertEqual(resource_get_method.cache_info(), (0, 1, 1))
+
+        # call same resource again
+        _ = resource_get_method(1)
+        # 1 hit, 1 miss, and 1 cached
+        self.assertEqual(resource_get_method.cache_info(), (1, 1, 1))
+
+        # call other resource
+        _ = resource_get_method(2)
+        # 1 hit, 2 miss, and 2 cached
+        self.assertEqual(resource_get_method.cache_info(), (1, 2, 2))
+
+        # clear cache
+        resource_get_method.cache_clear()
+        # 0 hits, 0 misses, and 0 cache
+        self.assertEqual(resource_get_method.cache_info(), (0, 0, 0))
+
+        if self.cache_type == 'in_memory':
+            self.assertEqual(resource_get_method.cache_location(), 'ram')
+        if self.cache_type == 'in_disk':
+            self.assertEqual(resource_get_method.cache_location(), )
+
+        # TODO não sei se faço este teste do cache_location...
+        # TODO clean if in_disk
+
+
 class TestV2Client(unittest.TestCase):
 
     def setUp(self):
         self.client = pokepy.V2Client()
-        self.mock_data = '{"id": 1, "name": "test_name"}'
-        self.base_url = 'https://pokeapi.co/api/v2'
 
     def test_get_berry_resource(self):
         base_get_test(self, "berry")
@@ -358,6 +409,16 @@ class TestV2Client(unittest.TestCase):
 
     def test_404_language_resource(self):
         base_404_test(self, "language")
+
+
+class TestV2ClientCacheInMemory(unittest.TestCase):
+
+    def setUp(self):
+        self.client = pokepy.V2Client(cache='in_memory')
+        self.cache_type = 'in_memory'
+
+    # def test_get_berry_resource(self):
+    #     base_get_test(self, "berry")
 
 
 if __name__ == '__main__':
