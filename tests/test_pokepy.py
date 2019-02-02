@@ -115,6 +115,7 @@ def base_cache_test(self, resource):
 
         # TODO não sei se faço este teste do cache_location...
         # TODO clean if in_disk
+        # TODO separate str uid and int uid in different tests
 
 
 class TestV2Client(unittest.TestCase):
