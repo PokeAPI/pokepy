@@ -37,15 +37,19 @@ def base_get_test(self, resource, method='name', uid_str=True):
         If True pass uid parameter as str, else pass int
     """
     with requests_mock.mock() as mock:
+        mock.get('%s/%s/test' % (base_url, resource), text=mock_data)
         mock.get('%s/%s/1' % (base_url, resource), text=mock_data)
 
-        uid = '1' if uid_str else 1
+        uid = 'test' if uid_str else 1
         response = getattr(self.client, 'get_%s' % resource.replace('-', '_'))(uid)[0]
+        response_upper = getattr(self.client, 'get_%s' % resource.replace('-', '_'))('TEST')[0]
 
         if method == 'name':
             self.assertEqual(response.name, 'test_name')
+            self.assertEqual(response_upper.name, 'test_name')
         elif method == 'id':
             self.assertEqual(response.id, '1')
+            self.assertEqual(response_upper.id, '1')
 
 
 def base_repr_test(self, resource):
