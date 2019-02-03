@@ -1109,7 +1109,7 @@ class BerryFlavorResource(BaseResource):
 class ContestTypeResource(BaseResource):
 
     class Meta(BaseResource.Meta):
-        name = 'Contest_type'
+        name = 'Contest_Type'
         resource_name = 'contest-type'
         identifier = 'id'
         methods = (
