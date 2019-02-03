@@ -12,7 +12,9 @@ import unittest
 import appdirs
 import requests_mock
 from beckett.exceptions import InvalidStatusCodeError
+from beckett.resources import SubResource
 import pokepy
+from pokepy import resources_v2
 
 
 base_url = 'https://pokeapi.co/api/v2'
@@ -71,6 +73,25 @@ def base_repr_test(self, resource):
 
         self.assertTrue(
             all(char in response.__repr__() for char in ['>', '<', '-'] + resource_names))
+
+
+def base_subresource_repr_test(self, subresource, key):
+    """
+    Base __repr__ test for subresources
+
+    Parameters
+    ----------
+    self: TestV2Client
+        TestV2Client instance (self)
+    subresource: SubResources in resources_v2
+        Subresource to be tested
+    key: str
+        key to test for
+    """
+    value = 'test'
+    subresource_repr = subresource(**{key: value}).__repr__()
+
+    self.assertEqual(subresource_repr, '<%s - %s>' % (subresource.Meta.name, value))
 
 
 def base_404_test(self, resource):
@@ -457,6 +478,11 @@ class TestV2Client(unittest.TestCase):
         base_get_test(self, 'language', uid_str=False)
 
     # __repr__
+
+    def test_APIResourceSubResource_repr(self):
+        base_subresource_repr_test(self, resources_v2.APIResourceSubResource, 'url')
+
+    # TODO
 
     def test_get_berry_repr(self):
         base_repr_test(self, 'berry')
