@@ -20,7 +20,8 @@ mock_data_alternate = '{"id": "2", "name": "test_name2"}'
 
 def base_get_test(self, resource, method='name', uid_str=True):
     """
-    Base 'get' test function for V2Client
+    Base get test for 'get' methods of V2Client
+    Can test str uid or int uid
 
     Parameters
     ----------
@@ -37,8 +38,7 @@ def base_get_test(self, resource, method='name', uid_str=True):
         mock.get('%s/%s/1' % (base_url, resource), text=mock_data)
 
         uid = '1' if uid_str else 1
-        response = getattr(self.client,
-                           'get_%s' % resource.replace('-', '_'))(uid)[0]
+        response = getattr(self.client, 'get_%s' % resource.replace('-', '_'))(uid)[0]
 
         if method == 'name':
             self.assertEqual(response.name, 'test_name')
@@ -46,9 +46,30 @@ def base_get_test(self, resource, method='name', uid_str=True):
             self.assertEqual(response.id, '1')
 
 
+def base_repr_test(self, resource):
+    """
+    Base __repr__ test for 'get' methods of V2Client
+
+    Parameters
+    ----------
+    self: TestV2Client
+        TestV2Client instance (self)
+    resource: str
+        Resource to be tested
+    """
+    with requests_mock.mock() as mock:
+        mock.get('%s/%s/1' % (base_url, resource), text=mock_data)
+
+        response = getattr(self.client, 'get_%s' % resource.replace('-', '_'))(1)[0]
+        resource_names = [name.capitalize() for name in resource.split('-')]
+
+        self.assertTrue(
+            all(char in response.__repr__() for char in ['>', '<', '-'] + resource_names))
+
+
 def base_404_test(self, resource):
     """
-    Base 404 error test function for V2Client
+    Base 404 error test for 'get' methods of V2Client
 
     Parameters
     ----------
@@ -61,13 +82,12 @@ def base_404_test(self, resource):
         mock.get('%s/%s/1' % (base_url, resource), status_code=404)
         self.assertRaises(
             InvalidStatusCodeError,
-            lambda: getattr(self.client,
-                            'get_%s' % resource.replace('-', '_'))(1)[0])
+            lambda: getattr(self.client, 'get_%s' % resource.replace('-', '_'))(1)[0])
 
 
 def base_cache_test(self, resource, test_to_do):
     """
-    Base cache test function for V2Client
+    Base cache test for V2Client
 
     Parameters
     ----------
@@ -84,8 +104,7 @@ def base_cache_test(self, resource, test_to_do):
     with requests_mock.mock() as mock:
         mock.get('%s/%s/1' % (base_url, resource), text=mock_data)
         mock.get('%s/%s/2' % (base_url, resource), text=mock_data_alternate)
-        resource_get_method = getattr(self.client,
-                                      'get_%s' % resource.replace('-', '_'))
+        resource_get_method = getattr(self.client, 'get_%s' % resource.replace('-', '_'))
 
         # starts with 0 hits, 0 misses, and 0 cache
         self.assertEqual(resource_get_method.cache_info(), (0, 0, 0))
@@ -411,6 +430,150 @@ class TestV2Client(unittest.TestCase):
 
     def test_get_language_int(self):
         base_get_test(self, "language", uid_str=False)
+
+    def test_get_berry_repr(self):
+        base_repr_test(self, "berry")
+
+    def test_get_berry_firmness_repr(self):
+        base_repr_test(self, "berry-firmness")
+
+    def test_get_berry_flavor_repr(self):
+        base_repr_test(self, "berry-flavor")
+
+    def test_get_contest_type_repr(self):
+        base_repr_test(self, "contest-type")
+
+    def test_get_contest_effect_repr(self):
+        base_repr_test(self, "contest-effect")
+
+    def test_get_super_contest_effect_repr(self):
+        base_repr_test(self, "super-contest-effect")
+
+    def test_get_encounter_method_repr(self):
+        base_repr_test(self, "encounter-method")
+
+    def test_get_encounter_condition_repr(self):
+        base_repr_test(self, "encounter-condition")
+
+    def test_get_encounter_condition_value_repr(self):
+        base_repr_test(self, "encounter-condition-value")
+
+    def test_get_evolution_chain_repr(self):
+        base_repr_test(self, "evolution-chain")
+
+    def test_get_evolution_trigger_repr(self):
+        base_repr_test(self, "evolution-trigger")
+
+    def test_get_generation_repr(self):
+        base_repr_test(self, "generation")
+
+    def test_get_pokedex_repr(self):
+        base_repr_test(self, "pokedex")
+
+    def test_get_version_repr(self):
+        base_repr_test(self, "version")
+
+    def test_get_version_group_repr(self):
+        base_repr_test(self, "version-group")
+
+    def test_get_item_repr(self):
+        base_repr_test(self, "item")
+
+    def test_get_item_attribute_repr(self):
+        base_repr_test(self, "item-attribute")
+
+    def test_get_item_category_repr(self):
+        base_repr_test(self, "item-category")
+
+    def test_get_item_fling_effect_repr(self):
+        base_repr_test(self, "item-fling-effect")
+
+    def test_get_item_pocket_repr(self):
+        base_repr_test(self, "item-pocket")
+
+    def test_get_machine_repr(self):
+        base_repr_test(self, "machine")
+
+    def test_get_move_repr(self):
+        base_repr_test(self, "move")
+
+    def test_get_move_ailment_repr(self):
+        base_repr_test(self, "move-ailment")
+
+    def test_get_move_battle_style_repr(self):
+        base_repr_test(self, "move-battle-style")
+
+    def test_get_move_category_repr(self):
+        base_repr_test(self, "move-category")
+
+    def test_get_move_damage_class_repr(self):
+        base_repr_test(self, "move-damage-class")
+
+    def test_get_move_learn_method_repr(self):
+        base_repr_test(self, "move-learn-method")
+
+    def test_get_move_target_repr(self):
+        base_repr_test(self, "move-target")
+
+    def test_get_location_repr(self):
+        base_repr_test(self, "location")
+
+    def test_get_location_area_repr(self):
+        base_repr_test(self, "location-area")
+
+    def test_get_pal_park_area_repr(self):
+        base_repr_test(self, "pal-park-area")
+
+    def test_get_region_repr(self):
+        base_repr_test(self, "region")
+
+    def test_get_ability_repr(self):
+        base_repr_test(self, "ability")
+
+    def test_get_characteristic_repr(self):
+        base_repr_test(self, "characteristic")
+
+    def test_get_egg_group_repr(self):
+        base_repr_test(self, "egg-group")
+
+    def test_get_gender_repr(self):
+        base_repr_test(self, "gender")
+
+    def test_get_growth_rate_repr(self):
+        base_repr_test(self, "growth-rate")
+
+    def test_get_nature_repr(self):
+        base_repr_test(self, "nature")
+
+    def test_get_pokeathlon_stat_repr(self):
+        base_repr_test(self, "pokeathlon-stat")
+
+    def test_get_pokemon_repr(self):
+        base_repr_test(self, "pokemon")
+
+    def test_get_pokemon_color_repr(self):
+        base_repr_test(self, "pokemon-color")
+
+    def test_get_pokemon_form_repr(self):
+        base_repr_test(self, "pokemon-form")
+
+    def test_get_pokemon_habitat_repr(self):
+        base_repr_test(self, "pokemon-habitat")
+
+    def test_get_pokemon_shape_repr(self):
+        base_repr_test(self, "pokemon-shape")
+
+    def test_get_pokemon_species_repr(self):
+        base_repr_test(self, "pokemon-species")
+
+    def test_get_stat_repr(self):
+        base_repr_test(self, "stat")
+
+    def test_get_type_repr(self):
+        base_repr_test(self, "type")
+
+    def test_get_language_repr(self):
+        base_repr_test(self, "language")
 
     def test_get_berry_404(self):
         base_404_test(self, "berry")
