@@ -7,7 +7,6 @@ test_pokepy
 Tests for pokepy module
 """
 
-import os.path
 import shutil
 import unittest
 import appdirs
@@ -124,7 +123,9 @@ def base_cache_test(self, resource, test_to_do):
             if self.client.cache_type == 'in_memory':
                 self.assertEqual(resource_get_method.cache_location(), 'ram')
             else:  # in_disk
-                self.assertTrue(resource_get_method.cache_location().startswith(appdirs.user_cache_dir('pokepy')))
+                self.assertTrue(
+                    resource_get_method.cache_location().startswith(
+                        appdirs.user_cache_dir('pokepy')))
 
         elif test_to_do == '011':  # 0 hits, 1 miss and 1 cached
             # call resource for the first time
@@ -754,7 +755,7 @@ class TestV2ClientCacheInMemory(unittest.TestCase):
         self.assertEqual(self.client.cache_type, 'in_memory')
 
     # cache_info
-    
+
     def test_get_berry_cache_info(self):
         base_cache_test(self, 'berry', 'cache_info')
 
