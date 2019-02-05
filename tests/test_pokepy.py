@@ -13,6 +13,7 @@ import appdirs
 import requests_mock
 from beckett.exceptions import InvalidStatusCodeError
 import pokepy
+from pokepy import resources_v2
 
 
 base_url = 'https://pokeapi.co/api/v2'
@@ -67,10 +68,42 @@ def base_repr_test(self, resource):
         mock.get('%s/%s/1' % (base_url, resource), text=mock_data)
 
         response = getattr(self.client, 'get_%s' % resource.replace('-', '_'))(1)[0]
-        resource_names = [name.capitalize() for name in resource.split('-')]
+        resource_name = '_'.join([name.capitalize() for name in resource.split('-')])
 
-        self.assertTrue(
-            all(char in response.__repr__() for char in ['>', '<', '-'] + resource_names))
+        self.assertTrue(all([
+            response.__repr__().startswith('<' + resource_name + ' - '),  # '<Berry_Firmness - '
+            response.__repr__().endswith('>'),
+            len(response.__repr__()) > len('<' + resource_name + ' - >')  # must have a name
+        ]))
+
+
+def base_subresource_repr_test(self, subresource, **key_value_dict):
+    """
+    Base __repr__ test for subresources
+
+    Parameters
+    ----------
+    self: TestV2Client
+        TestV2Client instance (self)
+    subresource: SubResources or BaseResources in resources_v2
+        Subresource to be tested
+    key_value_dict: str
+        key and values to test for
+    """
+    if key_value_dict:
+        subresource_repr = subresource(**key_value_dict).__repr__()
+    else:
+        subresource_repr = subresource().__repr__()
+
+    if '-' in subresource_repr:
+        self.assertTrue(all([
+            subresource_repr.startswith('<' + subresource.Meta.name + ' - '),  # '<API_Resource - '
+            subresource_repr.endswith('>'),
+            len(subresource_repr) > len('<' + subresource.Meta.name + ' - >')  # must have a name
+        ]))
+
+    else:
+        self.assertEqual(subresource_repr, '<%s>' % subresource.Meta.name)
 
 
 def base_404_test(self, resource):
@@ -457,6 +490,208 @@ class TestV2Client(unittest.TestCase):
         base_get_test(self, 'language', uid_str=False)
 
     # __repr__
+
+    def test_api_resource_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.APIResourceSubResource, url='test')
+
+    def test_named_api_resource_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.NamedAPIResourceSubResource, name='test')
+
+    def test_description_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.DescriptionSubResource, description='test')
+
+    def test_effect_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.EffectSubResource, effect='test')
+
+    def test_encounter_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.EncounterSubResource, min_level='test',
+                                   max_level='test', chance='test')
+
+    def test_flavor_text_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.FlavorTextSubResource, flavor_text='test')
+
+    def test_generation_game_index_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.GenerationGameIndexSubResource,
+                                   game_index='test')
+
+    def test_machine_version_detail_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.MachineVersionDetailSubResource)
+
+    def test_name_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.NameSubResource, name='test')
+
+    def test_verbose_effect_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.VerboseEffectSubResource, effect='test')
+
+    def test_version_encounter_detail_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.VersionEncounterDetailSubResource,
+                                   max_chance='test')
+
+    def test_version_game_index_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.VersionGameIndexSubResource,
+                                   game_index='test')
+
+    def test_version_group_flavor_text_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.VersionGroupFlavorTextSubResource,
+                                   text='test')
+
+    def test_berry_flavor_map_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.BerryFlavorMapSubResource, potency='test')
+
+    def test_flavor_berry_map_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.FlavorBerryMapSubResource, potency='test')
+
+    def test_contest_name_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.ContestNameSubResource, name='test')
+
+    def test_evolution_detail_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.EvolutionDetailSubResource)
+
+    def test_chain_link2_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.ChainLink2SubResource)
+
+    def test_chain_link1_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.ChainLink1SubResource)
+
+    def test_chain_link_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.ChainLinkSubResource)
+
+    def test_pokemon_entry_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PokemonEntrySubResource, entry_number='test')
+
+    def test_item_sprites_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.ItemSpritesSubResource, default='test')
+
+    def test_item_holder_pokemon_version_detail_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.ItemHolderPokemonVersionDetailSubResource)
+
+    def test_item_holder_pokemon_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.ItemHolderPokemonSubResource, pokemon='test')
+
+    def test_contest_combo_detail_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.ContestComboDetailSubResource)
+
+    def test_contest_combo_sets_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.ContestComboSetsSubResource)
+
+    def test_move_flavor_text_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.MoveFlavorTextSubResource, flavor_text='test')
+
+    def test_move_meta_data_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.MoveMetaDataSubResource)
+
+    def test_move_stat_change_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.MoveStatChangeSubResource, change='test')
+
+    def test_past_move_stat_values_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PastMoveStatValuesSubResource)
+
+    def test_encounter_version_details_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.EncounterVersionDetailsSubResource,
+                                   rate='test')
+
+    def test_encounter_method_rate_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.EncounterMethodRateSubResource)
+
+    def test_pokemon_encounter_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PokemonEncounterSubResource)
+
+    def test_pal_park_encounter_species_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PalParkEncounterSpeciesSubResource)
+
+    def test_ability_effect_change_sub_resource_repr(self):
+        base_subresource_repr_test(self, resources_v2.AbilityEffectChangeSubResource)
+
+    def test_ability_flavor_text_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.AbilityFlavorTextSubResource,
+                                   flavor_text='test')
+
+    def test_ability_pokemon_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.AbilityPokemonSubResource)
+
+    def test_pokemon_species_gender_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PokemonSpeciesGenderSubResource,
+                                   rate='test')
+
+    def test_growth_rate_experience_level_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.GrowthRateExperienceLevelSubResource,
+                                   level='test', experience='test')
+
+    def test_nature_stat_change_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.NatureStatChangeSubResource,
+                                   max_change='test')
+
+    def test_move_battle_style_preference_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.MoveBattleStylePreferenceSubResource,
+                                   low_hp_preference='test', high_hp_preference='test')
+
+    def test_nature_pokeathlon_stat_affect_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.NaturePokeathlonStatAffectSubResource,
+                                   max_change='test')
+
+    def test_nature_pokeathlon_stat_affect_sets_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.NaturePokeathlonStatAffectSetsSubResource)
+
+    def test_pokemon_ability_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PokemonAbilitySubResource)
+
+    def test_pokemon_type_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PokemonTypeSubResource)
+
+    def test_pokemon_held_item_version_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PokemonHeldItemVersionSubResource)
+
+    def test_pokemon_held_item_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PokemonHeldItemSubResource)
+
+    def test_pokemon_move_version_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PokemonMoveVersionSubResource)
+
+    def test_pokemon_move_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PokemonMoveSubResource)
+
+    def test_pokemon_stat_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PokemonStatSubResource)
+
+    def test_pokemon_sprites_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PokemonSpritesSubResource)
+
+    def test_location_area_encounter_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.LocationAreaEncounterSubResource)
+
+    def test_pokemon_form_sprites_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PokemonFormSpritesSubResource)
+
+    def test_awesome_name_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.AwesomeNameSubResource, awesome_name='test')
+
+    def test_genus_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.GenusSubResource, genus='test')
+
+    def test_pokemon_species_dex_entry_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PokemonSpeciesDexEntrySubResource,
+                                   entry_number='test')
+
+    def test_pal_park_encounter_area_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PalParkEncounterAreaSubResource)
+
+    def test_pokemon_species_variety_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.PokemonSpeciesVarietySubResource)
+
+    def test_move_stat_affect_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.MoveStatAffectSubResource)
+
+    def test_move_stat_affect_sets_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.MoveStatAffectSetsSubResource)
+
+    def test_nature_stat_affect_sets_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.NatureStatAffectSetsSubResource)
+
+    def test_type_pokemon_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.TypePokemonSubResource)
+
+    def test_type_relations_subresource_repr(self):
+        base_subresource_repr_test(self, resources_v2.TypeRelationsSubResource)
 
     def test_get_berry_repr(self):
         base_repr_test(self, 'berry')
