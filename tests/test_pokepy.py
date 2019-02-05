@@ -494,7 +494,7 @@ class TestV2Client(unittest.TestCase):
     def test_api_resource_subresource_repr(self):
         base_subresource_repr_test(self, resources_v2.APIResourceSubResource, url='test')
 
-    def test_named_api_resource_subResource_repr(self):
+    def test_named_api_resource_subresource_repr(self):
         base_subresource_repr_test(self, resources_v2.NamedAPIResourceSubResource, name='test')
 
     def test_description_subresource_repr(self):
@@ -510,7 +510,7 @@ class TestV2Client(unittest.TestCase):
     def test_flavor_text_subresource_repr(self):
         base_subresource_repr_test(self, resources_v2.FlavorTextSubResource, flavor_text='test')
 
-    def test_generation_game_Index_subresource_repr(self):
+    def test_generation_game_index_subresource_repr(self):
         base_subresource_repr_test(self, resources_v2.GenerationGameIndexSubResource,
                                    game_index='test')
 
@@ -527,7 +527,7 @@ class TestV2Client(unittest.TestCase):
         base_subresource_repr_test(self, resources_v2.VersionEncounterDetailSubResource,
                                    max_chance='test')
 
-    def test_version_game_index_Subresource_repr(self):
+    def test_version_game_index_subresource_repr(self):
         base_subresource_repr_test(self, resources_v2.VersionGameIndexSubResource,
                                    game_index='test')
 
@@ -669,7 +669,8 @@ class TestV2Client(unittest.TestCase):
         base_subresource_repr_test(self, resources_v2.GenusSubResource, genus='test')
 
     def test_pokemon_species_dex_entry_subresource_repr(self):
-        base_subresource_repr_test(self, resources_v2.PokemonSpeciesDexEntrySubResource, entry_number='test')
+        base_subresource_repr_test(self, resources_v2.PokemonSpeciesDexEntrySubResource,
+                                   entry_number='test')
 
     def test_pal_park_encounter_area_subresource_repr(self):
         base_subresource_repr_test(self, resources_v2.PalParkEncounterAreaSubResource)
