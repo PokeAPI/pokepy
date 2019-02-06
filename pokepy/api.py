@@ -56,7 +56,9 @@ def caching(disk_or_memory, cache_directory=None):
             if cache_directory:
                 cache_dir = os.path.join(cache_directory, 'pokepy_cache', str(get_methods_id[0]))
             else:
-                cache_dir = os.path.join(appdirs.user_cache_dir('pokepy'), str(get_methods_id[0]))
+                cache_dir = os.path.join(
+                    appdirs.user_cache_dir('pokepy_cache', False, opinion=False),
+                    str(get_methods_id[0]))
             cache = FileCache('pokepy', flag='cs', app_cache_dir=cache_dir)
             get_methods_id[0] += 1
         else:  # 'memory'
@@ -173,13 +175,15 @@ class V2Client(BaseClient):
         elif cache == 'in_disk':
             cache_function = caching('disk', cache_location)
             self.cache_type = cache
-        else:  # empty wrapping function
+        elif cache is None:  # empty wrapping function
             def no_cache(func):
                 @functools.wraps(func)
                 def inner(*args, **kwargs):
                     return func(*args, **kwargs)
                 return inner
             cache_function = no_cache
+        else:  # wrong cache parameter
+            raise ValueError('Accepted values for cache are "in_memory" or "in_disk"')
 
         self.cache = cache_function
         super(V2Client, self).__init__(*args, **kwargs)

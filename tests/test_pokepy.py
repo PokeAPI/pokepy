@@ -5,8 +5,11 @@
 test_pokepy
 
 Tests for pokepy module
+Running these tests will delete your in_disk default cache directory (if you have one)!
 """
 
+import os.path
+import random
 import shutil
 import unittest
 import appdirs
@@ -28,8 +31,8 @@ def base_get_test(self, resource, method='name', uid_str=True):
 
     Parameters
     ----------
-    self: TestV2Client
-        TestV2Client instance (self)
+    self: TestV2ClientMethods
+        TestV2ClientMethods instance (self)
     resource: str
         Resource to be tested
     method: str
@@ -59,8 +62,8 @@ def base_repr_test(self, resource):
 
     Parameters
     ----------
-    self: TestV2Client
-        TestV2Client instance (self)
+    self: TestV2ClientMethods
+        TestV2ClientMethods instance (self)
     resource: str
         Resource to be tested
     """
@@ -83,8 +86,8 @@ def base_subresource_repr_test(self, subresource, **key_value_dict):
 
     Parameters
     ----------
-    self: TestV2Client
-        TestV2Client instance (self)
+    self: TestV2ClientMethods
+        TestV2ClientMethods instance (self)
     subresource: SubResources or BaseResources in resources_v2
         Subresource to be tested
     key_value_dict: str
@@ -112,8 +115,8 @@ def base_404_test(self, resource):
 
     Parameters
     ----------
-    self: TestV2Client
-        TestV2Client instance (self)
+    self: TestV2ClientMethods
+        TestV2ClientMethods instance (self)
     resource: str
         Resource to be tested
     """
@@ -162,7 +165,7 @@ def base_cache_test(self, resource, test_to_do):
             else:  # in_disk
                 self.assertTrue(
                     resource_get_method.cache_location().startswith(
-                        appdirs.user_cache_dir('pokepy')))
+                        appdirs.user_cache_dir('pokepy_cache', False, opinion=False)))
 
         elif test_to_do == '011':  # 0 hits, 1 miss and 1 cached
             # call resource for the first time
@@ -192,6 +195,26 @@ def base_cache_test(self, resource, test_to_do):
 
 
 class TestV2Client(unittest.TestCase):
+
+    def test_wrong_cache_parameter(self):
+        self.assertRaises(ValueError, pokepy.V2Client, 'incorrect_cache_parameter')
+
+    def test_custom_cache_directory(self):
+        pokepy_folder = 'pokepy_cache' + str(random.randint(10000, 99999))  # random folder name
+        cache_dir = appdirs.user_cache_dir(pokepy_folder, False, opinion=False)
+        self.assertFalse(os.path.exists(cache_dir))  # doesn't exist yet
+
+        client = pokepy.V2Client('in_disk', cache_dir)
+
+        path_exists = os.path.exists(cache_dir)
+        self.assertTrue(path_exists)
+
+        del client
+        if path_exists:
+            shutil.rmtree(cache_dir)
+
+
+class TestV2ClientMethods(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -1874,6 +1897,11 @@ class TestV2ClientCacheInDisk(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        # should be default cache dir (same as defined in caching.memoize)
+        cls.default_caching_dir = appdirs.user_cache_dir('pokepy_cache', False, opinion=False)
+        if os.path.exists(cls.default_caching_dir):  # delete folder if already exists
+            shutil.rmtree(cls.default_caching_dir)
+
         cls.client = pokepy.V2Client(cache='in_disk')  # cache_location=None (default)
 
     @classmethod
@@ -1881,9 +1909,8 @@ class TestV2ClientCacheInDisk(unittest.TestCase):
         # remove V2Client to avoid problems with cache directory being locked
         del cls.client
 
-        # remove cache directory
-        cache_directory = appdirs.user_cache_dir('pokepy')  # same as defined in caching.memoize
-        shutil.rmtree(cache_directory)
+        # remove cache directory (same as defined in caching.memoize)
+        shutil.rmtree(cls.default_caching_dir)
 
     def test_cache_type(self):
         self.assertEqual(self.client.cache_type, 'in_disk')
