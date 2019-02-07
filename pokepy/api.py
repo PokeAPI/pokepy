@@ -9,6 +9,7 @@ User interaction with this package is done through this file.
 
 import functools
 import os
+import sys
 import types
 from collections import namedtuple
 import appdirs  # dependency of FileCache
@@ -54,6 +55,10 @@ def caching(disk_or_memory, cache_directory=None):
     def memoize(func):
         if disk_or_memory == 'disk':
             if cache_directory:
+                # Python 2 workaround
+                if sys.version_info[0] == 2 and not isinstance(cache_directory, str):
+                    raise TypeError('expected str')
+
                 cache_dir = os.path.join(cache_directory, 'pokepy_cache', str(get_methods_id[0]))
             else:
                 cache_dir = os.path.join(
