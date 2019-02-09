@@ -56,7 +56,8 @@ def base_get_test(self, resource, method='name', uid_str=True):
             self.assertEqual(response_upper.id, '1')
 
 
-def base_get_subresource_test(self, resource, subresource_name, subresource_list):
+def base_get_subresource_test(self, resource, subresource_name, subresource_list,
+                              multi_resource=True):
     """
     Base get subresource test for 'get' methods of V2Client
 
@@ -70,21 +71,31 @@ def base_get_subresource_test(self, resource, subresource_name, subresource_list
         Subresource name
     subresource_list: list(tuple)
         List of tuples of key and value
+    multi_resource: bool
+        List of subresources or single subresource
     """
-    mock_subresource = mock_data[:-1] + ', "%s": [{' % subresource_name
+    if multi_resource:
+        opening_brackets = '[{'
+        closing_brackets = ']}'
+    else:
+        opening_brackets = '{'
+        closing_brackets = '}'
+    mock_subresource = mock_data[:-1] + ', "%s": %s' % (subresource_name, opening_brackets)
     for subresource in subresource_list:
         mock_subresource += '"%s": "%s", ' % (subresource[0], subresource[1])
-    mock_subresource = mock_subresource[:-2] + '}]}'
+    mock_subresource = mock_subresource[:-2] + '}' + closing_brackets
 
     with requests_mock.mock() as mock:
         mock.get('%s/%s/1' % (base_url, resource), text=mock_subresource)
         response = getattr(self.client, 'get_%s' % resource.replace('-', '_'))(1)[0]
 
         for sub_name, sub_value in subresource_list:
-            # response.subresource_name[0].sub_name
-            self.assertEqual(
-                getattr(getattr(response, subresource_name)[0], sub_name),
-                sub_value)
+            if multi_resource:  # response.subresource_name[0].sub_name
+                self.assertEqual(
+                    getattr(getattr(response, subresource_name)[0], sub_name), sub_value)
+            else:  # response.subresource_name.sub_name
+                self.assertEqual(
+                    getattr(getattr(response, subresource_name), sub_name), sub_value)
 
 
 def base_repr_test(self, resource):
@@ -546,153 +557,307 @@ class TestV2ClientMethods(unittest.TestCase):
     def test_get_language_int(self):
         base_get_test(self, 'language', uid_str=False)
 
-    # subresource
+    # list of subresources
 
-    def test_get_berry_subresource(self):
+    def test_get_berry_list_subresource(self):
         base_get_subresource_test(self, 'berry', 'firmness', [('name', 'test')])
 
-    def test_get_berry_firmness_subresource(self):
+    def test_get_berry_firmness_list_subresource(self):
         base_get_subresource_test(self, 'berry-firmness', 'berries', [('name', 'test')])
 
-    def test_get_berry_flavor_subresource(self):
+    def test_get_berry_flavor_list_subresource(self):
         base_get_subresource_test(self, 'berry-flavor', 'contest_type', [('name', 'test')])
 
-    def test_get_contest_type_tsubresource(self):
+    def test_get_contest_type_list_subresource(self):
         base_get_subresource_test(self, 'contest-type', 'berry_flavor', [('name', 'test')])
 
-    def test_get_contest_effect_subresource(self):
+    def test_get_contest_effect_list_subresource(self):
         base_get_subresource_test(self, 'contest-effect', 'effect_entries', [('effect', 'test')])
 
-    def test_get_super_contest_effect_ssubresource(self):
+    def test_get_super_contest_effect_list_subresource(self):
         base_get_subresource_test(self, 'super-contest-effect', 'moves', [('name', 'test')])
 
-    def test_get_encounter_method_subresource(self):
+    def test_get_encounter_method_list_subresource(self):
         base_get_subresource_test(self, 'encounter-method', 'names', [('name', 'test')])
 
-    def test_get_encounter_condition_subresource(self):
+    def test_get_encounter_condition_list_subresource(self):
         base_get_subresource_test(self, 'encounter-condition', 'names', [('name', 'test')])
 
-    def test_get_encounter_condition_value_subresource(self):
+    def test_get_encounter_condition_value_list_subresource(self):
         base_get_subresource_test(self, 'encounter-condition-value', 'condition',
                                   [('name', 'test')])
 
-    def test_get_evolution_chain_subresource(self):
+    def test_get_evolution_chain_list_subresource(self):
         base_get_subresource_test(self, 'evolution-chain', 'baby_trigger_item', [('name', 'test')])
 
-    def test_get_evolution_trigger_subresource(self):
+    def test_get_evolution_trigger_list_subresource(self):
         base_get_subresource_test(self, 'evolution-trigger', 'names', [('name', 'test')])
 
-    def test_get_generation_subresource(self):
+    def test_get_generation_list_subresource(self):
         base_get_subresource_test(self, 'generation', 'abilities', [('name', 'test')])
 
-    def test_get_pokedex_subresource(self):
+    def test_get_pokedex_list_subresource(self):
         base_get_subresource_test(self, 'pokedex', 'names', [('name', 'test')])
 
-    def test_get_version_subresource(self):
+    def test_get_version_list_subresource(self):
         base_get_subresource_test(self, 'version', 'names', [('name', 'test')])
 
-    def test_get_version_group_subresource(self):
+    def test_get_version_group_list_subresource(self):
         base_get_subresource_test(self, 'version-group', 'generation', [('name', 'test')])
 
-    def test_get_item_subresource(self):
+    def test_get_item_list_subresource(self):
         base_get_subresource_test(self, 'item', 'fling_effect', [('name', 'test')])
 
-    def test_get_item_attribute_subresource(self):
+    def test_get_item_attribute_list_subresource(self):
         base_get_subresource_test(self, 'item-attribute', 'items', [('name', 'test')])
 
-    def test_get_item_category_subresource(self):
+    def test_get_item_category_list_subresource(self):
         base_get_subresource_test(self, 'item-category', 'items', [('name', 'test')])
 
-    def test_get_item_fling_effect_subresource(self):
+    def test_get_item_fling_effect_list_subresource(self):
         base_get_subresource_test(self, 'item-fling-effect', 'items', [('name', 'test')])
 
-    def test_get_item_pocket_subresource(self):
+    def test_get_item_pocket_list_subresource(self):
         base_get_subresource_test(self, 'item-pocket', 'categories', [('name', 'test')])
 
-    def test_get_machine_subresource(self):
+    def test_get_machine_list_subresource(self):
         base_get_subresource_test(self, 'machine', 'item', [('name', 'test')])
 
-    def test_get_move_subresource(self):
+    def test_get_move_list_subresource(self):
         base_get_subresource_test(self, 'move', 'contest_type', [('name', 'test')])
 
-    def test_get_move_ailment_subresource(self):
+    def test_get_move_ailment_list_subresource(self):
         base_get_subresource_test(self, 'move-ailment', 'moves', [('name', 'test')])
 
-    def test_get_move_battle_style_subresource(self):
+    def test_get_move_battle_style_list_subresource(self):
         base_get_subresource_test(self, 'move-battle-style', 'names', [('name', 'test')])
 
-    def test_get_move_category_subresource(self):
+    def test_get_move_category_list_subresource(self):
         base_get_subresource_test(self, 'move-category', 'moves', [('name', 'test')])
 
-    def test_get_move_damage_class_subresource(self):
+    def test_get_move_damage_class_list_subresource(self):
         base_get_subresource_test(self, 'move-damage-class', 'moves', [('name', 'test')])
 
-    def test_get_move_learn_method_subresource(self):
+    def test_get_move_learn_method_list_subresource(self):
         base_get_subresource_test(self, 'move-learn-method', 'names', [('name', 'test')])
 
-    def test_get_move_target_subresource(self):
+    def test_get_move_target_list_subresource(self):
         base_get_subresource_test(self, 'move-target', 'moves', [('name', 'test')])
 
-    def test_get_location_subresource(self):
+    def test_get_location_list_subresource(self):
         base_get_subresource_test(self, 'location', 'region', [('name', 'test')])
 
-    def test_get_location_area_subresource(self):
+    def test_get_location_area_list_subresource(self):
         base_get_subresource_test(self, 'location-area', 'location', [('name', 'test')])
 
-    def test_get_pal_park_area_subresource(self):
+    def test_get_pal_park_area_list_subresource(self):
         base_get_subresource_test(self, 'pal-park-area', 'names', [('name', 'test')])
 
-    def test_get_region_subresource(self):
+    def test_get_region_list_subresource(self):
         base_get_subresource_test(self, 'region', 'locations', [('name', 'test')])
 
-    def test_get_ability_subresource(self):
+    def test_get_ability_list_subresource(self):
         base_get_subresource_test(self, 'ability', 'generation', [('name', 'test')])
 
-    def test_get_characteristic_subresource(self):
+    def test_get_characteristic_list_subresource(self):
         base_get_subresource_test(self, 'characteristic', 'descriptions',
                                   [('description', 'test')])
 
-    def test_get_egg_group_subresource(self):
+    def test_get_egg_group_list_subresource(self):
         base_get_subresource_test(self, 'egg-group', 'names', [('name', 'test')])
 
-    def test_get_gender_subresource(self):
+    def test_get_gender_list_subresource(self):
         base_get_subresource_test(self, 'gender', 'required_for_evolution', [('name', 'test')])
 
-    def test_get_growth_rate_subresource(self):
+    def test_get_growth_rate_list_subresource(self):
         base_get_subresource_test(self, 'growth-rate', 'pokemon_species', [('name', 'test')])
 
-    def test_get_nature_subresource(self):
+    def test_get_nature_list_subresource(self):
         base_get_subresource_test(self, 'nature', 'decreased_stat', [('name', 'test')])
 
-    def test_get_pokeathlon_stat_subresource(self):
+    def test_get_pokeathlon_stat_list_subresource(self):
         base_get_subresource_test(self, 'pokeathlon-stat', 'names', [('name', 'test')])
 
-    def test_get_pokemon_subresource(self):
+    def test_get_pokemon_list_subresource(self):
         base_get_subresource_test(self, 'pokemon', 'forms', [('name', 'test')])
 
-    def test_get_pokemon_color_subresource(self):
+    def test_get_pokemon_color_list_subresource(self):
         base_get_subresource_test(self, 'pokemon-color', 'names', [('name', 'test')])
 
-    def test_get_pokemon_form_subresource(self):
+    def test_get_pokemon_form_list_subresource(self):
         base_get_subresource_test(self, 'pokemon-form', 'pokemon', [('name', 'test')])
 
-    def test_get_pokemon_habitat_subresource(self):
+    def test_get_pokemon_habitat_list_subresource(self):
         base_get_subresource_test(self, 'pokemon-habitat', 'names', [('name', 'test')])
 
-    def test_get_pokemon_shape_subresource(self):
+    def test_get_pokemon_shape_list_subresource(self):
         base_get_subresource_test(self, 'pokemon-shape', 'names', [('name', 'test')])
 
-    def test_get_pokemon_species_subresource(self):
+    def test_get_pokemon_species_list_subresource(self):
         base_get_subresource_test(self, 'pokemon-species', 'growth_rate', [('name', 'test')])
 
-    def test_get_stat_subresource(self):
+    def test_get_stat_list_subresource(self):
         base_get_subresource_test(self, 'stat', 'move_damage_class', [('name', 'test')])
 
-    def test_get_type_subresource(self):
+    def test_get_type_list_subresource(self):
         base_get_subresource_test(self, 'type', 'generation', [('name', 'test')])
 
-    def test_get_language_subresource(self):
+    def test_get_language_list_subresource(self):
         base_get_subresource_test(self, 'language', 'names', [('name', 'test')])
+
+    # single subresources
+
+    def test_get_berry_subresource(self):
+        base_get_subresource_test(self, 'berry', 'firmness', [('name', 'test')], False)
+
+    def test_get_berry_firmness_subresource(self):
+        base_get_subresource_test(self, 'berry-firmness', 'berries', [('name', 'test')], False)
+
+    def test_get_berry_flavor_subresource(self):
+        base_get_subresource_test(self, 'berry-flavor', 'contest_type', [('name', 'test')], False)
+
+    def test_get_contest_type_subresource(self):
+        base_get_subresource_test(self, 'contest-type', 'berry_flavor', [('name', 'test')], False)
+
+    def test_get_contest_effect_subresource(self):
+        base_get_subresource_test(self, 'contest-effect', 'effect_entries', [('effect', 'test')],
+                                  False)
+
+    def test_get_super_contest_effect_subresource(self):
+        base_get_subresource_test(self, 'super-contest-effect', 'moves', [('name', 'test')],
+                                  False)
+
+    def test_get_encounter_method_subresource(self):
+        base_get_subresource_test(self, 'encounter-method', 'names', [('name', 'test')], False)
+
+    def test_get_encounter_condition_subresource(self):
+        base_get_subresource_test(self, 'encounter-condition', 'names', [('name', 'test')], False)
+
+    def test_get_encounter_condition_value_subresource(self):
+        base_get_subresource_test(self, 'encounter-condition-value', 'condition',
+                                  [('name', 'test')], False)
+
+    def test_get_evolution_chain_subresource(self):
+        base_get_subresource_test(self, 'evolution-chain', 'baby_trigger_item',
+                                  [('name', 'test')], False)
+
+    def test_get_evolution_trigger_subresource(self):
+        base_get_subresource_test(self, 'evolution-trigger', 'names', [('name', 'test')], False)
+
+    def test_get_generation_subresource(self):
+        base_get_subresource_test(self, 'generation', 'abilities', [('name', 'test')], False)
+
+    def test_get_pokedex_subresource(self):
+        base_get_subresource_test(self, 'pokedex', 'names', [('name', 'test')], False)
+
+    def test_get_version_subresource(self):
+        base_get_subresource_test(self, 'version', 'names', [('name', 'test')], False)
+
+    def test_get_version_group_subresource(self):
+        base_get_subresource_test(self, 'version-group', 'generation', [('name', 'test')], False)
+
+    def test_get_item_subresource(self):
+        base_get_subresource_test(self, 'item', 'fling_effect', [('name', 'test')], False)
+
+    def test_get_item_attribute_subresource(self):
+        base_get_subresource_test(self, 'item-attribute', 'items', [('name', 'test')], False)
+
+    def test_get_item_category_subresource(self):
+        base_get_subresource_test(self, 'item-category', 'items', [('name', 'test')], False)
+
+    def test_get_item_fling_effect_subresource(self):
+        base_get_subresource_test(self, 'item-fling-effect', 'items', [('name', 'test')], False)
+
+    def test_get_item_pocket_subresource(self):
+        base_get_subresource_test(self, 'item-pocket', 'categories', [('name', 'test')], False)
+
+    def test_get_machine_subresource(self):
+        base_get_subresource_test(self, 'machine', 'item', [('name', 'test')], False)
+
+    def test_get_move_subresource(self):
+        base_get_subresource_test(self, 'move', 'contest_type', [('name', 'test')], False)
+
+    def test_get_move_ailment_subresource(self):
+        base_get_subresource_test(self, 'move-ailment', 'moves', [('name', 'test')], False)
+
+    def test_get_move_battle_style_subresource(self):
+        base_get_subresource_test(self, 'move-battle-style', 'names', [('name', 'test')], False)
+
+    def test_get_move_category_subresource(self):
+        base_get_subresource_test(self, 'move-category', 'moves', [('name', 'test')], False)
+
+    def test_get_move_damage_class_subresource(self):
+        base_get_subresource_test(self, 'move-damage-class', 'moves', [('name', 'test')], False)
+
+    def test_get_move_learn_method_subresource(self):
+        base_get_subresource_test(self, 'move-learn-method', 'names', [('name', 'test')], False)
+
+    def test_get_move_target_subresource(self):
+        base_get_subresource_test(self, 'move-target', 'moves', [('name', 'test')], False)
+
+    def test_get_location_subresource(self):
+        base_get_subresource_test(self, 'location', 'region', [('name', 'test')], False)
+
+    def test_get_location_area_subresource(self):
+        base_get_subresource_test(self, 'location-area', 'location', [('name', 'test')], False)
+
+    def test_get_pal_park_area_subresource(self):
+        base_get_subresource_test(self, 'pal-park-area', 'names', [('name', 'test')], False)
+
+    def test_get_region_subresource(self):
+        base_get_subresource_test(self, 'region', 'locations', [('name', 'test')], False)
+
+    def test_get_ability_subresource(self):
+        base_get_subresource_test(self, 'ability', 'generation', [('name', 'test')], False)
+
+    def test_get_characteristic_subresource(self):
+        base_get_subresource_test(self, 'characteristic', 'descriptions',
+                                  [('description', 'test')], False)
+
+    def test_get_egg_group_subresource(self):
+        base_get_subresource_test(self, 'egg-group', 'names', [('name', 'test')], False)
+
+    def test_get_gender_subresource(self):
+        base_get_subresource_test(self, 'gender', 'required_for_evolution', [('name', 'test')],
+                                  False)
+
+    def test_get_growth_rate_subresource(self):
+        base_get_subresource_test(self, 'growth-rate', 'pokemon_species', [('name', 'test')],
+                                  False)
+
+    def test_get_nature_subresource(self):
+        base_get_subresource_test(self, 'nature', 'decreased_stat', [('name', 'test')], False)
+
+    def test_get_pokeathlon_stat_subresource(self):
+        base_get_subresource_test(self, 'pokeathlon-stat', 'names', [('name', 'test')], False)
+
+    def test_get_pokemon_subresource(self):
+        base_get_subresource_test(self, 'pokemon', 'forms', [('name', 'test')], False)
+
+    def test_get_pokemon_color_subresource(self):
+        base_get_subresource_test(self, 'pokemon-color', 'names', [('name', 'test')], False)
+
+    def test_get_pokemon_form_subresource(self):
+        base_get_subresource_test(self, 'pokemon-form', 'pokemon', [('name', 'test')], False)
+
+    def test_get_pokemon_habitat_subresource(self):
+        base_get_subresource_test(self, 'pokemon-habitat', 'names', [('name', 'test')], False)
+
+    def test_get_pokemon_shape_subresource(self):
+        base_get_subresource_test(self, 'pokemon-shape', 'names', [('name', 'test')], False)
+
+    def test_get_pokemon_species_subresource(self):
+        base_get_subresource_test(self, 'pokemon-species', 'growth_rate', [('name', 'test')],
+                                  False)
+
+    def test_get_stat_subresource(self):
+        base_get_subresource_test(self, 'stat', 'move_damage_class', [('name', 'test')], False)
+
+    def test_get_type_subresource(self):
+        base_get_subresource_test(self, 'type', 'generation', [('name', 'test')], False)
+
+    def test_get_language_subresource(self):
+        base_get_subresource_test(self, 'language', 'names', [('name', 'test')], False)
 
     # __repr__
 
