@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import os
-import sys
+import pokepy
 
 
 try:
@@ -10,31 +9,28 @@ try:
 except ImportError:
     from distutils.core import setup
 
-if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
-    sys.exit()
-
-with open('README.md') as readme_md, open('docs/history.md') as history_md:
+with open('README.md') as readme_md, open('docs/history.md') as history_md,\
+        open('requirements.txt') as requirements_txt:
     readme = readme_md.read()
     history = history_md.read()
+    requirements = [req[:req.find('#')].rstrip() for req in requirements_txt.readlines()]
 
 setup(
     name='pokepy',
-    version='0.5.0',
-    description='A Python wrapper for PokéAPI',
+    version=pokepy.__version__,
+    description='A Python wrapper for PokéAPI (https://pokeapi.co)',
     long_description=readme + '\n\n' + history,
-    author='Paul Hallett',
-    author_email='hello@phalt.co',
+    license=pokepy.__license__,
+    author=pokepy.__author__,
+    author_email=pokepy.__email__,
     url='https://github.com/PokeAPI/pokepy',
-    packages=[
-        'pokepy',
-    ],
+    project_urls={'Documentation': 'https://pokeapi.github.io/pokepy/'},
+    packages=['pokepy'],
     package_dir={'pokepy': 'pokepy'},
     include_package_data=True,
-    install_requires=["beckett==0.8.0", "fcache==0.4.7", "requests==2.20.0"],
-    license="BSD",
+    install_requires=requirements,
     zip_safe=False,
-    keywords='pokepy',
+    keywords='pokepy PokéAPI',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -47,4 +43,5 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     test_suite='tests',
+    tests_require=['requests-mock==1.5.*'],
 )

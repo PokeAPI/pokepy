@@ -10,8 +10,9 @@ help:
 	@echo "docs-build - build MkDocs HTML documentation"
 	@echo "docs-test - live test the current documentation"
 	@echo "docs-release - push built docs to gh-pages branch of github repo (git should exist on PATH)"
-	@echo "release - package and upload a release"
 	@echo "sdist - package"
+	@echo "sdist-test - look for errors on the source distribution package"
+	@echo "release - package and upload a release"
 
 clean: clean-build clean-pyc
 
@@ -50,9 +51,13 @@ docs-test:
 docs-release:
     mkdocs gh-deploy --verbose
 
-release: clean sdist
-	twine upload dist/*
-
 sdist: clean
 	python setup.py sdist bdist_wheel
 	ls -l dist
+
+sdist-test:
+    twine check dist/*
+    twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+release: clean sdist
+	twine upload dist/*
