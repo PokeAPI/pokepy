@@ -130,11 +130,11 @@ Most resources can be requested by using either the `name` or `id` of the resour
 ### Cache
 If you use the API to get the same resources often,
 you can enable cache to avoid making unnecessary requests to the PokéAPI server.
-You can either enable `in-memory` or `in-disk` cache.
-Cache is kept per get method.
+You can either enable `memory-based` or `disk-based` cache.
 
-#### In-memory
-`in-memory` cache saves resources in RAM. Cache is kept per get method:
+#### Memory-based
+Memory-based cache is activated by passing `in_memory` to the `cache` parameter of `V2Client`.
+Resources obtained from the PokéAPI are then saved in RAM. Cache is kept per get method:
 ```python
 >>> client_mem_cache = pokepy.V2Client(cache='in_memory')
 ```
@@ -170,21 +170,24 @@ To clear the cache of a specific get method:
 CacheInfo(hits=0, misses=0, size=0)
 ```
 
-#### In-disk
-`in-disk` cache saves resources to the disk. Cache is kept per get method:
+#### Disk-based
+Disk-based cache is activated by passing `in_disk` to the `cache` parameter of `V2Client`.
+Resources obtained from the PokéAPI are then saved to disk. Cache is kept per get method:
 ```python
 >>> client_disk_cache = pokepy.V2Client(cache='in_disk', cache_location='/temp')
 ```
 
-For disk-based cache it's possible to specify the cache directory with `cache_location`.
+In this case it's possible to specify the cache directory with the `cache_location` parameter.
+A folder named `pokepy_cache` will be created inside the specified directory, where the
+cache of each get method will be located.
 If no cache directory is specified a system-appropriate cache directory is automatically determined by
 [appdirs](https://pypi.org/project/appdirs/).
  
-The same methods are used as with `in-memory` to check the state and clear the cache.
+The methods used to check the state and clear the cache are the same as in the memory-based cache.
 You can also check the cache directory:
 ```python
 >>> client_disk_cache.get_pokemon.cache_location()
-/temp
+/temp/pokepy_cache/39/cache
 ```
 
 Disk-based cache is reloaded automatically between runs if the same cache directory is specified.
