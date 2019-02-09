@@ -244,15 +244,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#in-memory" title="In-memory" class="md-nav__link">
-    In-memory
+  <a href="#memory-based" title="Memory-based" class="md-nav__link">
+    Memory-based
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#in-disk" title="In-disk" class="md-nav__link">
-    In-disk
+  <a href="#disk-based" title="Disk-based" class="md-nav__link">
+    Disk-based
   </a>
   
 </li>
@@ -352,15 +352,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#in-memory" title="In-memory" class="md-nav__link">
-    In-memory
+  <a href="#memory-based" title="Memory-based" class="md-nav__link">
+    Memory-based
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#in-disk" title="In-disk" class="md-nav__link">
-    In-disk
+  <a href="#disk-based" title="Disk-based" class="md-nav__link">
+    Disk-based
   </a>
   
 </li>
@@ -508,10 +508,10 @@ Prevents sleep.
 <h3 id="cache">Cache</h3>
 <p>If you use the API to get the same resources often,
 you can enable cache to avoid making unnecessary requests to the PokéAPI server.
-You can either enable <code>in-memory</code> or <code>in-disk</code> cache.
-Cache is kept per get method.</p>
-<h4 id="in-memory">In-memory</h4>
-<p><code>in-memory</code> cache saves resources in RAM. Cache is kept per get method:</p>
+You can either enable <code>memory-based</code> or <code>disk-based</code> cache.</p>
+<h4 id="memory-based">Memory-based</h4>
+<p>Memory-based cache is activated by passing <code>in_memory</code> to the <code>cache</code> parameter of <code>V2Client</code>.
+Resources obtained from the PokéAPI are then saved in RAM. Cache is kept per get method:</p>
 <pre><code class="python">&gt;&gt;&gt; client_mem_cache = pokepy.V2Client(cache='in_memory')
 </code></pre>
 
@@ -542,18 +542,21 @@ CacheInfo(hits=1, misses=1, size=1)
 CacheInfo(hits=0, misses=0, size=0)
 </code></pre>
 
-<h4 id="in-disk">In-disk</h4>
-<p><code>in-disk</code> cache saves resources to the disk. Cache is kept per get method:</p>
+<h4 id="disk-based">Disk-based</h4>
+<p>Disk-based cache is activated by passing <code>in_disk</code> to the <code>cache</code> parameter of <code>V2Client</code>.
+Resources obtained from the PokéAPI are then saved to disk. Cache is kept per get method:</p>
 <pre><code class="python">&gt;&gt;&gt; client_disk_cache = pokepy.V2Client(cache='in_disk', cache_location='/temp')
 </code></pre>
 
-<p>For disk-based cache it's possible to specify the cache directory with <code>cache_location</code>.
+<p>In this case it's possible to specify the cache directory with the <code>cache_location</code> parameter.
+A folder named <code>pokepy_cache</code> will be created inside the specified directory, where the
+cache of each get method will be located.
 If no cache directory is specified a system-appropriate cache directory is automatically determined by
 <a href="https://pypi.org/project/appdirs/">appdirs</a>.</p>
-<p>The same methods are used as with <code>in-memory</code> to check the state and clear the cache.
+<p>The methods used to check the state and clear the cache are the same as in the memory-based cache.
 You can also check the cache directory:</p>
 <pre><code class="python">&gt;&gt;&gt; client_disk_cache.get_pokemon.cache_location()
-/temp
+/temp/pokepy_cache/39/cache
 </code></pre>
 
 <p>Disk-based cache is reloaded automatically between runs if the same cache directory is specified.</p>
