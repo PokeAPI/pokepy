@@ -105,6 +105,18 @@ def caching(disk_or_memory, cache_directory=None):
     return memoize
 
 
+def cache_info_total(self):
+    pass
+
+
+def cache_clear_total(self):
+    pass
+
+
+def cache_location_absolute(self):
+    pass
+
+
 class V2Client(BaseClient):
     """Pokéapi client"""
 
@@ -174,23 +186,25 @@ class V2Client(BaseClient):
             cache directory, for disk-based cache.
             Optional.
         """
-        if cache == 'in_memory':
-            cache_function = caching('memory')
-            self.cache_type = cache
-        elif cache == 'in_disk':
-            cache_function = caching('disk', cache_location)
-            self.cache_type = cache
-        elif cache is None:  # empty wrapping function
+        if cache is None:  # empty wrapping function
             def no_cache(func):
                 @functools.wraps(func)
                 def inner(*args, **kwargs):
                     return func(*args, **kwargs)
                 return inner
             cache_function = no_cache
-        else:  # wrong cache parameter
-            raise ValueError('Accepted values for cache are "in_memory" or "in_disk"')
+        else:
+            if cache in ['in_memory', 'in_disk']:
+                cache_function = caching(cache.split('in_')[1], cache_location)
+                self.cache_type = cache
+                # global cache related methods
+                self.cache_info = types.MethodType(cache_info_total, self)
+                self.cache_clear = types.MethodType(cache_clear_total, self)
+                self.cache_location = types.MethodType(cache_location_absolute, self)
+            else:  # wrong cache parameter
+                raise ValueError('Accepted values for cache are "in_memory" or "in_disk"')
 
-        self.cache = cache_function
+        self._cache = cache_function
         super(V2Client, self).__init__(*args, **kwargs)
 
     def _assign_method(self, resource_class, method_type):
@@ -209,7 +223,7 @@ class V2Client(BaseClient):
         )
 
         # uid is now the first argument (after self)
-        @self.cache
+        @self._cache
         def get(self, uid=None, method_type=method_type,
                 method_name=method_name,
                 valid_status_codes=valid_status_codes,
