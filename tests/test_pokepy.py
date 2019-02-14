@@ -245,6 +245,14 @@ def base_cache_test(self, resource, test_to_do):
 
 
 def base_cache_info_test(self):
+    """
+    Base test for V2Client.cache_info()
+
+    Parameters
+    ----------
+    self: TestV2ClientCacheInMemory or TestV2ClientCacheInDisk
+        TestV2ClientCacheInMemory or TestV2ClientCacheInDisk instance (self)
+    """
     with requests_mock.mock() as mock:
         mock.get(requests_mock.ANY, text=mock_data)
 
@@ -275,6 +283,14 @@ def base_cache_info_test(self):
 
 
 def base_cache_clear_test(self):
+    """
+    Base test for V2Client.cache_clear()
+
+    Parameters
+    ----------
+    self: TestV2ClientCacheInMemory or TestV2ClientCacheInDisk
+        TestV2ClientCacheInMemory or TestV2ClientCacheInDisk instance (self)
+    """
     with requests_mock.mock() as mock:
         mock.get(requests_mock.ANY, text=mock_data)
 
@@ -300,6 +316,14 @@ def base_cache_clear_test(self):
 
 
 def base_cache_location_test(self):
+    """
+    Base test for V2Client.cache_location()
+
+    Parameters
+    ----------
+    self: TestV2ClientCacheInMemory or TestV2ClientCacheInDisk
+        TestV2ClientCacheInMemory or TestV2ClientCacheInDisk instance (self)
+    """
     if self.client.cache_type == 'in_memory':
         self.assertEqual(self.client.cache_location(), 'ram')
 
