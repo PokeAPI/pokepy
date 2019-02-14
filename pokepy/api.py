@@ -20,21 +20,6 @@ from . import resources_v2 as rv2
 from . import __version__
 
 
-def cache_info_total(self):
-    return self._cache_info_(self._cache_hits_global,
-                             self._cache_misses_global,
-                             self._cache_len_global)
-
-
-def cache_clear_total(self):
-    for get_method_name in self._all_get_methods_names:
-        getattr(self, get_method_name).cache_clear()
-
-
-def cache_location_absolute(self):
-    return self._cache_location_global
-
-
 class V2Client(BaseClient):
     """Pokéapi client"""
 
@@ -115,10 +100,24 @@ class V2Client(BaseClient):
             if cache in ['in_memory', 'in_disk']:
                 cache_function = self._caching(cache.split('in_')[1], cache_location)
                 self.cache_type = cache
+
+                def cache_info_total(self):
+                    return self._cache_info_(self._cache_hits_global,
+                                             self._cache_misses_global,
+                                             self._cache_len_global)
+
+                def cache_clear_total(self):
+                    for get_method_name in self._all_get_methods_names:
+                        getattr(self, get_method_name).cache_clear()
+
+                def cache_location_absolute(self):
+                    return self._cache_location_global
+
                 # global cache related methods
                 self.cache_info = types.MethodType(cache_info_total, self)
                 self.cache_clear = types.MethodType(cache_clear_total, self)
                 self.cache_location = types.MethodType(cache_location_absolute, self)
+
                 self._cache_hits_global = 0
                 self._cache_misses_global = 0
                 self._cache_len_global = 0
