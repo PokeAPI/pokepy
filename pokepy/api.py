@@ -233,13 +233,13 @@ class V2Client(BaseClient):
                 return self._cache_info_(hits[0], misses[0], len(cache))
 
             def cache_clear():
+                # local cache info
+                hits[0] = 0
+                misses[0] = 0
                 # global cache info
                 self._cache_hits_global -= hits[0]
                 self._cache_misses_global -= misses[0]
                 self._cache_len_global -= len(cache)
-                # local cache info
-                hits[0] = 0
-                misses[0] = 0
 
                 cache.clear()  # for disk-based cache, files are deleted but not the directories
                 if disk_or_memory == 'disk':
@@ -254,12 +254,11 @@ class V2Client(BaseClient):
                 key = str(args[1]) if len(args) > 1 else str(kwargs.get("uid"))
 
                 if key not in cache:
-                    # global cache info
-                    self._cache_misses_global += 1
-                    self._cache_len_global += 1
-                    # local cache info
+                    # local and global cache info
                     misses[0] += 1
+                    self._cache_misses_global += 1
                     cache[key] = func(*args, **kwargs)
+                    self._cache_len_global += 1
                 else:
                     self._cache_hits_global += 1  # global cache info
                     hits[0] += 1  # local cache info
