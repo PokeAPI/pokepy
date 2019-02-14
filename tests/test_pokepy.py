@@ -24,6 +24,11 @@ mock_data = '{"id": "1", "name": "test_name"}'
 mock_data_alternate = '{"id": "2", "name": "test_name2"}'
 
 
+############
+# Base tests
+############
+
+
 def base_get_test(self, resource, method='name', uid_str=True):
     """
     Base get test for 'get' methods of V2Client
@@ -210,30 +215,101 @@ def base_cache_test(self, resource, test_to_do):
                         appdirs.user_cache_dir('pokepy_cache', False, opinion=False)))
 
         elif test_to_do == '011':  # 0 hits, 1 miss and 1 cached
+            resource_get_method.cache_clear()
+
             # call resource for the first time
             _ = resource_get_method(1)
             self.assertEqual(resource_get_method.cache_info(), (0, 1, 1))
 
-            # clear cache for better testing
             resource_get_method.cache_clear()
 
         elif test_to_do == '111':  # 1 hit, 1 miss, and 1 cached
+            resource_get_method.cache_clear()
+
             # call same resource again
             _ = resource_get_method(1)
             _ = resource_get_method(1)
             self.assertEqual(resource_get_method.cache_info(), (1, 1, 1))
 
-            # clear cache for better testing
             resource_get_method.cache_clear()
 
         elif test_to_do == '022':  # 0 hit, 2 miss, and 2 cached
+            resource_get_method.cache_clear()
+
             # call other resource
             _ = resource_get_method(1)
             _ = resource_get_method(2)
             self.assertEqual(resource_get_method.cache_info(), (0, 2, 2))
 
-            # clear cache for better testing
             resource_get_method.cache_clear()
+
+
+def base_cache_info_test(self):
+    with requests_mock.mock() as mock:
+        mock.get(requests_mock.ANY, text=mock_data)
+
+        # starts with 0, 0, 0
+        self.assertEqual(self.client.cache_info(), (0, 0, 0))
+
+        # call 1 resource: 0, 1, 1
+        self.client.get_pokemon(1)
+        self.assertEqual(self.client.cache_info(), (0, 1, 1))
+
+        # call other resource: 0, 2, 2
+        self.client.get_berry(1)
+        self.assertEqual(self.client.cache_info(), (0, 2, 2))
+
+        # call same resource: 1, 2, 2
+        self.client.get_berry(1)
+        self.assertEqual(self.client.cache_info(), (1, 2, 2))
+
+        # call more resources: 2, 8, 8
+        self.client.get_egg_group(1)
+        self.client.get_egg_group(1)
+        self.client.get_egg_group(2)
+        self.client.get_ability(1)
+        self.client.get_ability(2)
+        self.client.get_gender(1)
+        self.client.get_gender(2)
+        self.assertEqual(self.client.cache_info(), (2, 8, 8))
+
+
+def base_cache_clear_test(self):
+    with requests_mock.mock() as mock:
+        mock.get(requests_mock.ANY, text=mock_data)
+
+        # starts with 0, 0, 0
+        self.assertEqual(self.client.cache_info(), (0, 0, 0))
+        self.client.cache_clear()
+        self.assertEqual(self.client.cache_info(), (0, 0, 0))
+
+        # call resources
+        self.client.get_pokemon(1)
+        self.client.get_pokemon(1)
+        self.client.cache_clear()
+        self.assertEqual(self.client.cache_info(), (0, 0, 0))
+
+        # call more resources
+        self.client.get_pokemon(1)
+        self.client.get_pokemon(1)
+        self.client.get_berry(1)
+        self.client.get_egg_group(1)
+        self.client.get_ability(1)
+        self.client.cache_clear()
+        self.assertEqual(self.client.cache_info(), (0, 0, 0))
+
+
+def base_cache_location_test(self):
+    if self.client.cache_type == 'in_memory':
+        self.assertEqual(self.client.cache_location(), 'ram')
+
+    elif self.client.cache_type == 'in_disk':
+        self.assertEqual(self.client.cache_location(), self.default_caching_dir)
+
+
+##############
+# Test Classes
+##############
 
 
 class TestV2Client(unittest.TestCase):
@@ -1365,6 +1441,9 @@ class TestV2ClientCacheInMemory(unittest.TestCase):
 
     # cache_info
 
+    def test_client_cache_info(self):
+        base_cache_info_test(self)
+
     def test_get_berry_cache_info(self):
         base_cache_test(self, 'berry', 'cache_info')
 
@@ -1511,6 +1590,9 @@ class TestV2ClientCacheInMemory(unittest.TestCase):
 
     # cache_clear
 
+    def test_client_cache_clear(self):
+        base_cache_clear_test(self)
+
     def test_get_berry_cache_clear(self):
         base_cache_test(self, "berry", 'cache_clear')
 
@@ -1656,6 +1738,9 @@ class TestV2ClientCacheInMemory(unittest.TestCase):
         base_cache_test(self, "language", 'cache_clear')
 
     # cache_location
+
+    def test_client_cache_location(self):
+        base_cache_location_test(self)
 
     def test_get_berry_cache_location(self):
         base_cache_test(self, "berry", 'cache_location')
@@ -2264,6 +2349,9 @@ class TestV2ClientCacheInDisk(unittest.TestCase):
 
     # cache_info
 
+    def test_client_cache_info(self):
+        base_cache_info_test(self)
+
     def test_get_berry_cache_info(self):
         base_cache_test(self, 'berry', 'cache_info')
 
@@ -2410,6 +2498,9 @@ class TestV2ClientCacheInDisk(unittest.TestCase):
 
     # cache_clear
 
+    def test_client_cache_clear(self):
+        base_cache_clear_test(self)
+
     def test_get_berry_cache_clear(self):
         base_cache_test(self, "berry", 'cache_clear')
 
@@ -2555,6 +2646,9 @@ class TestV2ClientCacheInDisk(unittest.TestCase):
         base_cache_test(self, "language", 'cache_clear')
 
     # cache_location
+
+    def test_client_cache_location(self):
+        base_cache_location_test(self)
 
     def test_get_berry_cache_location(self):
         base_cache_test(self, "berry", 'cache_location')
