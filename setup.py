@@ -20,6 +20,7 @@ setup(
     version=pokepy.__version__,
     description='A Python wrapper for PokéAPI (https://pokeapi.co)',
     long_description=readme + '\n\n' + history,
+    long_description_content_type='text/markdown',
     license=pokepy.__license__,
     author=pokepy.__author__,
     author_email=pokepy.__email__,
