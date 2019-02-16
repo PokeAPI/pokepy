@@ -515,8 +515,16 @@ Resources obtained from the PokéAPI are then saved in RAM. Cache is kept per ge
 <pre><code class="python">&gt;&gt;&gt; client_mem_cache = pokepy.V2Client(cache='in_memory')
 </code></pre>
 
-<p>To check the state of the cache of a particular method:</p>
+<p>You can check the state of the cache in two ways: per get method or as a whole.</p>
+<p>To check the state of the cache of a particular method, call the <code>cache_info()</code>
+of that get method:</p>
 <pre><code class="python">&gt;&gt;&gt; client_mem_cache.get_pokemon.cache_info()
+CacheInfo(hits=0, misses=0, size=0)
+</code></pre>
+
+<p>To check the state of the cache as a whole (all get methods combined),
+call the <code>cache_info()</code> of <code>V2Client</code>:</p>
+<pre><code class="python">&gt;&gt;&gt; client_mem_cache.cache_info()
 CacheInfo(hits=0, misses=0, size=0)
 </code></pre>
 
@@ -542,6 +550,12 @@ CacheInfo(hits=1, misses=1, size=1)
 CacheInfo(hits=0, misses=0, size=0)
 </code></pre>
 
+<p>To clear all cache:</p>
+<pre><code class="python">&gt;&gt;&gt; client_mem_cache.cache_clear()
+&gt;&gt;&gt; client_mem_cache.cache_info()
+CacheInfo(hits=0, misses=0, size=0)
+</code></pre>
+
 <h4 id="disk-based">Disk-based</h4>
 <p>Disk-based cache is activated by passing <code>in_disk</code> to the <code>cache</code> parameter of <code>V2Client</code>.
 Resources obtained from the PokéAPI are then saved to disk. Cache is kept per get method:</p>
@@ -553,10 +567,16 @@ A folder named <code>pokepy_cache</code> will be created inside the specified di
 cache of each get method will be located.
 If no cache directory is specified a system-appropriate cache directory is automatically determined by
 <a href="https://pypi.org/project/appdirs/">appdirs</a>.</p>
-<p>The methods used to check the state and clear the cache are the same as in the memory-based cache.
-You can also check the cache directory:</p>
+<p>The methods used to check the state and clear the cache are the same as in the memory-based cache,
+including the global <code>V2Client</code> methods.</p>
+<p>You can also check the cache directory, per get method:</p>
 <pre><code class="python">&gt;&gt;&gt; client_disk_cache.get_pokemon.cache_location()
 /temp/pokepy_cache/39/cache
+</code></pre>
+
+<p>Or check the global cache directory:</p>
+<pre><code class="python">&gt;&gt;&gt; client_disk_cache.cache_location()
+/temp/pokepy_cache/
 </code></pre>
 
 <p>Disk-based cache is reloaded automatically between runs if the same cache directory is specified.</p>
