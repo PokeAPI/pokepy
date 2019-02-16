@@ -176,7 +176,7 @@ def base_404_test(self, resource):
 
 def base_cache_test(self, resource, test_to_do):
     """
-    Base cache test for V2Client
+    Base cache test for V2Client get methods
 
     Parameters
     ----------
@@ -202,7 +202,7 @@ def base_cache_test(self, resource, test_to_do):
             self.assertEqual(resource_get_method.cache_info(), (0, 0, 0))
 
         elif test_to_do == 'cache_clear':  # 0 hits, 0 misses, and 0 cache
-            _ = resource_get_method(1)
+            resource_get_method(1)
             resource_get_method.cache_clear()
             self.assertEqual(resource_get_method.cache_info(), (0, 0, 0))
 
@@ -215,33 +215,27 @@ def base_cache_test(self, resource, test_to_do):
                         appdirs.user_cache_dir('pokepy_cache', False, opinion=False)))
 
         elif test_to_do == '011':  # 0 hits, 1 miss and 1 cached
-            resource_get_method.cache_clear()
+            resource_get_method.cache_clear()  # clear previous tests
 
             # call resource for the first time
-            _ = resource_get_method(1)
+            resource_get_method(1)
             self.assertEqual(resource_get_method.cache_info(), (0, 1, 1))
 
-            resource_get_method.cache_clear()
-
         elif test_to_do == '111':  # 1 hit, 1 miss, and 1 cached
-            resource_get_method.cache_clear()
+            resource_get_method.cache_clear()  # clear previous tests
 
             # call same resource again
-            _ = resource_get_method(1)
-            _ = resource_get_method(1)
+            resource_get_method(1)
+            resource_get_method(1)
             self.assertEqual(resource_get_method.cache_info(), (1, 1, 1))
 
-            resource_get_method.cache_clear()
-
         elif test_to_do == '022':  # 0 hit, 2 miss, and 2 cached
-            resource_get_method.cache_clear()
+            resource_get_method.cache_clear()  # clear previous tests
 
             # call other resource
-            _ = resource_get_method(1)
-            _ = resource_get_method(2)
+            resource_get_method(1)
+            resource_get_method(2)
             self.assertEqual(resource_get_method.cache_info(), (0, 2, 2))
-
-            resource_get_method.cache_clear()
 
 
 def base_cache_info_test(self):
@@ -255,6 +249,9 @@ def base_cache_info_test(self):
     """
     with requests_mock.mock() as mock:
         mock.get(requests_mock.ANY, text=mock_data)
+
+        # clear previous tests
+        self.client.cache_clear()
 
         # starts with 0, 0, 0
         self.assertEqual(self.client.cache_info(), (0, 0, 0))
@@ -293,6 +290,9 @@ def base_cache_clear_test(self):
     """
     with requests_mock.mock() as mock:
         mock.get(requests_mock.ANY, text=mock_data)
+
+        # clear previous tests
+        self.client.cache_clear()
 
         # starts with 0, 0, 0
         self.assertEqual(self.client.cache_info(), (0, 0, 0))
