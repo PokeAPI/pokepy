@@ -1,4 +1,10 @@
 # History
+### 0.5.1 (2019-02-16)
+* New V2Client cache-related methods:
+    * cache_info
+    * cache_clear
+    * cache_location
+
 ### 0.5.0 (2019-01-19)
 * Pykemon is now Pokepy!
 * Cache (disk- and memory-based)

@@ -66,6 +66,7 @@ disable=missing-docstring,
         no-member,
         keyword-arg-before-vararg,
         fixme,
+        too-many-instance-attributes,
 
         # Disabled by default:
 
