@@ -1745,7 +1745,7 @@ class LocationAreaResource(BaseResource):
             'encounter_method_rates': EncounterMethodRateSubResource,
             'location': NamedAPIResourceSubResource,
             'names': NameSubResource,
-            'pokemon_encounters:': PokemonEncounterSubResource
+            'pokemon_encounters': PokemonEncounterSubResource
         }
 
     def __repr__(self):

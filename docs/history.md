@@ -1,4 +1,8 @@
 # History
+### 0.5.2 (2019-03-01)
+* Fixed bug that caused pokemon_encounters subresource to not be detected in LocationAreaResource
+(thanks to [jachymb](https://github.com/jachymb))
+
 ### 0.5.1 (2019-02-16)
 * New V2Client cache-related methods:
     * cache_info

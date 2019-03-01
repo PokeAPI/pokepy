@@ -9,8 +9,9 @@ try:
 except ImportError:
     from distutils.core import setup
 
-with open('README.md') as readme_md, open('docs/history.md') as history_md,\
-        open('requirements.txt') as requirements_txt:
+with open('README.md', encoding='utf-8') as readme_md,\
+        open('docs/history.md', encoding='utf-8') as history_md,\
+        open('requirements.txt', encoding='utf-8') as requirements_txt:
     readme = readme_md.read()
     history = history_md.read()
     requirements = [req[:req.find('#')].rstrip() for req in requirements_txt.readlines()]
