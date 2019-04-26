@@ -1,3 +1,4 @@
 beckett==0.8.*      # main functionality
 fcache==0.4.*       # disk-based cache
-requests==2.20.*    # used by beckett (bumped to avoid CVE-2018-18074)
+requests==2.21.*    # used by beckett (bumped to avoid CVE-2018-18074)
+urllib3==1.25       # used by requests (bumped to avoid CVE-2019-11236)
