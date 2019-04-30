@@ -5,7 +5,7 @@ version: 2
 jobs:
   py27:
     docker:
-      - image: circleci/python:2.7.15
+      - image: circleci/python:2.7.16
     steps:
       - checkout
       - run:
@@ -29,7 +29,7 @@ jobs:
 
   py37:
     docker:
-      - image: circleci/python:3.7.2
+      - image: circleci/python:3.7.3
     steps:
       - checkout
       - run:

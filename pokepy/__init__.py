@@ -10,7 +10,7 @@ Usage:
 >>> import pokepy
 >>> clientV2 = pokepy.V2Client()
 >>> clientV2.get_pokemon('bulbasaur')
-[<Pokemon - Bulbasaur>]
+<Pokemon - Bulbasaur>
 """
 
 __author__ = 'Paul Hallett'

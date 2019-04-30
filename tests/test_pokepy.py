@@ -50,8 +50,8 @@ def base_get_test(self, resource, method='name', uid_str=True):
         mock.get('%s/%s/1' % (base_url, resource), text=mock_data)
 
         uid = 'test' if uid_str else 1
-        response = getattr(self.client, 'get_%s' % resource.replace('-', '_'))(uid)[0]
-        response_upper = getattr(self.client, 'get_%s' % resource.replace('-', '_'))('TEST')[0]
+        response = getattr(self.client, 'get_%s' % resource.replace('-', '_'))(uid)
+        response_upper = getattr(self.client, 'get_%s' % resource.replace('-', '_'))('TEST')
 
         if method == 'name':
             self.assertEqual(response.name, 'test_name')
@@ -92,7 +92,7 @@ def base_get_subresource_test(self, resource, subresource_name, subresource_list
 
     with requests_mock.mock() as mock:
         mock.get('%s/%s/1' % (base_url, resource), text=mock_subresource)
-        response = getattr(self.client, 'get_%s' % resource.replace('-', '_'))(1)[0]
+        response = getattr(self.client, 'get_%s' % resource.replace('-', '_'))(1)
 
         for sub_name, sub_value in subresource_list:
             if multi_resource:  # response.subresource_name[0].sub_name
@@ -117,7 +117,7 @@ def base_repr_test(self, resource):
     with requests_mock.mock() as mock:
         mock.get('%s/%s/1' % (base_url, resource), text=mock_data)
 
-        response = getattr(self.client, 'get_%s' % resource.replace('-', '_'))(1)[0]
+        response = getattr(self.client, 'get_%s' % resource.replace('-', '_'))(1)
         resource_name = '_'.join([name.capitalize() for name in resource.split('-')])
 
         self.assertTrue(all([
@@ -171,7 +171,7 @@ def base_404_test(self, resource):
         mock.get('%s/%s/1' % (base_url, resource), status_code=404)
         self.assertRaises(
             InvalidStatusCodeError,
-            lambda: getattr(self.client, 'get_%s' % resource.replace('-', '_'))(1)[0])
+            lambda: getattr(self.client, 'get_%s' % resource.replace('-', '_'))(1))
 
 
 def base_cache_test(self, resource, test_to_do):
