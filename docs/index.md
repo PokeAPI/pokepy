@@ -2,6 +2,7 @@
 
 [![pypi](https://img.shields.io/pypi/v/pokepy.svg "pypi package")](https://pypi.org/project/pokepy)
 [![python versions](https://img.shields.io/pypi/pyversions/pokepy.svg "supported python versions")](https://pypi.org/project/pokepy)
+[![downloads](https://img.shields.io/pypi/dm/pokepy.svg?style=popout "pypi downloads")](https://pypi.org/project/pokepy/)
 [![build status](https://circleci.com/gh/PokeAPI/pokepy.svg?style=svg "build status")](https://circleci.com/gh/PokeAPI/pokepy)
 [![coverage](https://codecov.io/gh/PokeAPI/pokepy/branch/master/graph/badge.svg "code coverage")](https://codecov.io/gh/PokeAPI/pokepy)
 [![snyk](https://snyk.io/test/github/PokeAPI/pokepy/badge.svg?targetFile=requirements.txt "known vulnerabilities")](https://snyk.io/test/github/PokeAPI/pokepy?targetFile=requirements.txt)
