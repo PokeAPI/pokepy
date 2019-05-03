@@ -459,50 +459,50 @@ for more information on what each of these methods returns, its description and 
 <p>Then you can start grabbing stuff from the API:</p>
 <pre><code class="python">&gt;&gt;&gt; mew = pokepy.V2Client().get_pokemon('mew')
 &gt;&gt;&gt; mew
-[&lt;Pokemon - Mew&gt;]
-&gt;&gt;&gt; mew[0].name
+&lt;Pokemon - Mew&gt;
+&gt;&gt;&gt; mew.name
 mew
 </code></pre>
 
 <pre><code class="python">&gt;&gt;&gt; kakuna = pokepy.V2Client().get_pokemon(14)
 &gt;&gt;&gt; kakuna
-[&lt;Pokemon - Kakuna&gt;]
-&gt;&gt;&gt; kakuna[0].weigth
+&lt;Pokemon - Kakuna&gt;
+&gt;&gt;&gt; kakuna.weigth
 100
 </code></pre>
 
 <pre><code class="python">&gt;&gt;&gt; cut = pokepy.V2Client().get_move(15)
 &gt;&gt;&gt; cut
-[&lt;Move - Cut&gt;]
-&gt;&gt;&gt; cut[0].power
+&lt;Move - Cut&gt;
+&gt;&gt;&gt; cut.power
 50
 </code></pre>
 
 <p>Some resources have subresources:</p>
 <pre><code class="python">&gt;&gt;&gt; kakuna = pokepy.V2Client().get_pokemon(14)
 &gt;&gt;&gt; kakuna
-[&lt;Pokemon - Kakuna&gt;]
-&gt;&gt;&gt; kakuna[0].types
+&lt;Pokemon - Kakuna&gt;
+&gt;&gt;&gt; kakuna.types
 [&lt;Pokemon_Type&gt;, &lt;Pokemon_Type&gt;]
-&gt;&gt;&gt; kakuna[0].types[0].type.name
+&gt;&gt;&gt; kakuna.types[0].type.name
 poison
 </code></pre>
 
 <pre><code class="python">&gt;&gt;&gt; insomnia = pokepy.V2Client().get_ability(15)
 &gt;&gt;&gt; insomnia
-[&lt;Ability - Insomnia&gt;]
-&gt;&gt;&gt; insomnia[0].effect_entries[0].short_effect
+&lt;Ability - Insomnia&gt;
+&gt;&gt;&gt; insomnia.effect_entries[0].short_effect
 Prevents sleep.
 </code></pre>
 
 <h3 id="parameters">Parameters</h3>
 <p>Most resources can be requested by using either the <code>name</code> or <code>id</code> of the resource:</p>
 <pre><code class="python">&gt;&gt;&gt; pokepy.V2Client().get_pokemon('rotom')
-[&lt;Pokemon - Rotom&gt;]
+&lt;Pokemon - Rotom&gt;
 &gt;&gt;&gt; pokepy.V2Client().get_pokemon(479)
-[&lt;Pokemon - Rotom&gt;]
+&lt;Pokemon - Rotom&gt;
 &gt;&gt;&gt; pokepy.V2Client().get_pokemon('479')
-[&lt;Pokemon - Rotom&gt;]
+&lt;Pokemon - Rotom&gt;
 </code></pre>
 
 <h3 id="cache">Cache</h3>
