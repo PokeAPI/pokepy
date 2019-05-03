@@ -1,6 +1,6 @@
 -r requirements-dev27.txt
-pylint==2.1.*               # style
-twine==1.12.*               # pypi tools
-pyOpenSSL==19.0.*           # twine dependency
-readme_renderer[md]==24.*   # command 'twine check'
-wheel==0.32.*               # command 'setup.py sdist bdist_wheel'
+pylint==2.1.*                 # style
+twine==1.12.*                 # pypi tools
+pyOpenSSL==19.0.*             # twine dependency
+readme_renderer[md]==24.0.*   # command 'twine check'
+wheel==0.32.*                 # command 'setup.py sdist bdist_wheel'
