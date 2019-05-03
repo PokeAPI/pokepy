@@ -1,4 +1,9 @@
 # History
+### 0.6.0 (2019-05-3)
+* V2Client get methods now return element instead of single element list
+* set urllib3 version to >=1.24.3, <1.25 (CVE-2019-11236)
+* Support for Python 3.4 and 3.5
+
 ### 0.5.2 (2019-03-01)
 * Fixed bug that caused pokemon_encounters subresource to not be detected in LocationAreaResource
 (thanks to [jachymb](https://github.com/jachymb))

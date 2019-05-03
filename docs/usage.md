@@ -75,24 +75,24 @@ Then you can start grabbing stuff from the API:
 ```python
 >>> mew = pokepy.V2Client().get_pokemon('mew')
 >>> mew
-[<Pokemon - Mew>]
->>> mew[0].name
+<Pokemon - Mew>
+>>> mew.name
 mew
 ```
 
 ```python
 >>> kakuna = pokepy.V2Client().get_pokemon(14)
 >>> kakuna
-[<Pokemon - Kakuna>]
->>> kakuna[0].weigth
+<Pokemon - Kakuna>
+>>> kakuna.weigth
 100
 ```
 
 ```python
 >>> cut = pokepy.V2Client().get_move(15)
 >>> cut
-[<Move - Cut>]
->>> cut[0].power
+<Move - Cut>
+>>> cut.power
 50
 ```
 
@@ -101,18 +101,18 @@ Some resources have subresources:
 ```python
 >>> kakuna = pokepy.V2Client().get_pokemon(14)
 >>> kakuna
-[<Pokemon - Kakuna>]
->>> kakuna[0].types
+<Pokemon - Kakuna>
+>>> kakuna.types
 [<Pokemon_Type>, <Pokemon_Type>]
->>> kakuna[0].types[0].type.name
+>>> kakuna.types[0].type.name
 poison
 ```
 
 ```python
 >>> insomnia = pokepy.V2Client().get_ability(15)
 >>> insomnia
-[<Ability - Insomnia>]
->>> insomnia[0].effect_entries[0].short_effect
+<Ability - Insomnia>
+>>> insomnia.effect_entries[0].short_effect
 Prevents sleep.
 ```
 
@@ -120,11 +120,11 @@ Prevents sleep.
 Most resources can be requested by using either the `name` or `id` of the resource:
 ```python
 >>> pokepy.V2Client().get_pokemon('rotom')
-[<Pokemon - Rotom>]
+<Pokemon - Rotom>
 >>> pokepy.V2Client().get_pokemon(479)
-[<Pokemon - Rotom>]
+<Pokemon - Rotom>
 >>> pokepy.V2Client().get_pokemon('479')
-[<Pokemon - Rotom>]
+<Pokemon - Rotom>
 ```
 
 ### Cache
