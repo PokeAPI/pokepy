@@ -100,7 +100,7 @@ Before submiting a pull request, check that it meets these guidelines:
    Put your new functionality into a function with a docstring, and add the
    feature to the list in [README](https://github.com/PokeAPI/pokepy/blob/master/README.md).
    
-**3 .** The pull request should work for Python 2.7, 3.6, and 3.7.
+**3 .** The pull request should work for Python 2.7, 3.4, 3.5, 3.6, and 3.7.
 
 ### Tips
 To run a subset of tests:
