@@ -1,18 +1,19 @@
-.PHONY: clean-pyc clean-build docs
+.PHONY: help clean clean-build clean-pyc lint test test-all coverage docs-build docs-test docs-release sdist sdist-test release
 
 help:
-	@echo "clean-build - remove build artifacts"
-	@echo "clean-pyc - remove Python file artifacts"
-	@echo "lint - check style with pylint"
-	@echo "test - run tests quickly with the default Python"
-	@echo "testall - run tests on every Python version with tox"
-	@echo "coverage - check code coverage quickly with the default Python"
-	@echo "docs-build - build MkDocs HTML documentation"
-	@echo "docs-test - live test the current documentation"
-	@echo "docs-release - push built docs to gh-pages branch of github repo (git should exist on PATH)"
-	@echo "sdist - package"
-	@echo "sdist-test - look for errors on the source distribution package"
-	@echo "release - package and upload a release"
+	@echo "clean - removes build and python file artifacts"
+	@echo "clean-build - removes build artifacts"
+	@echo "clean-pyc - removes python file artifacts"
+	@echo "lint - checks style with pylint"
+	@echo "test - runs tests quickly with the default python version"
+	@echo "test-all - runs tests on every python version with tox"
+	@echo "coverage - checks code coverage quickly with the default python version"
+	@echo "docs-build - builds MkDocs HTML documentation"
+	@echo "docs-test - live tests the current documentation"
+	@echo "docs-release - pushes built docs to gh-pages branch of github repo (git should exist on PATH)"
+	@echo "sdist - packages source distribution package"
+	@echo "sdist-test - looks for errors on the source distribution package"
+	@echo "release - packages and uploads a release"
 
 clean: clean-build clean-pyc
 
@@ -42,22 +43,22 @@ coverage:
 	open htmlcov/index.html
 
 docs-build:
-    mkdocs build
-    open site/index.html
+	mkdocs build
+	open site/index.html
 
 docs-test:
-    mkdocs serve
+	mkdocs serve
 
 docs-release:
-    mkdocs gh-deploy --verbose
+	mkdocs gh-deploy --verbose
 
 sdist: clean
 	python setup.py sdist bdist_wheel
 	ls -l dist
 
 sdist-test:
-    twine check dist/*
-    twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+	twine check dist/*
+	twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
 release: clean sdist
 	twine upload dist/*
