@@ -1,19 +1,19 @@
 .PHONY: help clean clean-build clean-pyc lint test test-all coverage docs-build docs-test docs-release sdist sdist-test release
 
 help:
-	@echo "clean - removes build and python file artifacts"
-	@echo "clean-build - removes build artifacts"
-	@echo "clean-pyc - removes python file artifacts"
-	@echo "lint - checks style with pylint"
-	@echo "test - runs tests quickly with the default python version"
-	@echo "test-all - runs tests on every python version with tox"
-	@echo "coverage - checks code coverage quickly with the default python version"
-	@echo "docs-build - builds MkDocs HTML documentation"
-	@echo "docs-test - live tests the current documentation"
-	@echo "docs-release - pushes built docs to gh-pages branch of github repo (git should exist on PATH)"
-	@echo "sdist - packages source distribution package"
-	@echo "sdist-test - looks for errors on the source distribution package"
-	@echo "release - packages and uploads a release"
+	@echo "clean          removes build and python file artifacts"
+	@echo "clean-build    removes build artifacts"
+	@echo "clean-pyc      removes python file artifacts"
+	@echo "lint           checks style with pylint"
+	@echo "test           runs tests quickly with the default python version"
+	@echo "test-all       runs tests on every python version with tox"
+	@echo "coverage       checks code coverage quickly with the default python version"
+	@echo "docs-build     builds MkDocs HTML documentation"
+	@echo "docs-test      live tests the current documentation"
+	@echo "docs-release   pushes built docs to gh-pages branch of github repo (git should exist on PATH)"
+	@echo "sdist          packages source distribution package"
+	@echo "sdist-test     looks for errors on the source distribution package"
+	@echo "release        packages and uploads a release"
 
 clean: clean-build clean-pyc
 
