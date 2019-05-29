@@ -54,7 +54,6 @@ docs-release:
 
 sdist: clean
 	python setup.py sdist bdist_wheel
-	ls -l dist
 
 sdist-test:
 	twine check dist/*
