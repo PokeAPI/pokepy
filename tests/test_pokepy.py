@@ -22,6 +22,7 @@ from pokepy import resources_v2
 base_url = 'https://pokeapi.co/api/v2'
 mock_data = '{"id": "1", "name": "test_name"}'
 mock_data_alternate = '{"id": "2", "name": "test_name2"}'
+mock_pagination = '{"count":1,"next":"url_next","previous":"url_previous","results":[{"name":"name","url":"url"}]}'
 
 
 ############
@@ -29,10 +30,11 @@ mock_data_alternate = '{"id": "2", "name": "test_name2"}'
 ############
 
 
-def base_get_test(self, resource, method='name', uid_str=True):
+def base_get_test(self, resource, method='name', uid_str=True, pagination=False):
     """
     Base get test for 'get' methods of V2Client
     Can test str uid or int uid
+    Can test pagination
 
     Parameters
     ----------
@@ -44,21 +46,38 @@ def base_get_test(self, resource, method='name', uid_str=True):
         'name' or 'id' (sometimes resources only have one of them)
     uid_str: bool
         If True pass uid parameter as str, else pass int
+    pagination: bool
+        If True passes no uid, to test pagination
     """
     with requests_mock.mock() as mock:
         mock.get('%s/%s/test' % (base_url, resource), text=mock_data)
         mock.get('%s/%s/1' % (base_url, resource), text=mock_data)
+        mock.get('%s/%s' % (base_url, resource), text=mock_pagination)
+        mock.get('%s/%s/?limit=1' % (base_url, resource), text=mock_pagination)
+        mock.get('%s/%s/?offset=1' % (base_url, resource), text=mock_pagination)
 
-        uid = 'test' if uid_str else 1
-        response = getattr(self.client, 'get_%s' % resource.replace('-', '_'))(uid)
-        response_upper = getattr(self.client, 'get_%s' % resource.replace('-', '_'))('TEST')
+        if not pagination:
+            uid = 'test' if uid_str else 1
+            response = getattr(self.client, 'get_%s' % resource.replace('-', '_'))(uid)
+            response_upper = getattr(self.client, 'get_%s' % resource.replace('-', '_'))('TEST')
 
-        if method == 'name':
-            self.assertEqual(response.name, 'test_name')
-            self.assertEqual(response_upper.name, 'test_name')
-        elif method == 'id':
-            self.assertEqual(response.id, '1')
-            self.assertEqual(response_upper.id, '1')
+            if method == 'name':
+                self.assertEqual(response.name, 'test_name')
+                self.assertEqual(response_upper.name, 'test_name')
+            elif method == 'id':
+                self.assertEqual(response.id, '1')
+                self.assertEqual(response_upper.id, '1')
+        else:
+            responses = [getattr(self.client, 'get_%s' % resource.replace('-', '_'))(),
+                         getattr(self.client, 'get_%s' % resource.replace('-', '_'))(limit=1),
+                         getattr(self.client, 'get_%s' % resource.replace('-', '_'))(offset=1),
+                         getattr(self.client, 'get_%s' % resource.replace('-', '_'))(limit=1, offset=1)]
+            for response in responses:
+                self.assertEqual(response.count, 1)
+                self.assertEqual(response.next, 'url_next')
+                self.assertEqual(response.previous, 'url_previous')
+                self.assertIsInstance(response.results[0],
+                                      (resources_v2.APIResourceSubResource, resources_v2.NamedAPIResourceSubResource))
 
 
 def base_get_subresource_test(self, resource, subresource_name, subresource_list,
@@ -656,6 +675,152 @@ class TestV2ClientMethods(unittest.TestCase):
 
     def test_get_language_int(self):
         base_get_test(self, 'language', uid_str=False)
+
+    # pagination
+
+    def test_get_berry_pagination(self):
+        base_get_test(self, 'berry', pagination=True)
+
+    def test_get_berry_firmness_pagination(self):
+        base_get_test(self, 'berry-firmness', pagination=True)
+
+    def test_get_berry_flavor_pagination(self):
+        base_get_test(self, 'berry-flavor', pagination=True)
+
+    def test_get_contest_type_pagination(self):
+        base_get_test(self, 'contest-type', pagination=True)
+
+    def test_get_contest_effect_pagination(self):
+        base_get_test(self, 'contest-effect', pagination=True)
+
+    def test_get_super_contest_effect_pagination(self):
+        base_get_test(self, 'super-contest-effect', pagination=True)
+
+    def test_get_encounter_method_pagination(self):
+        base_get_test(self, 'encounter-method', pagination=True)
+
+    def test_get_encounter_condition_pagination(self):
+        base_get_test(self, 'encounter-condition', pagination=True)
+
+    def test_get_encounter_condition_value_pagination(self):
+        base_get_test(self, 'encounter-condition-value', pagination=True)
+
+    def test_get_evolution_chain_pagination(self):
+        base_get_test(self, 'evolution-chain', pagination=True)
+
+    def test_get_evolution_trigger_pagination(self):
+        base_get_test(self, 'evolution-trigger', pagination=True)
+
+    def test_get_generation_pagination(self):
+        base_get_test(self, 'generation', pagination=True)
+
+    def test_get_pokedex_pagination(self):
+        base_get_test(self, 'pokedex', pagination=True)
+
+    def test_get_version_pagination(self):
+        base_get_test(self, 'version', pagination=True)
+
+    def test_get_version_group_pagination(self):
+        base_get_test(self, 'version-group', pagination=True)
+
+    def test_get_item_pagination(self):
+        base_get_test(self, 'item', pagination=True)
+
+    def test_get_item_attribute_pagination(self):
+        base_get_test(self, 'item-attribute', pagination=True)
+
+    def test_get_item_category_pagination(self):
+        base_get_test(self, 'item-category', pagination=True)
+
+    def test_get_item_fling_effect_pagination(self):
+        base_get_test(self, 'item-fling-effect', pagination=True)
+
+    def test_get_item_pocket_pagination(self):
+        base_get_test(self, 'item-pocket', pagination=True)
+
+    def test_get_machine_pagination(self):
+        base_get_test(self, 'machine', pagination=True)
+
+    def test_get_move_pagination(self):
+        base_get_test(self, 'move', pagination=True)
+
+    def test_get_move_ailment_pagination(self):
+        base_get_test(self, 'move-ailment', pagination=True)
+
+    def test_get_move_battle_style_pagination(self):
+        base_get_test(self, 'move-battle-style', pagination=True)
+
+    def test_get_move_category_pagination(self):
+        base_get_test(self, 'move-category', pagination=True)
+
+    def test_get_move_damage_class_pagination(self):
+        base_get_test(self, 'move-damage-class', pagination=True)
+
+    def test_get_move_learn_method_pagination(self):
+        base_get_test(self, 'move-learn-method', pagination=True)
+
+    def test_get_move_target_pagination(self):
+        base_get_test(self, 'move-target', pagination=True)
+
+    def test_get_location_pagination(self):
+        base_get_test(self, 'location', pagination=True)
+
+    def test_get_location_area_pagination(self):
+        base_get_test(self, 'location-area', pagination=True)
+
+    def test_get_pal_park_area_pagination(self):
+        base_get_test(self, 'pal-park-area', pagination=True)
+
+    def test_get_region_pagination(self):
+        base_get_test(self, 'region', pagination=True)
+
+    def test_get_ability_pagination(self):
+        base_get_test(self, 'ability', pagination=True)
+
+    def test_get_characteristic_pagination(self):
+        base_get_test(self, 'characteristic', pagination=True)
+
+    def test_get_egg_group_pagination(self):
+        base_get_test(self, 'egg-group', pagination=True)
+
+    def test_get_gender_pagination(self):
+        base_get_test(self, 'gender', pagination=True)
+
+    def test_get_growth_rate_pagination(self):
+        base_get_test(self, 'growth-rate', pagination=True)
+
+    def test_get_nature_pagination(self):
+        base_get_test(self, 'nature', pagination=True)
+
+    def test_get_pokeathlon_stat_pagination(self):
+        base_get_test(self, 'pokeathlon-stat', pagination=True)
+
+    def test_get_pokemon_pagination(self):
+        base_get_test(self, 'pokemon', pagination=True)
+
+    def test_get_pokemon_color_pagination(self):
+        base_get_test(self, 'pokemon-color', pagination=True)
+
+    def test_get_pokemon_form_pagination(self):
+        base_get_test(self, 'pokemon-form', pagination=True)
+
+    def test_get_pokemon_habitat_pagination(self):
+        base_get_test(self, 'pokemon-habitat', pagination=True)
+
+    def test_get_pokemon_shape_pagination(self):
+        base_get_test(self, 'pokemon-shape', pagination=True)
+
+    def test_get_pokemon_species_pagination(self):
+        base_get_test(self, 'pokemon-species', pagination=True)
+
+    def test_get_stat_pagination(self):
+        base_get_test(self, 'stat', pagination=True)
+
+    def test_get_type_pagination(self):
+        base_get_test(self, 'type', pagination=True)
+
+    def test_get_language_pagination(self):
+        base_get_test(self, 'language', pagination=True)
 
     # list of subresources
 
