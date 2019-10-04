@@ -132,7 +132,7 @@ class V2Client(BaseClient):
 
     def _assign_method(self, resource_class, method_type):
         """
-        Exactly the same code as the original except:
+        Changes to original code:
         - uid is now first parameter (after self). Therefore, no need to explicitly call 'uid='
         - Ignored the other http methods besides GET (as they are not needed for the pokeapi.co API)
         - Added cache wrapping function
@@ -177,6 +177,30 @@ class V2Client(BaseClient):
 
         # for easier listing of get methods
         self._all_get_methods_names.append(method_name)
+
+    def call_api(self, method_type, method_name, valid_status_codes, resource, data, uid, **kwargs):
+        """
+        Changes to original code:
+        - Removed check for uid (to allow calling resource without uid, for pagination)
+        - Simplified http method check (it's always GET)
+        - Removed check for POST, PUT and PATCH http methods
+        - Specify resource in case of pagination
+        """
+        url = resource.get_resource_url(resource, base_url=self.Meta.base_url)
+        url = resource.get_url(url=url, uid=uid, **kwargs)
+        params = {
+            'headers': self.get_http_headers(
+                self.Meta.name, method_name, **kwargs),
+            'url': url
+        }
+        prepared_request = self.prepare_http_request(method_type, params, **kwargs)
+        response = self.session.send(prepared_request)
+
+        # In case of pagination, use pagination-specific class
+        if not uid:
+            resource = resource.resource_list_class
+
+        return self._handle_response(response, valid_status_codes, resource)
 
     def _caching(self, disk_or_memory, cache_directory=None):
         """

@@ -13,11 +13,9 @@ from beckett.resources import SubResource
 
 
 class BaseResource(OriginalBaseResource):
-    """
-    Fix for "type object argument after ** must be a mapping, not NoneType"
-    """
+    # Fix for "type object argument after ** must be a mapping, not NoneType"
     def set_subresources(self, **kwargs):
-        """Same logic as the original except for the first 'if' clause."""
+        """Same logic as the original except for the first and last 'if' clauses."""
         for attribute_name, resource in self._subresource_map.items():
             sub_attr = kwargs.get(attribute_name)
             if sub_attr is None:
@@ -29,7 +27,26 @@ class BaseResource(OriginalBaseResource):
             else:
                 # So is a single resource
                 value = resource(**sub_attr)
-            setattr(self, attribute_name, value)
+            if value:
+                setattr(self, attribute_name, value)
+
+    @classmethod
+    def get_url(cls, url, uid, **kwargs):
+        """Same logic as the original plus pagination support"""
+        if uid:
+            url = '{}/{}'.format(url, uid)
+        else:
+            url = url
+
+        pagination_parameters = []
+        if kwargs.get('limit'):
+            pagination_parameters.append('limit={}'.format(kwargs.get('limit')))
+        if kwargs.get('offset'):
+            pagination_parameters.append('offset={}'.format(kwargs.get('offset')))
+        if pagination_parameters:
+            parameters = '&'.join(pagination_parameters)
+            url = '{}/?{}'.format(url, parameters)
+        return cls._parse_url_and_validate(url)
 
 
 ##############################
@@ -234,6 +251,45 @@ class VersionGroupFlavorTextSubResource(BaseResource):
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name,
                               self.text.capitalize()[:10] + "...")
+
+
+###############################
+# Resource Lists and Pagination
+###############################
+
+
+class APIResourceList(BaseResource):
+    class Meta:
+        name = 'API_Resource_List'
+        identifier = 'count'
+        attributes = (
+            'count',
+            'next',
+            'previous'
+        )
+        subresources = {
+            'results': APIResourceSubResource
+        }
+
+    def __repr__(self):
+        return '<%s>' % self.Meta.name
+
+
+class NamedAPIResourceList(BaseResource):
+    class Meta:
+        name = 'Named_API_Resource_List'
+        identifier = 'count'
+        attributes = (
+            'count',
+            'next',
+            'previous'
+        )
+        subresources = {
+            'results': NamedAPIResourceSubResource
+        }
+
+    def __repr__(self):
+        return '<%s>' % self.Meta.name
 
 
 ##############
@@ -1032,6 +1088,7 @@ class TypeRelationsSubResource(BaseResource):
 
 
 class BerryResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Berry'
@@ -1062,6 +1119,7 @@ class BerryResource(BaseResource):
 
 
 class BerryFirmnessResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Berry_Firmness'
@@ -1084,6 +1142,7 @@ class BerryFirmnessResource(BaseResource):
 
 
 class BerryFlavorResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Berry_Flavor'
@@ -1107,6 +1166,7 @@ class BerryFlavorResource(BaseResource):
 
 
 class ContestTypeResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Contest_Type'
@@ -1129,6 +1189,7 @@ class ContestTypeResource(BaseResource):
 
 
 class ContestEffectResource(BaseResource):
+    resource_list_class = APIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Contest_Effect'
@@ -1152,6 +1213,7 @@ class ContestEffectResource(BaseResource):
 
 
 class SuperContestEffectResource(BaseResource):
+    resource_list_class = APIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Super_Contest_Effect'
@@ -1174,6 +1236,7 @@ class SuperContestEffectResource(BaseResource):
 
 
 class EncounterMethodResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Encounter_Method'
@@ -1196,6 +1259,7 @@ class EncounterMethodResource(BaseResource):
 
 
 class EncounterConditionResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Encounter_Condition'
@@ -1218,6 +1282,7 @@ class EncounterConditionResource(BaseResource):
 
 
 class EncounterConditionValueResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Encounter_Condition_Value'
@@ -1240,6 +1305,7 @@ class EncounterConditionValueResource(BaseResource):
 
 
 class EvolutionChainResource(BaseResource):
+    resource_list_class = APIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Evolution_Chain'
@@ -1261,6 +1327,7 @@ class EvolutionChainResource(BaseResource):
 
 
 class EvolutionTriggerResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Evolution_Trigger'
@@ -1283,6 +1350,7 @@ class EvolutionTriggerResource(BaseResource):
 
 
 class GenerationResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Generation'
@@ -1310,6 +1378,7 @@ class GenerationResource(BaseResource):
 
 
 class PokedexResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Pokedex'
@@ -1336,6 +1405,7 @@ class PokedexResource(BaseResource):
 
 
 class VersionResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Version'
@@ -1358,6 +1428,7 @@ class VersionResource(BaseResource):
 
 
 class VersionGroupResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Version_Group'
@@ -1384,6 +1455,7 @@ class VersionGroupResource(BaseResource):
 
 
 class ItemCategoryResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Item_Category'
@@ -1407,6 +1479,7 @@ class ItemCategoryResource(BaseResource):
 
 
 class ItemResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Item'
@@ -1440,6 +1513,7 @@ class ItemResource(BaseResource):
 
 
 class ItemAttributeResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Item_Attribute'
@@ -1463,6 +1537,7 @@ class ItemAttributeResource(BaseResource):
 
 
 class ItemFlingEffectResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Item_Fling_Effect'
@@ -1485,6 +1560,7 @@ class ItemFlingEffectResource(BaseResource):
 
 
 class ItemPocketResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Item_Pocket'
@@ -1507,6 +1583,7 @@ class ItemPocketResource(BaseResource):
 
 
 class MachineResource(BaseResource):
+    resource_list_class = APIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Machine'
@@ -1529,6 +1606,7 @@ class MachineResource(BaseResource):
 
 
 class MoveResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Move'
@@ -1570,6 +1648,7 @@ class MoveResource(BaseResource):
 
 
 class MoveAilmentResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Move_Ailment'
@@ -1592,6 +1671,7 @@ class MoveAilmentResource(BaseResource):
 
 
 class MoveBattleStyleResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Move_Battle_Style'
@@ -1613,6 +1693,7 @@ class MoveBattleStyleResource(BaseResource):
 
 
 class MoveCategoryResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Move_Category'
@@ -1635,6 +1716,7 @@ class MoveCategoryResource(BaseResource):
 
 
 class MoveDamageClassResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Move_Damage_Class'
@@ -1658,6 +1740,7 @@ class MoveDamageClassResource(BaseResource):
 
 
 class MoveLearnMethodResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Move_Learn_Method'
@@ -1681,6 +1764,7 @@ class MoveLearnMethodResource(BaseResource):
 
 
 class MoveTargetResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Move_Target'
@@ -1704,6 +1788,7 @@ class MoveTargetResource(BaseResource):
 
 
 class LocationResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Location'
@@ -1728,6 +1813,7 @@ class LocationResource(BaseResource):
 
 
 class LocationAreaResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Location_Area'
@@ -1753,6 +1839,7 @@ class LocationAreaResource(BaseResource):
 
 
 class PalParkAreaResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Pal_Park_Area'
@@ -1775,6 +1862,7 @@ class PalParkAreaResource(BaseResource):
 
 
 class RegionResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Region'
@@ -1800,6 +1888,7 @@ class RegionResource(BaseResource):
 
 
 class AbilityResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Ability'
@@ -1827,6 +1916,7 @@ class AbilityResource(BaseResource):
 
 
 class CharacteristicResource(BaseResource):
+    resource_list_class = APIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Characteristic'
@@ -1849,6 +1939,7 @@ class CharacteristicResource(BaseResource):
 
 
 class EggGroupResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Egg_Group'
@@ -1871,6 +1962,7 @@ class EggGroupResource(BaseResource):
 
 
 class GenderResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Gender'
@@ -1893,6 +1985,7 @@ class GenderResource(BaseResource):
 
 
 class GrowthRateResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Growth_Rate'
@@ -1917,6 +2010,7 @@ class GrowthRateResource(BaseResource):
 
 
 class NatureResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Nature'
@@ -1944,6 +2038,7 @@ class NatureResource(BaseResource):
 
 
 class PokeathlonStatResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Pokeathlon_Stat'
@@ -1966,6 +2061,7 @@ class PokeathlonStatResource(BaseResource):
 
 
 class PokemonResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Pokemon'
@@ -2001,6 +2097,7 @@ class PokemonResource(BaseResource):
 
 
 class PokemonColorResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Pokemon_Color'
@@ -2023,6 +2120,7 @@ class PokemonColorResource(BaseResource):
 
 
 class PokemonFormResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Pokemon_Form'
@@ -2054,6 +2152,7 @@ class PokemonFormResource(BaseResource):
 
 
 class PokemonHabitatResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Pokemon_Habitat'
@@ -2076,6 +2175,7 @@ class PokemonHabitatResource(BaseResource):
 
 
 class PokemonShapeResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Pokemon_Shape'
@@ -2099,6 +2199,7 @@ class PokemonShapeResource(BaseResource):
 
 
 class PokemonSpeciesResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Pokemon_Species'
@@ -2142,6 +2243,7 @@ class PokemonSpeciesResource(BaseResource):
 
 
 class StatResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Stat'
@@ -2169,6 +2271,7 @@ class StatResource(BaseResource):
 
 
 class TypeResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Type'
@@ -2196,6 +2299,7 @@ class TypeResource(BaseResource):
 
 
 class LanguageResource(BaseResource):
+    resource_list_class = NamedAPIResourceList
 
     class Meta(BaseResource.Meta):
         name = 'Language'
