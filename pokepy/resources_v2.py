@@ -38,14 +38,15 @@ class BaseResource(OriginalBaseResource):
         else:
             url = url
 
-        pagination_parameters = []
-        if kwargs.get('limit'):
-            pagination_parameters.append('limit={}'.format(kwargs.get('limit')))
-        if kwargs.get('offset'):
-            pagination_parameters.append('offset={}'.format(kwargs.get('offset')))
-        if pagination_parameters:
-            parameters = '&'.join(pagination_parameters)
-            url = '{}/?{}'.format(url, parameters)
+            # pagination only happens if there is no uid
+            pagination_parameters = []
+            if kwargs.get('limit'):
+                pagination_parameters.append('limit={}'.format(kwargs.get('limit')))
+            if kwargs.get('offset'):
+                pagination_parameters.append('offset={}'.format(kwargs.get('offset')))
+            if pagination_parameters:
+                parameters = '&'.join(pagination_parameters)
+                url = '{}/?{}'.format(url, parameters)
         return cls._parse_url_and_validate(url)
 
 
