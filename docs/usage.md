@@ -14,7 +14,7 @@ This class is usually instantiated without parameters:
 Unless you want to use the caching feature, which is discussed [further below](#cache).
 
 Each endpoint of PokéAPI is represented in `V2Client` by a `get_<endpoint_name>` method,
-all taking a single parameter (`uid`), which can be either an `integer` (for most endpoints) or a `string`.
+all taking a main parameter `uid`, which can be either an `integer` (for most endpoints) or a `string`.
 
 The following is an exhaustive list of all the endpoints with links to their respective PokéAPI documentation:
 
@@ -67,9 +67,10 @@ The following is an exhaustive list of all the endpoints with links to their res
 * [get_type](https://pokeapi.co/docs/v2.html/#types)
 * [get_language](https://pokeapi.co/docs/v2.html/#languages)
 
-Each method returns an object containing as many python attributes as there are named attributes.
+Each method returns an object containing as many python attributes as there are named attributes in the respective
+PokéAPI resource.
 Please refer to the [PokéAPI documentation](https://pokeapi.co/docs/v2.html/)
-for more information on what each of these methods returns, its description and type.
+for more information on what each of these methods returns, its description and types.
 
 Then you can start grabbing stuff from the API:
 ```python
@@ -126,6 +127,38 @@ Most resources can be requested by using either the `name` or `id` of the resour
 >>> pokepy.V2Client().get_pokemon('479')
 <Pokemon - Rotom>
 ```
+
+### Pagination
+When requesting a resource without specifying an `uid`, an object containing a list of the available resources
+is returned. To be consistent with the PokéAPI, the default number of resources returned is 20:
+```python
+>>> pokemons = pokepy.V2Client().get_pokemon()
+>>> pokemons.count
+964
+>>> pokemons.results
+[<Named_API_Resource - Bulbasaur>, <Named_API_Resource - Ivysaur>, <Named_API_Resource - Venusaur>, ...]
+>>> len(pokemons.results)
+20
+```
+
+To change the maximum number of resources returned, call the resource with the `limit` parameter set to a positive
+number. Use the `offset` parameter to get a different set of available resources.
+```python
+>>> pokepy.V2Client().get_pokemon(limit=2).results
+[<Named_API_Resource - Bulbasaur>, <Named_API_Resource - Ivysaur>]
+>>> pokepy.V2Client().get_pokemon(limit=2, offset=3).results
+[<Named_API_Resource - Charmander>, <Named_API_Resource - Charmeleon>]
+```
+
+```python
+>>> pokepy.V2Client().get_machine(limit=2).results
+[<API_Resource - https://pokeapi.co/api/v2/machine/1/>, <API_Resource - https://pokeapi.co/api/v2/machine/2/>]
+```
+
+Please refer to the PokéAPI documentation for further detail on
+[pagination](https://pokeapi.co/docs/v2.html#resource-lists-section) and the attributes of the
+[Named_API_Resource](https://pokeapi.co/docs/v2.html/#namedapiresource) and
+[API_Resource](https://pokeapi.co/docs/v2.html#apiresource).
 
 ### Cache
 If you use the API to get the same resources often,

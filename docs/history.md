@@ -1,5 +1,8 @@
 # History
-### 0.6.0 (2019-05-3)
+### 0.7.0 (2019-10-05)
+* PokeAPI pagination support
+
+### 0.6.0 (2019-05-03)
 * V2Client get methods now return element instead of single element list
 * set urllib3 version to >=1.24.3, <1.25 (CVE-2019-11236)
 * Support for Python 3.4 and 3.5
@@ -31,7 +34,7 @@
 ### 0.2.0 (2016-06-11)
 * Beckett API Client framework added
 
-### 0.1.2 (2014-1-3)
+### 0.1.2 (2014-01-03)
 * Sprite attribute added to Pokemon class
 
 ### 0.1.1 (2013-12-24)
