@@ -20,5 +20,6 @@ __version__ = '0.7.0'
 __copyright__ = 'Copyright Paul Hallett 2016'
 __license__ = 'BSD'
 
+base_url = 'https://pokeapi.co/api/v2'
 
 from .api import V2Client

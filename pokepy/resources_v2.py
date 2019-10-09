@@ -9,10 +9,12 @@ Refer to the documentation for more information
 """
 
 from beckett.resources import BaseResource as OriginalBaseResource
+from beckett.resources import HypermediaResource as OriginalHypermediaResource
 from beckett.resources import SubResource
+from . import base_url
 
 
-class BaseResource(OriginalBaseResource):
+class BaseResourceFixes(object):
     # Fix for "type object argument after ** must be a mapping, not NoneType"
     def set_subresources(self, **kwargs):
         """Same logic as the original except for the first and last 'if' clauses."""
@@ -50,38 +52,186 @@ class BaseResource(OriginalBaseResource):
         return cls._parse_url_and_validate(url)
 
 
+class BaseResource(BaseResourceFixes, OriginalBaseResource):
+    pass
+
+
+class HypermediaResource(BaseResourceFixes, OriginalHypermediaResource):
+    class Meta(OriginalHypermediaResource.Meta):
+        base_url = base_url
+
+    def match_urls_to_resources(self, url_values):
+        """
+        Same logic as the original except for the 'eval' code between the first and second for-loop.
+        This eval allows strings to be passed instead of actual classes, and therefore those classes
+        don't need to have been parsed by the interpreter when reading HypermediaResource classes.
+        """
+
+        # TODO has performance problems
+        # TODO some resources generate 2 get_ methods for the same hypermedia resource...
+        # TODO ex: PokemonResource's species generates a get_pokemon and get_pokemon_species...
+
+        valid_values = {}
+        for resource in self.Meta.related_resources:
+            resource = eval(resource)
+            for k, v in url_values.items():
+                resource_url = resource.get_resource_url(
+                    resource, resource.Meta.base_url)
+                if isinstance(v, list):
+                    if all([resource_url in i for i in v]):
+                        self.set_related_method(resource, v)
+                        valid_values[k] = v
+                elif resource_url in v:
+                    self.set_related_method(resource, v)
+                    valid_values[k] = v
+        return valid_values
+
+
 ##############################
 # Common Models (SubResources)
 ##############################
 
 
-class APIResourceSubResource(SubResource):
-    class Meta:
+class APIResourceSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'API_Resource'
         identifier = 'url'
         attributes = (
             'url',
+        )
+        related_resources = (
+            'EvolutionChainResource',
+            'ContestEffectResource',
+            'SuperContestEffectResource',
+            'CharacteristicResource',
+            'MachineResource',
+            'MachineVersionDetailSubResource',
+            'APIResourceList'
         )
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.url)
 
 
-class NamedAPIResourceSubResource(SubResource):
-    class Meta:
+class NamedAPIResourceSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Named_API_Resource'
         identifier = 'name'
         attributes = (
             'name',
             'url'
         )
+        related_resources = (
+            'BerryResource',
+            'BerryFirmnessResource',
+            'BerryFlavorResource',
+            'ContestTypeResource',
+            'ContestEffectResource',
+            'SuperContestEffectResource',
+            'EncounterMethodResource',
+            'EncounterConditionResource',
+            'EncounterConditionValueResource',
+            'EvolutionChainResource',
+            'EvolutionTriggerResource',
+            'GenerationResource',
+            'PokedexResource',
+            'VersionResource',
+            'VersionGroupResource',
+            'ItemResource',
+            'ItemAttributeResource',
+            'ItemCategoryResource',
+            'ItemFlingEffectResource',
+            'ItemPocketResource',
+            'MachineResource',
+            'MoveResource',
+            'MoveAilmentResource',
+            'MoveBattleStyleResource',
+            'MoveCategoryResource',
+            'MoveDamageClassResource',
+            'MoveLearnMethodResource',
+            'MoveTargetResource',
+            'LocationResource',
+            'LocationAreaResource',
+            'PalParkAreaResource',
+            'RegionResource',
+            'AbilityResource',
+            'CharacteristicResource',
+            'EggGroupResource',
+            'GenderResource',
+            'GrowthRateResource',
+            'NatureResource',
+            'PokeathlonStatResource',
+            'PokemonResource',
+            'PokemonColorResource',
+            'PokemonFormResource',
+            'PokemonHabitatResource',
+            'PokemonShapeResource',
+            'PokemonSpeciesResource',
+            'StatResource',
+            'TypeResource',
+            'LanguageResource',
+            'DescriptionSubResource',
+            'EffectSubResource',
+            'EncounterSubResource',
+            'FlavorTextSubResource',
+            'GenerationGameIndexSubResource',
+            'MachineVersionDetailSubResource',
+            'NameSubResource',
+            'VerboseEffectSubResource',
+            'VersionEncounterDetailSubResource',
+            'VersionGameIndexSubResource',
+            'VersionGroupFlavorTextSubResource',
+            'NamedAPIResourceList',
+            'BerryFlavorMapSubResource',
+            'FlavorBerryMapSubResource',
+            'ContestNameSubResource',
+            'EvolutionDetailSubResource',
+            'ChainLink2SubResource',
+            'ChainLink1SubResource',
+            'ChainLinkSubResource',
+            'PokemonEntrySubResource',
+            'ItemHolderPokemonVersionDetailSubResource',
+            'ContestComboDetailSubResource',
+            'MoveFlavorTextSubResource',
+            'MoveMetaDataSubResource',
+            'MoveStatChangeSubResource',
+            'PastMoveStatValuesSubResource',
+            'EncounterVersionDetailsSubResource',
+            'EncounterMethodRateSubResource',
+            'PokemonEncounterSubResource',
+            'PalParkEncounterSpeciesSubResource',
+            'AbilityEffectChangeSubResource',
+            'AbilityFlavorTextSubResource',
+            'AbilityPokemonSubResource',
+            'PokemonSpeciesGenderSubResource',
+            'NatureStatChangeSubResource',
+            'MoveBattleStylePreferenceSubResource',
+            'NaturePokeathlonStatAffectSubResource',
+            'PokemonAbilitySubResource',
+            'PokemonTypeSubResource',
+            'PokemonHeldItemVersionSubResource',
+            'PokemonHeldItemSubResource',
+            'PokemonMoveVersionSubResource',
+            'PokemonMoveSubResource',
+            'PokemonStatSubResource',
+            'LocationAreaEncounterSubResource',
+            'AwesomeNameSubResource',
+            'GenusSubResource',
+            'PokemonSpeciesDexEntrySubResource',
+            'PalParkEncounterAreaSubResource',
+            'PokemonSpeciesVarietySubResource',
+            'MoveStatAffectSubResource',
+            'NatureStatAffectSetsSubResource',
+            'TypePokemonSubResource',
+            'TypeRelationsSubResource'
+        )
 
     def __repr__(self):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class DescriptionSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class DescriptionSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Description'
         identifier = 'description'
         attributes = (
@@ -96,8 +246,8 @@ class DescriptionSubResource(BaseResource):
                               self.description.capitalize()[:10] + "...")
 
 
-class EffectSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class EffectSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Effect'
         identifier = 'effect'
         attributes = (
@@ -112,8 +262,8 @@ class EffectSubResource(BaseResource):
                               self.effect.capitalize()[:10] + "...")
 
 
-class EncounterSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class EncounterSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Encounter'
         identifier = 'chance'
         attributes = (
@@ -131,8 +281,8 @@ class EncounterSubResource(BaseResource):
                                     self.max_level, self.chance)
 
 
-class FlavorTextSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class FlavorTextSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Flavor_Text'
         identifier = 'flavor_text'
         attributes = (
@@ -147,8 +297,8 @@ class FlavorTextSubResource(BaseResource):
                               self.flavor_text.capitalize()[:10] + "...")
 
 
-class GenerationGameIndexSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class GenerationGameIndexSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Generation_Game_Index'
         identifier = 'game_index'
         attributes = (
@@ -162,8 +312,8 @@ class GenerationGameIndexSubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.game_index)
 
 
-class MachineVersionDetailSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class MachineVersionDetailSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Machine_Version_Detail'
         identifier = 'machine'
         subresources = {
@@ -175,8 +325,8 @@ class MachineVersionDetailSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class NameSubResource(BaseResource):
-    class Meta:
+class NameSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Name'
         identifier = 'name'
         attributes = (
@@ -190,8 +340,8 @@ class NameSubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class VerboseEffectSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class VerboseEffectSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Verbose_Effect'
         identifier = 'effect'
         attributes = (
@@ -206,8 +356,8 @@ class VerboseEffectSubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.effect.capitalize())
 
 
-class VersionEncounterDetailSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class VersionEncounterDetailSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Version_Encounter_Detail'
         identifier = 'max_chance'
         attributes = (
@@ -222,8 +372,8 @@ class VersionEncounterDetailSubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.max_chance)
 
 
-class VersionGameIndexSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class VersionGameIndexSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Version_Game_Index'
         identifier = 'game_index'
         attributes = (
@@ -237,8 +387,8 @@ class VersionGameIndexSubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.game_index)
 
 
-class VersionGroupFlavorTextSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class VersionGroupFlavorTextSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Version_Group_Flavor_Text'
         identifier = 'text'
         attributes = (
@@ -259,8 +409,8 @@ class VersionGroupFlavorTextSubResource(BaseResource):
 ###############################
 
 
-class APIResourceList(BaseResource):
-    class Meta:
+class APIResourceList(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'API_Resource_List'
         identifier = 'count'
         attributes = (
@@ -276,8 +426,8 @@ class APIResourceList(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class NamedAPIResourceList(BaseResource):
-    class Meta:
+class NamedAPIResourceList(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Named_API_Resource_List'
         identifier = 'count'
         attributes = (
@@ -298,8 +448,8 @@ class NamedAPIResourceList(BaseResource):
 ##############
 
 
-class BerryFlavorMapSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class BerryFlavorMapSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Berry_Flavor_Map'
         identifier = 'potency'
         attributes = (
@@ -313,8 +463,8 @@ class BerryFlavorMapSubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.potency)
 
 
-class FlavorBerryMapSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class FlavorBerryMapSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Flavor_Berry_Map'
         identifier = 'potency'
         attributes = (
@@ -328,8 +478,8 @@ class FlavorBerryMapSubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.potency)
 
 
-class ContestNameSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class ContestNameSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Contest_Name'
         identifier = 'name'
         attributes = (
@@ -344,8 +494,8 @@ class ContestNameSubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class EvolutionDetailSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class EvolutionDetailSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Evolution_Detail'
         identifier = 'gender'
         attributes = (
@@ -381,8 +531,8 @@ class EvolutionDetailSubResource(BaseResource):
 # the last one not having the evolves_to subresource, ending the recursion.
 
 
-class ChainLink2SubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class ChainLink2SubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Chain_Link2'
         identifier = 'is_baby'
         attributes = (
@@ -397,8 +547,8 @@ class ChainLink2SubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class ChainLink1SubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class ChainLink1SubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Chain_Link1'
         identifier = 'is_baby'
         attributes = (
@@ -414,8 +564,8 @@ class ChainLink1SubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class ChainLinkSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class ChainLinkSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Chain_Link'
         identifier = 'is_baby'
         attributes = (
@@ -431,8 +581,8 @@ class ChainLinkSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class PokemonEntrySubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PokemonEntrySubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Entry'
         identifier = 'entry_number'
         attributes = (
@@ -447,7 +597,7 @@ class PokemonEntrySubResource(BaseResource):
 
 
 class ItemSpritesSubResource(SubResource):
-    class Meta(BaseResource.Meta):
+    class Meta(SubResource.Meta):
         name = 'Item_Sprites'
         identifier = 'default'
         attributes = (
@@ -459,8 +609,8 @@ class ItemSpritesSubResource(SubResource):
                               self.default.capitalize()[:10] + "...")
 
 
-class ItemHolderPokemonVersionDetailSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class ItemHolderPokemonVersionDetailSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Item_Holder_Pokemon_Version_Detail'
         identifier = 'rarity'
         attributes = (
@@ -489,8 +639,8 @@ class ItemHolderPokemonSubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.pokemon.capitalize())
 
 
-class ContestComboDetailSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class ContestComboDetailSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Contest_Combo_Detail'
         identifier = 'use_before'
         subresources = {
@@ -515,8 +665,8 @@ class ContestComboSetsSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class MoveFlavorTextSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class MoveFlavorTextSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Move_Flavor_Text'
         identifier = 'flavor_text'
         attributes = (
@@ -532,8 +682,8 @@ class MoveFlavorTextSubResource(BaseResource):
                               self.flavor_text.capitalize()[:10] + "...")
 
 
-class MoveMetaDataSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class MoveMetaDataSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Move_Meta_Data'
         identifier = 'min_hits'
         attributes = (
@@ -557,8 +707,8 @@ class MoveMetaDataSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class MoveStatChangeSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class MoveStatChangeSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Move_Stat_Change'
         identifier = 'change'
         attributes = (
@@ -572,8 +722,8 @@ class MoveStatChangeSubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.change)
 
 
-class PastMoveStatValuesSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PastMoveStatValuesSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Past_Move_Stat_Values'
         identifier = 'accuracy'
         attributes = (
@@ -592,8 +742,8 @@ class PastMoveStatValuesSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class EncounterVersionDetailsSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class EncounterVersionDetailsSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Encounter_Version_Details'
         identifier = 'rate'
         attributes = (
@@ -607,8 +757,8 @@ class EncounterVersionDetailsSubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.rate)
 
 
-class EncounterMethodRateSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class EncounterMethodRateSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Encounter_Method_Rate'
         identifier = 'encounter_method'
         subresources = {
@@ -620,8 +770,8 @@ class EncounterMethodRateSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class PokemonEncounterSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PokemonEncounterSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Encounter'
         identifier = 'pokemon'
         subresources = {
@@ -633,8 +783,8 @@ class PokemonEncounterSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class PalParkEncounterSpeciesSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PalParkEncounterSpeciesSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Pal_Park_Encounter_Species'
         identifier = 'rate'
         attributes = (
@@ -649,8 +799,8 @@ class PalParkEncounterSpeciesSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class AbilityEffectChangeSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class AbilityEffectChangeSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Ability_Effect_Change'
         identifier = 'effect_entries'
         subresources = {
@@ -662,8 +812,8 @@ class AbilityEffectChangeSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class AbilityFlavorTextSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class AbilityFlavorTextSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Ability_Flavor_Text'
         identifier = 'flavor_text'
         attributes = (
@@ -679,8 +829,8 @@ class AbilityFlavorTextSubResource(BaseResource):
                               self.flavor_text.capitalize()[:10] + "...")
 
 
-class AbilityPokemonSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class AbilityPokemonSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Ability_Pokemon'
         identifier = 'slot'
         attributes = (
@@ -695,8 +845,8 @@ class AbilityPokemonSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class PokemonSpeciesGenderSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PokemonSpeciesGenderSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Species_Gender'
         identifier = 'rate'
         attributes = (
@@ -711,7 +861,7 @@ class PokemonSpeciesGenderSubResource(BaseResource):
 
 
 class GrowthRateExperienceLevelSubResource(SubResource):
-    class Meta(BaseResource.Meta):
+    class Meta(SubResource.Meta):
         name = 'Growth_Rate_Experience_Level'
         identifier = 'level'
         attributes = (
@@ -723,8 +873,8 @@ class GrowthRateExperienceLevelSubResource(SubResource):
         return '<%s - %s/%s>' % (self.Meta.name, self.level, self.experience)
 
 
-class NatureStatChangeSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class NatureStatChangeSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Nature_Stat_Change'
         identifier = 'max_change'
         attributes = (
@@ -738,8 +888,8 @@ class NatureStatChangeSubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.max_change)
 
 
-class MoveBattleStylePreferenceSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class MoveBattleStylePreferenceSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Move_Battle_Style_Preference'
         identifier = 'low_hp_preference'
         attributes = (
@@ -755,8 +905,8 @@ class MoveBattleStylePreferenceSubResource(BaseResource):
                                  self.high_hp_preference)
 
 
-class NaturePokeathlonStatAffectSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class NaturePokeathlonStatAffectSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Nature_Pokeathlon_Stat_Affect'
         identifier = 'max_change'
         attributes = (
@@ -783,8 +933,8 @@ class NaturePokeathlonStatAffectSetsSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class PokemonAbilitySubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PokemonAbilitySubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Ability'
         identifier = 'is_hidden'
         attributes = (
@@ -799,8 +949,8 @@ class PokemonAbilitySubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class PokemonTypeSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PokemonTypeSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Type'
         identifier = 'slot'
         attributes = (
@@ -814,8 +964,8 @@ class PokemonTypeSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class PokemonHeldItemVersionSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PokemonHeldItemVersionSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Held_Item_Version'
         identifier = 'rarity'
         attributes = (
@@ -829,8 +979,8 @@ class PokemonHeldItemVersionSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class PokemonHeldItemSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PokemonHeldItemSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Held_Item'
         identifier = 'item'
         subresources = {
@@ -842,8 +992,8 @@ class PokemonHeldItemSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class PokemonMoveVersionSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PokemonMoveVersionSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Move_Version'
         identifier = 'level_learned_at'
         attributes = (
@@ -858,8 +1008,8 @@ class PokemonMoveVersionSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class PokemonMoveSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PokemonMoveSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Move'
         identifier = 'move'
         subresources = {
@@ -871,8 +1021,8 @@ class PokemonMoveSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class PokemonStatSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PokemonStatSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Stat'
         identifier = 'effort'
         attributes = (
@@ -888,7 +1038,7 @@ class PokemonStatSubResource(BaseResource):
 
 
 class PokemonSpritesSubResource(SubResource):
-    class Meta(BaseResource.Meta):
+    class Meta(SubResource.Meta):
         name = 'Pokemon_Sprites'
         identifier = 'front_default'
         attributes = (
@@ -906,8 +1056,8 @@ class PokemonSpritesSubResource(SubResource):
         return '<%s>' % self.Meta.name
 
 
-class LocationAreaEncounterSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class LocationAreaEncounterSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Location_Area_Encounter'
         identifier = 'location_area'
         subresources = {
@@ -920,7 +1070,7 @@ class LocationAreaEncounterSubResource(BaseResource):
 
 
 class PokemonFormSpritesSubResource(SubResource):
-    class Meta(BaseResource.Meta):
+    class Meta(SubResource.Meta):
         name = 'Pokemon_Form_Sprites'
         identifier = 'front_default'
         attributes = (
@@ -934,8 +1084,8 @@ class PokemonFormSpritesSubResource(SubResource):
         return '<%s>' % self.Meta.name
 
 
-class AwesomeNameSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class AwesomeNameSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Awesome_Name'
         identifier = 'awesome_name'
         attributes = (
@@ -949,8 +1099,8 @@ class AwesomeNameSubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.awesome_name.capitalize())
 
 
-class GenusSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class GenusSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Genus'
         identifier = 'genus'
         attributes = (
@@ -964,8 +1114,8 @@ class GenusSubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.genus.capitalize())
 
 
-class PokemonSpeciesDexEntrySubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PokemonSpeciesDexEntrySubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Species_Dex_Entry'
         identifier = 'entry_number'
         attributes = (
@@ -979,8 +1129,8 @@ class PokemonSpeciesDexEntrySubResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.entry_number)
 
 
-class PalParkEncounterAreaSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PalParkEncounterAreaSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Pal_Park_Encounter_Area'
         identifier = 'base_score'
         attributes = (
@@ -995,8 +1145,8 @@ class PalParkEncounterAreaSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class PokemonSpeciesVarietySubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class PokemonSpeciesVarietySubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Species_Variety'
         identifier = 'is_default'
         attributes = (
@@ -1010,8 +1160,8 @@ class PokemonSpeciesVarietySubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class MoveStatAffectSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class MoveStatAffectSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Move_Stat_Affect'
         identifier = 'change'
         attributes = (
@@ -1038,8 +1188,8 @@ class MoveStatAffectSetsSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class NatureStatAffectSetsSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class NatureStatAffectSetsSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Nature_Stat_Affect_Sets'
         identifier = 'increase'
         subresources = {
@@ -1051,8 +1201,8 @@ class NatureStatAffectSetsSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class TypePokemonSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class TypePokemonSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Type_Pokemon'
         identifier = 'slot'
         attributes = (
@@ -1066,8 +1216,8 @@ class TypePokemonSubResource(BaseResource):
         return '<%s>' % self.Meta.name
 
 
-class TypeRelationsSubResource(BaseResource):
-    class Meta(BaseResource.Meta):
+class TypeRelationsSubResource(HypermediaResource):
+    class Meta(HypermediaResource.Meta):
         name = 'Type_Relations'
         identifier = 'no_damage_to'
         subresources = {
@@ -1088,10 +1238,10 @@ class TypeRelationsSubResource(BaseResource):
 ###########
 
 
-class BerryResource(BaseResource):
+class BerryResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Berry'
         resource_name = 'berry'
         identifier = 'id'
@@ -1119,10 +1269,10 @@ class BerryResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class BerryFirmnessResource(BaseResource):
+class BerryFirmnessResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Berry_Firmness'
         resource_name = 'berry-firmness'
         identifier = 'id'
@@ -1142,10 +1292,10 @@ class BerryFirmnessResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class BerryFlavorResource(BaseResource):
+class BerryFlavorResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Berry_Flavor'
         resource_name = 'berry-flavor'
         identifier = 'id'
@@ -1166,10 +1316,10 @@ class BerryFlavorResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class ContestTypeResource(BaseResource):
+class ContestTypeResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Contest_Type'
         resource_name = 'contest-type'
         identifier = 'id'
@@ -1189,10 +1339,10 @@ class ContestTypeResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class ContestEffectResource(BaseResource):
+class ContestEffectResource(HypermediaResource):
     resource_list_class = APIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Contest_Effect'
         resource_name = 'contest-effect'
         identifier = 'id'
@@ -1213,10 +1363,10 @@ class ContestEffectResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.id)
 
 
-class SuperContestEffectResource(BaseResource):
+class SuperContestEffectResource(HypermediaResource):
     resource_list_class = APIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Super_Contest_Effect'
         resource_name = 'super-contest-effect'
         identifier = 'id'
@@ -1236,10 +1386,10 @@ class SuperContestEffectResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.id)
 
 
-class EncounterMethodResource(BaseResource):
+class EncounterMethodResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Encounter_Method'
         resource_name = 'encounter-method'
         identifier = 'id'
@@ -1259,10 +1409,10 @@ class EncounterMethodResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class EncounterConditionResource(BaseResource):
+class EncounterConditionResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Encounter_Condition'
         resource_name = 'encounter-condition'
         identifier = 'id'
@@ -1282,10 +1432,10 @@ class EncounterConditionResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class EncounterConditionValueResource(BaseResource):
+class EncounterConditionValueResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Encounter_Condition_Value'
         resource_name = 'encounter-condition-value'
         identifier = 'id'
@@ -1305,10 +1455,10 @@ class EncounterConditionValueResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class EvolutionChainResource(BaseResource):
+class EvolutionChainResource(HypermediaResource):
     resource_list_class = APIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Evolution_Chain'
         resource_name = 'evolution-chain'
         identifier = 'id'
@@ -1327,10 +1477,10 @@ class EvolutionChainResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.id)
 
 
-class EvolutionTriggerResource(BaseResource):
+class EvolutionTriggerResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Evolution_Trigger'
         resource_name = 'evolution-trigger'
         identifier = 'id'
@@ -1350,10 +1500,10 @@ class EvolutionTriggerResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class GenerationResource(BaseResource):
+class GenerationResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Generation'
         resource_name = 'generation'
         identifier = 'id'
@@ -1378,10 +1528,10 @@ class GenerationResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class PokedexResource(BaseResource):
+class PokedexResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokedex'
         resource_name = 'pokedex'
         identifier = 'id'
@@ -1405,10 +1555,10 @@ class PokedexResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class VersionResource(BaseResource):
+class VersionResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Version'
         resource_name = 'version'
         identifier = 'id'
@@ -1428,10 +1578,10 @@ class VersionResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class VersionGroupResource(BaseResource):
+class VersionGroupResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Version_Group'
         resource_name = 'version-group'
         identifier = 'id'
@@ -1455,10 +1605,10 @@ class VersionGroupResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class ItemCategoryResource(BaseResource):
+class ItemCategoryResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Item_Category'
         resource_name = 'item-category'
         identifier = 'id'
@@ -1479,10 +1629,10 @@ class ItemCategoryResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class ItemResource(BaseResource):
+class ItemResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Item'
         resource_name = 'item'
         identifier = 'id'
@@ -1513,10 +1663,10 @@ class ItemResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class ItemAttributeResource(BaseResource):
+class ItemAttributeResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Item_Attribute'
         resource_name = 'item-attribute'
         identifier = 'id'
@@ -1537,10 +1687,10 @@ class ItemAttributeResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class ItemFlingEffectResource(BaseResource):
+class ItemFlingEffectResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Item_Fling_Effect'
         resource_name = 'item-fling-effect'
         identifier = 'id'
@@ -1560,10 +1710,10 @@ class ItemFlingEffectResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class ItemPocketResource(BaseResource):
+class ItemPocketResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Item_Pocket'
         resource_name = 'item-pocket'
         identifier = 'id'
@@ -1583,10 +1733,10 @@ class ItemPocketResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class MachineResource(BaseResource):
+class MachineResource(HypermediaResource):
     resource_list_class = APIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Machine'
         resource_name = 'machine'
         identifier = 'id'
@@ -1606,10 +1756,10 @@ class MachineResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.id)
 
 
-class MoveResource(BaseResource):
+class MoveResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Move'
         resource_name = 'move'
         identifier = 'id'
@@ -1648,10 +1798,10 @@ class MoveResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class MoveAilmentResource(BaseResource):
+class MoveAilmentResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Move_Ailment'
         resource_name = 'move-ailment'
         identifier = 'id'
@@ -1671,10 +1821,10 @@ class MoveAilmentResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class MoveBattleStyleResource(BaseResource):
+class MoveBattleStyleResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Move_Battle_Style'
         resource_name = 'move-battle-style'
         identifier = 'id'
@@ -1693,10 +1843,10 @@ class MoveBattleStyleResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class MoveCategoryResource(BaseResource):
+class MoveCategoryResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Move_Category'
         resource_name = 'move-category'
         identifier = 'id'
@@ -1716,10 +1866,10 @@ class MoveCategoryResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class MoveDamageClassResource(BaseResource):
+class MoveDamageClassResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Move_Damage_Class'
         resource_name = 'move-damage-class'
         identifier = 'id'
@@ -1740,10 +1890,10 @@ class MoveDamageClassResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class MoveLearnMethodResource(BaseResource):
+class MoveLearnMethodResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Move_Learn_Method'
         resource_name = 'move-learn-method'
         identifier = 'id'
@@ -1764,10 +1914,10 @@ class MoveLearnMethodResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class MoveTargetResource(BaseResource):
+class MoveTargetResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Move_Target'
         resource_name = 'move-target'
         identifier = 'id'
@@ -1788,10 +1938,10 @@ class MoveTargetResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class LocationResource(BaseResource):
+class LocationResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Location'
         resource_name = 'location'
         identifier = 'id'
@@ -1813,10 +1963,10 @@ class LocationResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class LocationAreaResource(BaseResource):
+class LocationAreaResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Location_Area'
         resource_name = 'location-area'
         identifier = 'id'
@@ -1839,10 +1989,10 @@ class LocationAreaResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class PalParkAreaResource(BaseResource):
+class PalParkAreaResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Pal_Park_Area'
         resource_name = 'pal-park-area'
         identifier = 'id'
@@ -1862,10 +2012,10 @@ class PalParkAreaResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class RegionResource(BaseResource):
+class RegionResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Region'
         resource_name = 'region'
         identifier = 'id'
@@ -1888,10 +2038,10 @@ class RegionResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class AbilityResource(BaseResource):
+class AbilityResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Ability'
         resource_name = 'ability'
         identifier = 'id'
@@ -1916,10 +2066,10 @@ class AbilityResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class CharacteristicResource(BaseResource):
+class CharacteristicResource(HypermediaResource):
     resource_list_class = APIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Characteristic'
         resource_name = 'characteristic'
         identifier = 'id'
@@ -1939,10 +2089,10 @@ class CharacteristicResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.id)
 
 
-class EggGroupResource(BaseResource):
+class EggGroupResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Egg_Group'
         resource_name = 'egg-group'
         identifier = 'id'
@@ -1962,10 +2112,10 @@ class EggGroupResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class GenderResource(BaseResource):
+class GenderResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Gender'
         resource_name = 'gender'
         identifier = 'id'
@@ -1985,10 +2135,10 @@ class GenderResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class GrowthRateResource(BaseResource):
+class GrowthRateResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Growth_Rate'
         resource_name = 'growth-rate'
         identifier = 'id'
@@ -2010,10 +2160,10 @@ class GrowthRateResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class NatureResource(BaseResource):
+class NatureResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Nature'
         resource_name = 'nature'
         identifier = 'id'
@@ -2038,10 +2188,10 @@ class NatureResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class PokeathlonStatResource(BaseResource):
+class PokeathlonStatResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokeathlon_Stat'
         resource_name = 'pokeathlon-stat'
         identifier = 'id'
@@ -2061,10 +2211,10 @@ class PokeathlonStatResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class PokemonResource(BaseResource):
+class PokemonResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon'
         resource_name = 'pokemon'
         identifier = 'id'
@@ -2097,10 +2247,10 @@ class PokemonResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class PokemonColorResource(BaseResource):
+class PokemonColorResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Color'
         resource_name = 'pokemon-color'
         identifier = 'id'
@@ -2120,10 +2270,10 @@ class PokemonColorResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class PokemonFormResource(BaseResource):
+class PokemonFormResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Form'
         resource_name = 'pokemon-form'
         identifier = 'id'
@@ -2152,10 +2302,10 @@ class PokemonFormResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class PokemonHabitatResource(BaseResource):
+class PokemonHabitatResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Habitat'
         resource_name = 'pokemon-habitat'
         identifier = 'id'
@@ -2175,10 +2325,10 @@ class PokemonHabitatResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class PokemonShapeResource(BaseResource):
+class PokemonShapeResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Shape'
         resource_name = 'pokemon-shape'
         identifier = 'id'
@@ -2199,10 +2349,10 @@ class PokemonShapeResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class PokemonSpeciesResource(BaseResource):
+class PokemonSpeciesResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Pokemon_Species'
         resource_name = 'pokemon-species'
         identifier = 'id'
@@ -2243,10 +2393,10 @@ class PokemonSpeciesResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class StatResource(BaseResource):
+class StatResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Stat'
         resource_name = 'stat'
         identifier = 'id'
@@ -2271,10 +2421,10 @@ class StatResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class TypeResource(BaseResource):
+class TypeResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Type'
         resource_name = 'type'
         identifier = 'id'
@@ -2299,10 +2449,10 @@ class TypeResource(BaseResource):
         return '<%s - %s>' % (self.Meta.name, self.name.capitalize())
 
 
-class LanguageResource(BaseResource):
+class LanguageResource(HypermediaResource):
     resource_list_class = NamedAPIResourceList
 
-    class Meta(BaseResource.Meta):
+    class Meta(HypermediaResource.Meta):
         name = 'Language'
         resource_name = 'language'
         identifier = 'id'

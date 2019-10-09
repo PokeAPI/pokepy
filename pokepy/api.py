@@ -17,7 +17,7 @@ from beckett.clients import BaseClient
 from beckett.constants import DEFAULT_VALID_STATUS_CODES
 from fcache.cache import FileCache
 from . import resources_v2 as rv2
-from . import __version__
+from . import __version__, base_url
 
 
 class V2Client(BaseClient):
@@ -25,7 +25,7 @@ class V2Client(BaseClient):
 
     class Meta(BaseClient.Meta):
         name = 'pokepy-v2-client-' + __version__
-        base_url = 'https://pokeapi.co/api/v2'
+        base_url = base_url
         resources = (
             rv2.BerryResource,
             rv2.BerryFirmnessResource,
