@@ -15,18 +15,6 @@ jobs:
           name: Run Tests
           command: python -m unittest discover tests
 
-  py33:
-    docker:
-      - image: circleci/python:3.3.6
-    steps:
-      - checkout
-      - run:
-          name: Install Requirements
-          command: pip install -r requirements.txt -r requirements-dev27.txt --user
-      - run:
-          name: Run Tests
-          command: python -m unittest
-
   py34:
     docker:
       - image: circleci/python:3.4.10
@@ -104,7 +92,6 @@ workflows:
   run_tests:
     jobs:
       - py27
-      - py33
       - py34
       - py35
       - py36
