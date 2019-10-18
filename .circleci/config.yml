@@ -15,6 +15,18 @@ jobs:
           name: Run Tests
           command: python -m unittest discover tests
 
+  py33:
+    docker:
+      - image: circleci/python:3.3.6
+    steps:
+      - checkout
+      - run:
+          name: Install Requirements
+          command: pip install -r requirements.txt -r requirements-dev27.txt --user
+      - run:
+          name: Run Tests
+          command: python -m unittest
+
   py34:
     docker:
       - image: circleci/python:3.4.10
@@ -41,7 +53,7 @@ jobs:
 
   py36:
     docker:
-      - image: circleci/python:3.6.8
+      - image: circleci/python:3.6.9
     steps:
       - checkout
       - run:
@@ -53,7 +65,7 @@ jobs:
 
   py37:
     docker:
-      - image: circleci/python:3.7.3
+      - image: circleci/python:3.7.4
     steps:
       - checkout
       - run:
@@ -75,12 +87,26 @@ jobs:
           name: Upload Coverage report to CodeCov
           command: bash <(curl -s https://codecov.io/bash)
 
+  py38:
+    docker:
+      - image: circleci/python:3.8.0
+    steps:
+      - checkout
+      - run:
+          name: Install Requirements
+          command: pip install -r requirements.txt -r requirements-dev27.txt --user
+      - run:
+          name: Run Tests
+          command: python -m unittest
+
 workflows:
   version: 2
   run_tests:
     jobs:
       - py27
+      - py33
       - py34
       - py35
       - py36
       - py37
+      - py38
