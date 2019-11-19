@@ -151,7 +151,7 @@ class V2Client(BaseClient):
             @functools.wraps(func)
             def inner(*args, **kwargs):
                 final = func(*args, **kwargs)
-                if isinstance(final, list) and len(final) == 1:
+                if len(final) == 1:
                     final = final[0]
                 return final
             return inner
