@@ -30,11 +30,11 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 clean-tests:
-    rm -rf .tox/
-    rm -rf  html_coverage/
+	rm -rf .tox/
+	rm -rf  html_coverage/
 
 clean-docs:
-    rm -rf site/
+	rm -rf site/
 
 lint:
 	pylint pokepy tests setup.py
