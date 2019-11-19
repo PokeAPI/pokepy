@@ -158,7 +158,7 @@ class V2Client(BaseClient):
             def inner(*args, **kwargs):
                 final = func(*args, **kwargs)
                 if not always_list:
-                    if isinstance(final, list) and len(final) == 1:
+                    if len(final) == 1:
                         final = final[0]
                 return final
             return inner
