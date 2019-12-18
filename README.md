@@ -12,14 +12,16 @@ A python wrapper for [PokéAPI](https://pokeapi.co). (former [pykemon](https://g
 
 Maintainer: [Kronopt](https://github.com/Kronopt)
 
-# Installation
+## Installation
+
 Nice and simple:
 
-```
+```sh
 $ pip install pokepy
 ```
 
-# Usage
+## Usage
+
 Even simpler:
 
 ```python
@@ -29,10 +31,11 @@ Even simpler:
 <Pokemon - Kakuna>
 ```
 
-# Documentation
+## Documentation
+
 For more information, check the documentation at https://pokeapi.github.io/pokepy
 
-# Features
+## Features
 
 * Generate Python objects from PokéAPI resources
 * Cache
