@@ -421,15 +421,13 @@ class ItemHolderPokemonSubResource(BaseResource):
     class Meta(BaseResource.Meta):
         name = 'Item_Holder_Pokemon'
         identifier = 'pokemon'
-        attributes = (
-            'pokemon',
-        )
         subresources = {
+            'pokemon': NamedAPIResourceSubResource,
             'version_details': ItemHolderPokemonVersionDetailSubResource
         }
 
     def __repr__(self):
-        return '<%s - %s>' % (self.Meta.name, self.pokemon.capitalize())
+        return '<%s>' % self.Meta.name
 
 
 class ContestComboDetailSubResource(BaseResource):
@@ -1424,7 +1422,7 @@ class ItemResource(BaseResource):
         subresources = {
             'fling_effect': NamedAPIResourceSubResource,
             'attributes': NamedAPIResourceSubResource,
-            'category': ItemCategoryResource,
+            'category': NamedAPIResourceSubResource,
             'effect_entries': VerboseEffectSubResource,
             'flavor_text_entries': VersionGroupFlavorTextSubResource,
             'game_indices': GenerationGameIndexSubResource,

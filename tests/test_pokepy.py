@@ -1036,7 +1036,7 @@ class TestV2ClientMethods(unittest.TestCase):
         base_subresource_repr_test(self, resources_v2.ItemHolderPokemonVersionDetailSubResource)
 
     def test_item_holder_pokemon_subresource_repr(self):
-        base_subresource_repr_test(self, resources_v2.ItemHolderPokemonSubResource, pokemon='test')
+        base_subresource_repr_test(self, resources_v2.ItemHolderPokemonSubResource)
 
     def test_contest_combo_detail_subresource_repr(self):
         base_subresource_repr_test(self, resources_v2.ContestComboDetailSubResource)
