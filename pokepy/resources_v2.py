@@ -850,7 +850,9 @@ class PokemonSpritesSubResource(SubResource):
 class LocationAreaEncounterSubResource(BaseResource):
     class Meta(BaseResource.Meta):
         name = 'Location_Area_Encounter'
+        resource_name = 'pokemon'
         identifier = 'location_area'
+        always_list = True
         subresources = {
             'location_area': NamedAPIResourceSubResource,
             'version_details': VersionEncounterDetailSubResource
@@ -858,6 +860,10 @@ class LocationAreaEncounterSubResource(BaseResource):
 
     def __repr__(self):
         return '<%s>' % self.Meta.name
+
+    @classmethod
+    def get_url(cls, url, uid, **kwargs):
+        return '%s/%s/encounters' % (url, uid)
 
 
 class PokemonFormSpritesSubResource(SubResource):

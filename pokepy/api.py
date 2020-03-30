@@ -74,7 +74,8 @@ class V2Client(BaseClient):
             rv2.PokemonSpeciesResource,
             rv2.StatResource,
             rv2.TypeResource,
-            rv2.LanguageResource
+            rv2.LanguageResource,
+            rv2.LocationAreaEncounterSubResource
         )
 
     def __init__(self, cache=None, cache_location=None, *args, **kwargs):
@@ -146,13 +147,19 @@ class V2Client(BaseClient):
             'valid_status_codes',
             DEFAULT_VALID_STATUS_CODES
         )
+        always_list = getattr(
+            resource_class.Meta,
+            'always_list',
+            False
+        )
 
         def extract_single_element_list(func):
             @functools.wraps(func)
             def inner(*args, **kwargs):
                 final = func(*args, **kwargs)
-                if len(final) == 1:
-                    final = final[0]
+                if not always_list:
+                    if len(final) == 1:
+                        final = final[0]
                 return final
             return inner
 

@@ -40,6 +40,7 @@ The following is an exhaustive list of all the endpoints with links to their res
 * [get_item_pocket](https://pokeapi.co/docs/v2.html/#item-pockets)
 * [get_location](https://pokeapi.co/docs/v2.html/#locations)
 * [get_location_area](https://pokeapi.co/docs/v2.html/#location-areas)
+* [get_location_area_encounter](https://pokeapi.co/docs/v2.html/#pokemon)
 * [get_pal_park_area](https://pokeapi.co/docs/v2.html/#pal-park-areas)
 * [get_region](https://pokeapi.co/docs/v2.html/#regions)
 * [get_machine](https://pokeapi.co/docs/v2.html/#machines)
