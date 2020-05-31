@@ -61,7 +61,7 @@ tox
 goto:eof
 
 :coverage
-coverage run --source pokepy -m unittest tests.test_pokepy
+coverage run --source pokepy --omit="pokepy\fcache\*" -m unittest tests.test_pokepy
 coverage report -m
 coverage html -d html_coverage
 start "" html_coverage/index.html

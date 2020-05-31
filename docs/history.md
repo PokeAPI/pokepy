@@ -1,4 +1,7 @@
 # History
+### 0.6.1 (2020-05-31)
+* Fixed disk-based cache not handling different filesystems on Windows
+
 ### 0.6.0 (2019-05-3)
 * V2Client get methods now return element instead of single element list
 * set urllib3 version to >=1.24.3, <1.25 (CVE-2019-11236)

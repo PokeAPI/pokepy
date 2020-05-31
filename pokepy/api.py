@@ -15,7 +15,7 @@ from collections import namedtuple
 import appdirs  # dependency of FileCache
 from beckett.clients import BaseClient
 from beckett.constants import DEFAULT_VALID_STATUS_CODES
-from fcache.cache import FileCache
+from .fcache.cache import FileCache
 from . import resources_v2 as rv2
 from . import __version__
 

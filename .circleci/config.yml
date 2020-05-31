@@ -5,7 +5,7 @@ version: 2
 jobs:
   py27:
     docker:
-      - image: circleci/python:2.7.16
+      - image: circleci/python:2.7.18
     steps:
       - checkout
       - run:
@@ -29,7 +29,7 @@ jobs:
 
   py35:
     docker:
-      - image: circleci/python:3.5.7
+      - image: circleci/python:3.5.8
     steps:
       - checkout
       - run:
@@ -41,7 +41,7 @@ jobs:
 
   py36:
     docker:
-      - image: circleci/python:3.6.9
+      - image: circleci/python:3.6.10
     steps:
       - checkout
       - run:
@@ -53,7 +53,7 @@ jobs:
 
   py37:
     docker:
-      - image: circleci/python:3.7.4
+      - image: circleci/python:3.7.7
     steps:
       - checkout
       - run:
@@ -77,7 +77,7 @@ jobs:
 
   py38:
     docker:
-      - image: circleci/python:3.8.0
+      - image: circleci/python:3.8.3
     steps:
       - checkout
       - run:
