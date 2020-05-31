@@ -49,7 +49,7 @@ rmdir /s /q site
 goto:eof
 
 :lint
-pylint pokepy tests setup.py
+python -m pylint --ignore=pokepy\fcache pokepy tests setup.py
 goto:eof
 
 :test

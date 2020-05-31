@@ -37,7 +37,7 @@ clean-docs:
 	rm -rf site/
 
 lint:
-	pylint pokepy tests setup.py
+	python -m pylint --ignore=pokepy/fcache pokepy tests setup.py
 
 test:
 	python -m unittest tests.test_pokepy
