@@ -216,8 +216,10 @@ class V2Client(BaseClient):
             if disk_or_memory == 'disk':
                 if cache_directory:
                     # Python 2 and 3.4 workaround
-                    if (sys.version_info[0] == 2 or sys.version_info[0:2] == (3, 4)) and \
-                            not isinstance(cache_directory, str):
+                    if (sys.version_info[0] == 2 and not
+                        isinstance(cache_directory, (str, unicode))) or (
+                            sys.version_info[0:2] == (3, 4) and not
+                            isinstance(cache_directory, str)):
                         raise TypeError('expected str, not %s' % cache_directory.__class__.__name__)
 
                     _global_cache_dir = os.path.join(cache_directory, 'pokepy_cache')

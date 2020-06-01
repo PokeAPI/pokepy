@@ -13,7 +13,7 @@ jobs:
           command: pip install -r requirements.txt -r requirements-dev27.txt --user
       - run:
           name: Run Tests
-          command: python -m unittest discover tests
+          command: make test
 
   py34:
     docker:
