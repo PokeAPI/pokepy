@@ -91,13 +91,7 @@ jobs:
     executor:
       name: windows/default
     steps:
-      - tests-coverage-lint
-
-  macos:
-    macos:
-      xcode: 11.3.0
-    steps:
-      - tests-coverage-lint
+      - tests-only
 
 
 # -------------------------
@@ -114,4 +108,3 @@ workflows:
       - py37-linux
       - py38-linux
       - py37-windows
-      - macos
