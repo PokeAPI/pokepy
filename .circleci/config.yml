@@ -90,6 +90,7 @@ jobs:
   py37-windows:
     executor:
       name: windows/default
+      shell: cmd.exe
     steps:
       - tests-only
 
