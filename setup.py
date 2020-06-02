@@ -27,7 +27,7 @@ setup(
     author_email=pokepy.__email__,
     url='https://github.com/PokeAPI/pokepy',
     project_urls={'Documentation': 'https://pokeapi.github.io/pokepy/'},
-    packages=['pokepy'],
+    packages=['pokepy', 'pokepy.fcache'],
     package_dir={'pokepy': 'pokepy'},
     include_package_data=True,
     install_requires=requirements,

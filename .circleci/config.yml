@@ -5,7 +5,7 @@ version: 2
 jobs:
   py27:
     docker:
-      - image: circleci/python:2.7.16
+      - image: circleci/python:2.7.18
     steps:
       - checkout
       - run:
@@ -13,7 +13,7 @@ jobs:
           command: pip install -r requirements.txt -r requirements-dev27.txt --user
       - run:
           name: Run Tests
-          command: python -m unittest discover tests
+          command: make test
 
   py34:
     docker:
@@ -25,11 +25,11 @@ jobs:
           command: pip install -r requirements.txt -r requirements-dev27.txt --user
       - run:
           name: Run Tests
-          command: python -m unittest
+          command: make test
 
   py35:
     docker:
-      - image: circleci/python:3.5.7
+      - image: circleci/python:3.5.8
     steps:
       - checkout
       - run:
@@ -37,11 +37,11 @@ jobs:
           command: pip install -r requirements.txt -r requirements-dev27.txt --user
       - run:
           name: Run Tests
-          command: python -m unittest
+          command: make test
 
   py36:
     docker:
-      - image: circleci/python:3.6.9
+      - image: circleci/python:3.6.10
     steps:
       - checkout
       - run:
@@ -49,11 +49,11 @@ jobs:
           command: pip install -r requirements.txt -r requirements-dev27.txt --user
       - run:
           name: Run Tests
-          command: python -m unittest
+          command: make test
 
   py37:
     docker:
-      - image: circleci/python:3.7.4
+      - image: circleci/python:3.7.7
     steps:
       - checkout
       - run:
@@ -61,13 +61,13 @@ jobs:
           command: sudo pip install -r requirements.txt -r requirements-dev.txt
       - run:
           name: Lint
-          command: python -m pylint pokepy tests setup.py
+          command: make lint
       - run:
           name: Run Tests
-          command: python -m unittest
+          command: make test
       - run:
           name: Run Coverage tool
-          command: coverage run --source pokepy -m unittest
+          command: coverage run --source pokepy --omit="pokepy/fcache/*" -m unittest tests.test_pokepy
       - run:
           name: Generate XML coverage report
           command: coverage xml
@@ -77,7 +77,7 @@ jobs:
 
   py38:
     docker:
-      - image: circleci/python:3.8.0
+      - image: circleci/python:3.8.3
     steps:
       - checkout
       - run:
@@ -85,7 +85,7 @@ jobs:
           command: pip install -r requirements.txt -r requirements-dev27.txt --user
       - run:
           name: Run Tests
-          command: python -m unittest
+          command: make test
 
 workflows:
   version: 2
