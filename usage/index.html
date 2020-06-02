@@ -393,8 +393,8 @@
 </code></pre>
 
 <h3 id="api">API</h3>
-<p>Pokepy is composed of a single class, <code>V2Client</code>, which implements the whole 
-<a href="https://pokeapi.co/docs/v2.html">v2 PokéAPI</a>.
+<p>Pokepy is composed of a single class, <code>V2Client</code>, which implements the whole
+<a href="https://pokeapi.co/docs/v2">v2 PokéAPI</a>.
 This class is usually instantiated without parameters:</p>
 <pre><code class="python">&gt;&gt;&gt; client = pokepy.V2Client()
 </code></pre>
@@ -404,57 +404,57 @@ This class is usually instantiated without parameters:</p>
 all taking a single parameter (<code>uid</code>), which can be either an <code>integer</code> (for most endpoints) or a <code>string</code>.</p>
 <p>The following is an exhaustive list of all the endpoints with links to their respective PokéAPI documentation:</p>
 <ul>
-<li><a href="https://pokeapi.co/docs/v2.html/#berries">get_berry</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#berry-firmnesses">get_berry_firmness</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#berry-flavors">get_berry_flavor</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#contest-types">get_contest_type</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#contest-effects">get_contest_effect</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#super-contest-effects">get_super_contest_effect</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#encounter-methods">get_encounter_method</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#encounter-conditions">get_encounter_condition</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#encounter-condition-values">get_encounter_condition_value</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#evolution-chains">get_evolution_chain</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#evolution-triggers">get_evolution_trigger</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#generations">get_generation</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#pokedexes">get_pokedex</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#version">get_version</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#version-groups">get_version_group</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#item">get_item</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#item-attributes">get_item_attribute</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#item-categories">get_item_category</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#item-fling-effects">get_item_fling_effect</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#item-pockets">get_item_pocket</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#locations">get_location</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#location-areas">get_location_area</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#pal-park-areas">get_pal_park_area</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#regions">get_region</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#machines">get_machine</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#moves">get_move</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#move-ailments">get_move_ailment</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#move-battle-styles">get_move_battle_style</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#move-categories">get_move_category</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#move-damage-classes">get_move_damage_class</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#move-learn-methods">get_move_learn_method</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#move-targets">get_move_target</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#abilities">get_ability</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#characteristics">get_characteristic</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#egg-groups">get_egg_group</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#genders">get_gender</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#growth-rates">get_growth_rate</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#natures">get_nature</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#pokeathlon-stats">get_pokeathlon_stat</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#pokemon">get_pokemon</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#pok%C3%A9mon-colors">get_pokemon_color</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#pok%C3%A9mon-forms">get_pokemon_form</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#pok%C3%A9mon-habitats">get_pokemon_habitat</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#pok%C3%A9mon-shapes">get_pokemon_shape</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#pok%C3%A9mon-species">get_pokemon_species</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#stats">get_stat</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#types">get_type</a></li>
-<li><a href="https://pokeapi.co/docs/v2.html/#languages">get_language</a></li>
+<li><a href="https://pokeapi.co/docs/v2#berries">get_berry</a></li>
+<li><a href="https://pokeapi.co/docs/v2#berry-firmnesses">get_berry_firmness</a></li>
+<li><a href="https://pokeapi.co/docs/v2#berry-flavors">get_berry_flavor</a></li>
+<li><a href="https://pokeapi.co/docs/v2#contest-types">get_contest_type</a></li>
+<li><a href="https://pokeapi.co/docs/v2#contest-effects">get_contest_effect</a></li>
+<li><a href="https://pokeapi.co/docs/v2#super-contest-effects">get_super_contest_effect</a></li>
+<li><a href="https://pokeapi.co/docs/v2#encounter-methods">get_encounter_method</a></li>
+<li><a href="https://pokeapi.co/docs/v2#encounter-conditions">get_encounter_condition</a></li>
+<li><a href="https://pokeapi.co/docs/v2#encounter-condition-values">get_encounter_condition_value</a></li>
+<li><a href="https://pokeapi.co/docs/v2#evolution-chains">get_evolution_chain</a></li>
+<li><a href="https://pokeapi.co/docs/v2#evolution-triggers">get_evolution_trigger</a></li>
+<li><a href="https://pokeapi.co/docs/v2#generations">get_generation</a></li>
+<li><a href="https://pokeapi.co/docs/v2#pokedexes">get_pokedex</a></li>
+<li><a href="https://pokeapi.co/docs/v2#version">get_version</a></li>
+<li><a href="https://pokeapi.co/docs/v2#version-groups">get_version_group</a></li>
+<li><a href="https://pokeapi.co/docs/v2#item">get_item</a></li>
+<li><a href="https://pokeapi.co/docs/v2#item-attributes">get_item_attribute</a></li>
+<li><a href="https://pokeapi.co/docs/v2#item-categories">get_item_category</a></li>
+<li><a href="https://pokeapi.co/docs/v2#item-fling-effects">get_item_fling_effect</a></li>
+<li><a href="https://pokeapi.co/docs/v2#item-pockets">get_item_pocket</a></li>
+<li><a href="https://pokeapi.co/docs/v2#locations">get_location</a></li>
+<li><a href="https://pokeapi.co/docs/v2#location-areas">get_location_area</a></li>
+<li><a href="https://pokeapi.co/docs/v2#pal-park-areas">get_pal_park_area</a></li>
+<li><a href="https://pokeapi.co/docs/v2#regions">get_region</a></li>
+<li><a href="https://pokeapi.co/docs/v2#machines">get_machine</a></li>
+<li><a href="https://pokeapi.co/docs/v2#moves">get_move</a></li>
+<li><a href="https://pokeapi.co/docs/v2#move-ailments">get_move_ailment</a></li>
+<li><a href="https://pokeapi.co/docs/v2#move-battle-styles">get_move_battle_style</a></li>
+<li><a href="https://pokeapi.co/docs/v2#move-categories">get_move_category</a></li>
+<li><a href="https://pokeapi.co/docs/v2#move-damage-classes">get_move_damage_class</a></li>
+<li><a href="https://pokeapi.co/docs/v2#move-learn-methods">get_move_learn_method</a></li>
+<li><a href="https://pokeapi.co/docs/v2#move-targets">get_move_target</a></li>
+<li><a href="https://pokeapi.co/docs/v2#abilities">get_ability</a></li>
+<li><a href="https://pokeapi.co/docs/v2#characteristics">get_characteristic</a></li>
+<li><a href="https://pokeapi.co/docs/v2#egg-groups">get_egg_group</a></li>
+<li><a href="https://pokeapi.co/docs/v2#genders">get_gender</a></li>
+<li><a href="https://pokeapi.co/docs/v2#growth-rates">get_growth_rate</a></li>
+<li><a href="https://pokeapi.co/docs/v2#natures">get_nature</a></li>
+<li><a href="https://pokeapi.co/docs/v2#pokeathlon-stats">get_pokeathlon_stat</a></li>
+<li><a href="https://pokeapi.co/docs/v2#pokemon">get_pokemon</a></li>
+<li><a href="https://pokeapi.co/docs/v2#pok%C3%A9mon-colors">get_pokemon_color</a></li>
+<li><a href="https://pokeapi.co/docs/v2#pok%C3%A9mon-forms">get_pokemon_form</a></li>
+<li><a href="https://pokeapi.co/docs/v2#pok%C3%A9mon-habitats">get_pokemon_habitat</a></li>
+<li><a href="https://pokeapi.co/docs/v2#pok%C3%A9mon-shapes">get_pokemon_shape</a></li>
+<li><a href="https://pokeapi.co/docs/v2#pok%C3%A9mon-species">get_pokemon_species</a></li>
+<li><a href="https://pokeapi.co/docs/v2#stats">get_stat</a></li>
+<li><a href="https://pokeapi.co/docs/v2#types">get_type</a></li>
+<li><a href="https://pokeapi.co/docs/v2#languages">get_language</a></li>
 </ul>
 <p>Each method returns an object containing as many python attributes as there are named attributes.
-Please refer to the <a href="https://pokeapi.co/docs/v2.html/">PokéAPI documentation</a>
+Please refer to the <a href="https://pokeapi.co/docs/v2">PokéAPI documentation</a>
 for more information on what each of these methods returns, its description and type.</p>
 <p>Then you can start grabbing stuff from the API:</p>
 <pre><code class="python">&gt;&gt;&gt; mew = pokepy.V2Client().get_pokemon('mew')
