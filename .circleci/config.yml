@@ -1,11 +1,19 @@
 # Config file for automatic testing at circleci.com
 
-version: 2
 
-jobs:
-  py27:
-    docker:
-      - image: circleci/python:2.7.18
+version: 2.1
+
+
+orbs:
+  windows: circleci/windows@2.4.0
+
+
+# -------------------------
+#         COMMANDS
+# -------------------------
+commands:
+
+  tests-only:
     steps:
       - checkout
       - run:
@@ -15,45 +23,7 @@ jobs:
           name: Run Tests
           command: make test
 
-  py34:
-    docker:
-      - image: circleci/python:3.4.10
-    steps:
-      - checkout
-      - run:
-          name: Install Requirements
-          command: pip install -r requirements.txt -r requirements-dev27.txt --user
-      - run:
-          name: Run Tests
-          command: make test
-
-  py35:
-    docker:
-      - image: circleci/python:3.5.8
-    steps:
-      - checkout
-      - run:
-          name: Install Requirements
-          command: pip install -r requirements.txt -r requirements-dev27.txt --user
-      - run:
-          name: Run Tests
-          command: make test
-
-  py36:
-    docker:
-      - image: circleci/python:3.6.10
-    steps:
-      - checkout
-      - run:
-          name: Install Requirements
-          command: pip install -r requirements.txt -r requirements-dev27.txt --user
-      - run:
-          name: Run Tests
-          command: make test
-
-  py37:
-    docker:
-      - image: circleci/python:3.7.7
+  tests-coverage-lint:
     steps:
       - checkout
       - run:
@@ -75,25 +45,67 @@ jobs:
           name: Upload Coverage report to CodeCov
           command: bash <(curl -s https://codecov.io/bash)
 
-  py38:
+
+# -------------------------
+#           JOBS
+# -------------------------
+jobs:
+
+  py27-linux:
+    docker:
+      - image: circleci/python:2.7.18
+    steps:
+      - tests-only
+
+  py34-linux:
+    docker:
+      - image: circleci/python:3.4.10
+    steps:
+      - tests-only
+
+  py35-linux:
+    docker:
+      - image: circleci/python:3.5.8
+    steps:
+      - tests-only
+
+  py36-linux:
+    docker:
+      - image: circleci/python:3.6.10
+    steps:
+      - tests-only
+
+  py37-linux:
+    docker:
+      - image: circleci/python:3.7.7
+    steps:
+      - tests-coverage-lint
+
+  py38-linux:
     docker:
       - image: circleci/python:3.8.3
     steps:
-      - checkout
-      - run:
-          name: Install Requirements
-          command: pip install -r requirements.txt -r requirements-dev27.txt --user
-      - run:
-          name: Run Tests
-          command: make test
+      - tests-only
 
+  py37-windows:
+    executor:
+      name: windows/default
+      shell: cmd.exe
+    steps:
+      - tests-only
+
+
+# -------------------------
+#         WORKFLOW
+# -------------------------
 workflows:
   version: 2
   run_tests:
     jobs:
-      - py27
-      - py34
-      - py35
-      - py36
-      - py37
-      - py38
+      - py27-linux
+      - py34-linux
+      - py35-linux
+      - py36-linux
+      - py37-linux
+      - py38-linux
+      - py37-windows
