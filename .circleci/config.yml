@@ -109,8 +109,6 @@ jobs:
           command: python --version
       - run:
           command: pip --version
-      - run:
-          command:
       - tests-only
 
 
