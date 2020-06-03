@@ -103,7 +103,7 @@ jobs:
           command: python --version
       - run:
           name: Install Python 2.7
-          command: python --version
+          command: choco install python2
       - run:
           command: python --version
       - tests-only
