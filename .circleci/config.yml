@@ -103,10 +103,7 @@ jobs:
           name: Install Python 2.7
           command: choco install python2
       - run:
-          name: Add Python 2.7 to PATH
-          command: setx path "C:\Python27"
-      - run:
-          command: python --version
+          command: cd C:\Python27 && python --version
       - run:
           command: pip --version
       - tests-only
