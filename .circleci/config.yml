@@ -103,10 +103,13 @@ jobs:
           name: Install Python 2.7
           command: choco install python2
       - run:
-          command: cd C:\Python27 && python --version
+          name: Install Requirements
+          working_directory: C:\Python27
+          command: pip --version && pip install -r requirements.txt -r requirements-dev27.txt --user
       - run:
-          command: pip --version
-      - tests-only
+          name: Run Tests
+          working_directory: C:\Python27
+          command: python --version && make test
 
 
 # -------------------------
