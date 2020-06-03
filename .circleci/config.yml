@@ -104,7 +104,7 @@ jobs:
           command: choco install python2
       - run:
           name: Install Requirements
-          working_directory: C:\Python27
+          working_directory: C:\Python27\Scripts
           command: pip --version && pip install -r requirements.txt -r requirements-dev27.txt --user
       - run:
           name: Run Tests
