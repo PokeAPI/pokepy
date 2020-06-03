@@ -100,11 +100,12 @@ jobs:
       shell: cmd.exe
     steps:
       - run:
+          command: python --version
+      - run:
           name: Install Python 2.7
-          command: |
-            python --version
-            choco install python2
-            python --version
+          command: python --version
+      - run:
+          command: python --version
       - tests-only
 
 
