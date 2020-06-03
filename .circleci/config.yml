@@ -100,12 +100,11 @@ jobs:
       shell: cmd.exe
     steps:
       - run:
-          command: python --version
-      - run:
           name: Install Python 2.7
           command: choco install python2
       - run:
-          command: python --version
+          name: Add Python 2.7 to PATH
+          command: setx path "C:\Python27;%path%"
       - tests-only
 
 
