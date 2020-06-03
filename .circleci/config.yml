@@ -102,8 +102,9 @@ jobs:
       - run:
           name: Install Python 2.7
           command: |
+            python --version
             choco install python2
-            py -2 --version
+            python --version
       - tests-only
 
 
