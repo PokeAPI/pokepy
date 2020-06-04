@@ -99,6 +99,7 @@ jobs:
       name: windows/default
       shell: cmd.exe
     steps:
+      - checkout
       - run:
           name: Install Python 2.7
           command: choco install python2
