@@ -104,12 +104,10 @@ jobs:
           command: choco install python2
       - run:
           name: Install Requirements
-          working_directory: C:\Python27\Scripts
-          command: pip --version && pip install -r requirements.txt -r requirements-dev27.txt --user
+          command: C:\Python27\Scripts\pip.exe --version && C:\Python27\Scripts\pip.exe install -r requirements.txt -r requirements-dev27.txt --user
       - run:
           name: Run Tests
-          working_directory: C:\Python27
-          command: python --version && make test
+          command: C:\Python27\python.exe --version && C:\Python27\python.exe -m unittest tests.test_pokepy
 
 
 # -------------------------
