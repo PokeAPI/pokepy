@@ -94,6 +94,22 @@ jobs:
     steps:
       - tests-only
 
+  py27-windows:
+    executor:
+      name: windows/default
+      shell: cmd.exe
+    steps:
+      - checkout
+      - run:
+          name: Install Python 2.7
+          command: choco install python2
+      - run:
+          name: Install Requirements
+          command: C:\Python27\Scripts\pip.exe --version && C:\Python27\Scripts\pip.exe install -r requirements.txt -r requirements-dev27.txt --user
+      - run:
+          name: Run Tests
+          command: C:\Python27\python.exe --version && C:\Python27\python.exe -m unittest tests.test_pokepy
+
 
 # -------------------------
 #         WORKFLOW
@@ -109,3 +125,4 @@ workflows:
       - py37-linux
       - py38-linux
       - py37-windows
+      - py27-windows
