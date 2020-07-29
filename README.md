@@ -1,4 +1,4 @@
-# Pokepy <img heigth=50 width=50 src="https://veekun.com/dex/media/pokemon/global-link/14.png">
+# Pokepy <a href="https://pokeapi.co/api/v2/pokemon/kakuna"><img src='https://veekun.com/dex/media/pokemon/global-link/14.png' height=50px/></a>
 
 [![pypi](https://img.shields.io/pypi/v/pokepy.svg "pypi package")](https://pypi.org/project/pokepy)
 [![python versions](https://img.shields.io/pypi/pyversions/pokepy.svg "supported python versions")](https://pypi.org/project/pokepy)
