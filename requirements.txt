@@ -1,4 +1,4 @@
 appdirs==1.4.*      # dependency of FileCache
 beckett==0.8.*      # main functionality
 requests==2.21.*    # used by beckett (bumped to avoid CVE-2018-18074)
-urllib3~=1.24.3     # used by requests (bumped to avoid CVE-2019-11236)
+urllib3~=1.25.9     # used by requests (bumped to avoid CVE-2019-11236)
