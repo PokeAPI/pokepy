@@ -2113,6 +2113,8 @@ class PokemonSpeciesResource(BaseResource):
             'capture_rate',
             'base_happiness',
             'is_baby',
+            'is_legendary',
+            'is_mythical',
             'hatch_counter',
             'has_gender_differences',
             'forms_switchable',
