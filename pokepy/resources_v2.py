@@ -121,7 +121,8 @@ class FlavorTextSubResource(BaseResource):
             'flavor_text',
         )
         subresources = {
-            'language': NamedAPIResourceSubResource
+            'language': NamedAPIResourceSubResource,
+            'version': NamedAPIResourceSubResource
         }
 
     def __repr__(self):
