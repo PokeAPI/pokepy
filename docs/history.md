@@ -1,4 +1,7 @@
 # History
+### 0.6.2 (2021-05-16)
+* Add `version` subproperty to `FlavorTextSubResource` 
+
 ### 0.6.1 (2020-05-31)
 * Fixed disk-based cache not handling different filesystems on Windows
 
