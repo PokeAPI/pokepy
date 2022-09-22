@@ -1552,6 +1552,7 @@ class MoveResource(BaseResource):
             'damage_class': NamedAPIResourceSubResource,
             'effect_entries': VerboseEffectSubResource,
             'effect_changes': AbilityEffectChangeSubResource,
+            'learned_by_pokemon': NamedAPIResourceSubResource,
             'flavor_text_entries': MoveFlavorTextSubResource,
             'generation': NamedAPIResourceSubResource,
             'machines': MachineVersionDetailSubResource,
