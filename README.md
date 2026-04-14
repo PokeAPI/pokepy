@@ -12,6 +12,8 @@ A python wrapper for [PokéAPI](https://pokeapi.co). (former [pykemon](https://g
 
 Maintainer: Nobody
 
+# ⚠️ Currently unsupported!
+
 ## Installation
 
 Nice and simple:
