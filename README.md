@@ -10,7 +10,7 @@
 
 A python wrapper for [PokéAPI](https://pokeapi.co). (former [pykemon](https://github.com/PokeAPI/pokepy/tree/bb72105f4c5402aaa5d4fd2b9c142bf9b678b254))
 
-Maintainer: [Kronopt](https://github.com/Kronopt)
+Maintainer: Nobody
 
 ## Installation
 
