@@ -8,11 +8,11 @@
 [![snyk](https://snyk.io/test/github/PokeAPI/pokepy/badge.svg?targetFile=requirements.txt "known vulnerabilities")](https://snyk.io/test/github/PokeAPI/pokepy?targetFile=requirements.txt)
 [![license](https://img.shields.io/pypi/l/pokepy.svg "license")](https://github.com/PokeAPI/pokepy/blob/master/LICENSE)
 
+> [!WARNING] Currently unsupported
+
 A python wrapper for [PokéAPI](https://pokeapi.co). (former [pykemon](https://github.com/PokeAPI/pokepy/tree/bb72105f4c5402aaa5d4fd2b9c142bf9b678b254))
 
 Maintainer: Nobody
-
-# ⚠️ Currently unsupported!
 
 ## Installation
 
