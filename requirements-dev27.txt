@@ -3,4 +3,4 @@ mkdocs-material==3.2.*  # docs
 coverage==4.5.*         # coverage
 requests-mock==1.5.*    # tests
 tox==3.5.*              # tests
-PyYAML==5.2             # mkdocs dependency (last version to support Python 3.4)
+PyYAML==5.4             # mkdocs dependency (last version to support Python 3.4)
